@@ -7,3 +7,13 @@ export function getDaysInMonth(month, year) {
   }
   return days;
 }
+
+export function getInitialMonths(month, year, length) {
+  let months = [];
+
+  for (let m = month - length; m <= month + 1; m++) {
+    const days = getDaysInMonth(m, year);
+    months.push({ days, id: m });
+  }
+  return months;
+}
