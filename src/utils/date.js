@@ -11,9 +11,12 @@ export function getDaysInMonth(month, year) {
 export function getInitialMonths(month, year, length) {
   let months = [];
 
-  for (let m = month - length; m <= month + 1; m++) {
-    const days = getDaysInMonth(m, year);
-    months.push({ days, id: m });
+  for (let m = month - length; m <= month + 2; m++) {
+    const monthNumber = m % 11;
+    const yearNumber = m / 11 >= 1 ? year + 1 : year;
+
+    const days = getDaysInMonth(monthNumber, yearNumber);
+    months.push({ days, month: monthNumber, year: yearNumber });
   }
   return months;
 }

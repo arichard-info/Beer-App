@@ -3,13 +3,13 @@ import styled, { css } from "styled-components";
 import classNames from "classnames";
 import { useCalendar } from "./../../state/calendar";
 
-const Month = ({ className, days, id }) => {
-  const [{ current }] = useCalendar();
+const Month = ({ className, days, month, year }) => {
+  const [{ today }] = useCalendar();
   const offset = days[0].getDay() - 1;
   const offsetArray = Array(offset >= 0 ? offset : 6).fill(null);
 
   const monthClassNames = classNames(className, {
-    current: current.getMonth() === id
+    current: today.getMonth() === month && today.getFullYear() === year
   });
   return (
     <div className={monthClassNames}>
@@ -17,8 +17,8 @@ const Month = ({ className, days, id }) => {
         if (day === null) return <div key={key} className="offset" />;
 
         const dayClassNames = classNames("daybox", {
-          disabled: day.setHours(0, 0, 0, 0) > current.setHours(0, 0, 0, 0),
-          current: day.setHours(0, 0, 0, 0) === current.setHours(0, 0, 0, 0)
+          disabled: day.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0),
+          current: day.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
         });
         return (
           <div key={key} className={dayClassNames}>
@@ -44,6 +44,7 @@ export default styled(Month)(
     margin-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    scroll-snap-align: center;
 
     &.current {
       padding-left: 0;
@@ -70,15 +71,16 @@ export default styled(Month)(
           left: 0;
           height: 100%;
           width: 100%;
-          background-color: grey;
+          background-color: #f6f6f6;
           border-radius: 10px;
-          border: none;
+          border: 1px solid #e0e0e0;
           outline: none;
           cursor: pointer;
         }
       }
       &.current {
         .daybox__inner {
+          border-color: #ffcf40;
           box-shadow: 0px 0px 10px #ffd045;
         }
       }

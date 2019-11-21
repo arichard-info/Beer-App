@@ -23,7 +23,7 @@ const getInitialState = () => {
   const todayDate = new Date();
   return {
     months: getInitialMonths(todayDate.getMonth(), todayDate.getFullYear(), 4),
-    current: todayDate
+    today: todayDate
   };
 };
 
