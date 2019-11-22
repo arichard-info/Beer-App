@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { debounce } from "./../../utils";
 import { useCalendar } from "./../../state/calendar";
 import Month from "./Month";
+import Header from "./Header";
 
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
@@ -14,37 +15,26 @@ const Calendar = ({ className }) => {
       "scroll",
       debounce(() => {
         let newIndex = false;
-        const middleScroll =
-          scrollContainer.current.scrollTop +
-          scrollContainer.current.offsetHeight / 2;
-
+        const scrollTop = scrollContainer.current.scrollTop;
         const monthsEls = scrollContainer.current.childNodes;
+        let closestOffset = 100000;
         monthsEls.forEach((el, index) => {
-          const top = el.offsetTop;
-          const bottom = el.offsetTop + el.offsetHeight;
-          if (top < middleScroll && bottom > middleScroll) {
+          const offset = el.offsetTop - scrollTop;
+          if (offset >= 0 && offset < closestOffset) {
+            closestOffset = offset;
             newIndex = index;
           }
         });
         dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: newIndex });
-      }, 66)
+      }, 10)
     );
 
-    //On first render => Scroll to today's month
-    const index = months.findIndex(el => el.month === today.getMonth());
-    const wrapperEl = scrollContainer.current;
-    const currentEl = scrollContainer.current.childNodes[index];
-    const scrollPosition = currentEl.offsetTop - wrapperEl.offsetHeight / 2;
-    scrollContainer.current.scroll(0, scrollPosition);
+    dispatch({ type: "INIT", value: scrollContainer.current });
   }, [today, months, dispatch]);
 
   return (
     <div className={className}>
-      <header>
-        <button className="prev">Prev</button>
-        <span>Test Title</span>
-        <button className="next">Next</button>
-      </header>
+      <Header />
       <div className="scroll-container" ref={scrollContainer}>
         {months.map((month, key) => (
           <Month
@@ -72,7 +62,9 @@ export default styled(Calendar)(
       max-height: 100vh;
       overflow-y: scroll;
       overflow-x: hidden;
-      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      position: relative;
+      /*scroll-snap-type: y proximity;*/
     }
   `
 );

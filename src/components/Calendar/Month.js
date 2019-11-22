@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import classNames from "classnames";
 import { useCalendar } from "./../../state/calendar";
+import { getFullDate } from "../../utils/date";
 
 const Month = ({ className, days, month, year }) => {
   const [{ today, highlight }] = useCalendar();
@@ -26,8 +27,11 @@ const Month = ({ className, days, month, year }) => {
             <div className="daybox__wrapper">
               <button
                 className="daybox__inner"
+                title={getFullDate(day)}
                 onClick={() => console.log(day)}
-              />
+              >
+                {day.getDate()}
+              </button>
             </div>
           </div>
         );
@@ -41,17 +45,12 @@ export default styled(Month)(
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 1rem;
     scroll-snap-align: center;
-
     transition: padding 0.2s ease;
 
     &.current {
-      padding-left: 0;
-      padding-right: 0;
+      padding: 0;
     }
 
     .offset,
@@ -63,6 +62,7 @@ export default styled(Month)(
 
     .daybox {
       padding: 1%;
+      transition: padding 0.1s ease;
       .daybox__wrapper {
         position: relative;
         width: 100%;
@@ -79,12 +79,20 @@ export default styled(Month)(
           border: 1px solid #e0e0e0;
           outline: none;
           cursor: pointer;
+          color: transparent;
+          transition: color 0.2s ease;
         }
       }
       &.today {
         .daybox__inner {
           border-color: #ffcf40;
           box-shadow: 0px 0px 10px #ffd045;
+        }
+      }
+      &:hover {
+        padding: 0;
+        .daybox__inner {
+          color: grey;
         }
       }
     }
