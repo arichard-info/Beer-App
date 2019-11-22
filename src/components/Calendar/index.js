@@ -1,23 +1,42 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled, { css } from "styled-components";
+import { debounce } from "./../../utils";
 import { useCalendar } from "./../../state/calendar";
 import Month from "./Month";
 
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
-  const [{ months, today }] = useCalendar();
-  const [scrollIndex, setScrollIndex] = useState(null);
+  const [{ months, today }, dispatch] = useCalendar();
 
   useEffect(() => {
-    const index = months.findIndex(el => el.month === today.getMonth());
-    const containerEl = scrollContainer.current;
-    const currentMonthEl = scrollContainer.current.childNodes[index];
-    scrollContainer.current.scroll(
-      0,
-      currentMonthEl.offsetTop - containerEl.offsetHeight / 2
+    //Add listener to update highlight month
+    scrollContainer.current.addEventListener(
+      "scroll",
+      debounce(() => {
+        let newIndex = false;
+        const middleScroll =
+          scrollContainer.current.scrollTop +
+          scrollContainer.current.offsetHeight / 2;
+
+        const monthsEls = scrollContainer.current.childNodes;
+        monthsEls.forEach((el, index) => {
+          const top = el.offsetTop;
+          const bottom = el.offsetTop + el.offsetHeight;
+          if (top < middleScroll && bottom > middleScroll) {
+            newIndex = index;
+          }
+        });
+        dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: newIndex });
+      }, 66)
     );
-    setScrollIndex(index);
-  }, [today, months]);
+
+    //On first render => Scroll to today's month
+    const index = months.findIndex(el => el.month === today.getMonth());
+    const wrapperEl = scrollContainer.current;
+    const currentEl = scrollContainer.current.childNodes[index];
+    const scrollPosition = currentEl.offsetTop - wrapperEl.offsetHeight / 2;
+    scrollContainer.current.scroll(0, scrollPosition);
+  }, [today, months, dispatch]);
 
   return (
     <div className={className}>

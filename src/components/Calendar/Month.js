@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 import classNames from "classnames";
 import { useCalendar } from "./../../state/calendar";
 
 const Month = ({ className, days, month, year }) => {
-  const [{ today }] = useCalendar();
+  const [{ today, highlight }] = useCalendar();
   const offset = days[0].getDay() - 1;
   const offsetArray = Array(offset >= 0 ? offset : 6).fill(null);
 
   const monthClassNames = classNames(className, {
-    current: today.getMonth() === month && today.getFullYear() === year
+    current: highlight && month === highlight.month && year === highlight.year
   });
+
   return (
     <div className={monthClassNames}>
       {[...offsetArray, ...days].map((day, key) => {
@@ -18,7 +19,7 @@ const Month = ({ className, days, month, year }) => {
 
         const dayClassNames = classNames("daybox", {
           disabled: day.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0),
-          current: day.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
+          today: day.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
         });
         return (
           <div key={key} className={dayClassNames}>
@@ -45,6 +46,8 @@ export default styled(Month)(
     padding-left: 1rem;
     padding-right: 1rem;
     scroll-snap-align: center;
+
+    transition: padding 0.2s ease;
 
     &.current {
       padding-left: 0;
@@ -78,7 +81,7 @@ export default styled(Month)(
           cursor: pointer;
         }
       }
-      &.current {
+      &.today {
         .daybox__inner {
           border-color: #ffcf40;
           box-shadow: 0px 0px 10px #ffd045;

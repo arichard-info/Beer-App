@@ -16,7 +16,7 @@ export function getInitialMonths(month, year, length) {
     const yearNumber = m / 11 >= 1 ? year + 1 : year;
 
     const days = getDaysInMonth(monthNumber, yearNumber);
-    months.push({ days, month: monthNumber, year: yearNumber });
+    months.push({ days, month: monthNumber, year: yearNumber, date: days[0] });
   }
   return months;
 }

@@ -7,10 +7,16 @@ const StateContext = createContext();
 //Reducer
 const reducer = (state, action) => {
   switch (action.type) {
-    case "init":
+    case "UPDATE_HIGHLIGHT_MONTH":
+      const highlightMonth = state.months[action.value];
+
       return {
         ...state,
-        theme: action.newTheme
+        highlight: {
+          month: highlightMonth.month,
+          year: highlightMonth.year,
+          date: highlightMonth.date
+        }
       };
 
     default:
