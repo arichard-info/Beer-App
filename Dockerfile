@@ -6,6 +6,7 @@ WORKDIR /usr/app/client/
 COPY client/package*.json ./
 RUN npm install -qy
 COPY client/ ./
+COPY .env.production ./
 RUN npm run build
 
 
