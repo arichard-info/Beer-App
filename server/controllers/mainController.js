@@ -6,5 +6,5 @@ exports.getDefault = (req, res, next) => {
   };
 
   res.header("Content-Type", "application/json");
-  res.send(JSON.stringify(testObj));
+  res.send(JSON.stringify(process.env));
 };

@@ -5,6 +5,7 @@ import GlobalStyle from "./GlobalStyle";
 import Calendar from "./Calendar";
 
 const App = ({ className }) => {
+  console.log(process.env);
   return (
     <>
       <GlobalStyle />
