@@ -1,0 +1,22 @@
+version: "3"
+services:
+  frontend:
+    container_name: app_client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: beer_app/app_client
+    ports:
+      - "${CLIENT_PORT}:3000"
+    volumes:
+      - ./client:/usr/src/app
+  backend:
+    container_name: app_server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: beer_app/app_server
+    ports:
+      - "${SERVER_PORT}:5000"
+    volumes:
+      - ./server:/usr/src/app
