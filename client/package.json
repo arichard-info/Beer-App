@@ -10,8 +10,8 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "start": "cp ./../.env .env && react-scripts start",
-    "build": "cp ./../.env .env && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
