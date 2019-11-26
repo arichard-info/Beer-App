@@ -8,10 +8,15 @@ const App = ({ className }) => {
   useEffect(() => {
     async function fetchData() {
       const res = await fetch("/api");
-      res.json().then(res => {
-        console.log("--- RESPONSE ---");
-        console.log(res);
-      });
+      res
+        .json()
+        .then(res => {
+          console.log("--- RESPONSE ---");
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
 
     fetchData();
