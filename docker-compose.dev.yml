@@ -1,0 +1,28 @@
+version: "3"
+services:
+  backend:
+    container_name: app_server
+    build:
+      context: ./server/
+      dockerfile: ./../docker/dockerfile/dev.node.dockerfile
+    command: npm run dev
+    image: beer_app/app_server
+    ports:
+      - "8000:5000"
+    volumes:
+      - ./server:/usr/src/app
+  frontend:
+    container_name: app_client
+    build:
+      context: ./client/
+      dockerfile: ./../docker/dockerfile/dev.react.dockerfile
+    command: npm run start
+    image: beer_app/app_client
+    links:
+      - backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/usr/src/app
+    depends_on:
+      - backend

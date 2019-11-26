@@ -4,8 +4,9 @@ services:
     container_name: prod_server
     environment:
       - NODE_ENV=production
-    env_file: .env.production
-    build: .
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile/prod.node.dockerfile
     ports:
       - "3000:5000"
     restart: always
