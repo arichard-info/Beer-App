@@ -30,4 +30,4 @@ beerSchema.pre("save", function(next) {
   next();
 });
 
-module.exports = mongoose.modelNames("Beer", beerSchema);
+module.exports = mongoose.model("Beer", beerSchema);
