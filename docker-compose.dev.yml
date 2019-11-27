@@ -1,18 +1,32 @@
 version: "3"
 services:
+  database:
+    container_name: app_database
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
   backend:
     container_name: app_server
+    restart: always
     build:
       context: ./server/
       dockerfile: ./../docker/dockerfile/dev.node.dockerfile
     command: npm run dev
     image: beer_app/app_server
+    environment:
+      - NODE_ENV=development
+      - DATABASE=mongodb://database/beer_app
     ports:
       - "8000:5000"
     volumes:
       - ./server:/usr/src/app
+    links:
+      - database
   frontend:
     container_name: app_client
+    restart: always
     build:
       context: ./client/
       dockerfile: ./../docker/dockerfile/dev.react.dockerfile

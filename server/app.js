@@ -3,11 +3,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const dotenv = require("dotenv");
 
 const routes = require("./routes/index");
-
-dotenv.config();
 
 var app = express();
 

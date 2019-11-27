@@ -1,10 +1,9 @@
-exports.getDefault = (req, res, next) => {
-  const testObj = {
-    number: 3,
-    string: "Toto",
-    date: new Date()
-  };
+const mongoose = require("mongoose");
+const Beer = mongoose.model("Beer");
 
+exports.getDefault = async (req, res, next) => {
+  const beers = await Beer.find();
+  console.log(beers);
   res.header("Content-Type", "application/json");
-  res.send(JSON.stringify(process.env));
+  res.send(JSON.stringify({ beers }));
 };

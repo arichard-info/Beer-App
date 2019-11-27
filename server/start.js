@@ -1,10 +1,24 @@
 #!/usr/bin/env node
+/*
+const dotenv = require("dotenv");
+dotenv.config();
+*/
+
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.DATABASE);
+mongoose.Promise = global.Promise;
+mongoose.connection.on("error", err => {
+  console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
+});
+
+require("./models/Beer");
 
 /**
  * Module dependencies.
  */
 
-var app = require("../app");
+var app = require("./app");
 var debug = require("debug")("rungis-express:server");
 var http = require("http");
 
