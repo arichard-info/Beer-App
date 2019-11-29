@@ -40,5 +40,6 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./client:/usr/src/app
+      - ./.env:/usr/src/app/.env
     depends_on:
       - backend
