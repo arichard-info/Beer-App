@@ -9,4 +9,4 @@ services:
       dockerfile: ./docker/dockerfile/prod.node.dockerfile
     ports:
       - "3000:5000"
-    restart: always
+    restart: on-failure

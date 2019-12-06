@@ -9,7 +9,7 @@ services:
       - "27017:27017"
   backend:
     container_name: app_server
-    restart: always
+    restart: on-failure
     build:
       context: ./server/
       dockerfile: ./../docker/dockerfile/dev.node.dockerfile
@@ -27,7 +27,7 @@ services:
       - database
   frontend:
     container_name: app_client
-    restart: always
+    restart: on-failure
     build:
       context: ./client/
       dockerfile: ./../docker/dockerfile/dev.react.dockerfile
