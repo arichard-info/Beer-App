@@ -12,20 +12,20 @@ const Header = ({ className }) => {
       }
     : { month: "", year: "" };
 
-  function onPreviousClick() {
+  function handlePreviousClick() {
     dispatch({ type: "PREVIOUS_MONTH" });
   }
-  function onNextClick() {
+  function handleNextClick() {
     dispatch({ type: "NEXT_MONTH" });
   }
 
   return (
     <header className={className}>
-      <button onClick={onPreviousClick}>Prev</button>
+      <button onClick={handlePreviousClick}>Prev</button>
       <span>
         {date.month} {date.year}
       </span>
-      <button onClick={onNextClick}>Next</button>
+      <button onClick={handleNextClick}>Next</button>
     </header>
   );
 };

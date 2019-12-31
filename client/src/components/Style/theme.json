@@ -1,0 +1,14 @@
+{
+  "colors": {
+    "black": "#000000",
+    "white": "#FFFFFF"
+  },
+  "fw": {
+    "light": "300",
+    "regular": "400",
+    "medium": "500",
+    "semibold": "600",
+    "bold": "700",
+    "black": "900"
+  }
+}
