@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from "react";
-
 import styled, { css } from "styled-components";
 
 import { debounce } from "./../../utils";
 import { useCalendar } from "./../../state/calendar";
-
 import Month from "./Month";
 
 const Calendar = ({ className }) => {
@@ -16,7 +14,6 @@ const Calendar = ({ className }) => {
     dispatch({ type: "INIT", value: container });
 
     const handleScroll = debounce(() => {
-      console.log("debounce");
       let newIndex = false;
       const scrollTop = container.scrollTop;
       const monthsEls = container.childNodes;
@@ -30,8 +27,6 @@ const Calendar = ({ className }) => {
       });
       dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: newIndex });
     }, 10);
-
-    //Add listener to update highlight month
     container.addEventListener("scroll", handleScroll);
 
     return () => {
