@@ -1,49 +1,36 @@
-import React, { useEffect } from "react";
-import styled, { css } from "styled-components";
-import { CalendarProvider } from "./../state/calendar";
+import React from "react";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
 import GlobalStyle from "./GlobalStyle";
-import Calendar from "./Calendar";
 
-const App = ({ className }) => {
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("/api");
-      res
-        .json()
-        .then(res => {
-          console.log("--- RESPONSE ---");
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+import Layout from "./Layout";
 
-    fetchData();
-  });
+import Calendar from "./CalendarPage";
+import Settings from "./SettingsPage";
+import Profile from "./ProfilePage";
+import Error from "./ErrorPage";
 
-  console.log("--- CLIENT SIDE --- ");
-  console.log(process.env);
-  return (
-    <>
+const App = () => (
+  <Router>
+    <Layout>
       <GlobalStyle />
-      <CalendarProvider>
-        <div className={className}>
-          <div className="calendar-wrapper">
-            <Calendar />
-          </div>
-        </div>
-      </CalendarProvider>
-    </>
-  );
-};
-
-export default styled(App)(
-  () => css`
-    .calendar-wrapper {
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  `
+      <Switch>
+        <Route exact path="/">
+          <Calendar />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+        <Route path="/settings">
+          <Settings />
+        </Route>
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
+    </Layout>
+  </Router>
 );
+
+export default App;
