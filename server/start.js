@@ -1,10 +1,9 @@
 #!/usr/bin/env node
-/*
-const dotenv = require("dotenv");
-dotenv.config();
-*/
 
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise;
