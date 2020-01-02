@@ -4,6 +4,15 @@ This project is a beer consumption monitoring application. The user can enter th
 
 This project is not intended to push for alcohol consumption. The goal is simply to be able to track your consumption in a fun way, and to discover new beers.
 
+- [Project configuration](#project-configuration)
+  - [Docker](#docker)
+  - [Running without Docker](#docker)
+  - [Environment variables](#environmentvariables)
+- [Available scripts](#available-scripts)
+  - [Express server](#express-server)
+  - [React](#react)
+  - [Loading sample data](#loading-sample-data)
+
 ## Project configuration
 
 ### Docker
@@ -69,3 +78,61 @@ If you're running the project without Docker and need to add / override environm
 #### Variables prefix
 
 Variables used client-side have to be prefixed with "REACT_APP\_", as the application is built with create-react-app ([see the .env documentation here](https://create-react-app.dev/docs/adding-custom-environment-variables/))
+
+## Available scripts
+
+### Express server
+
+#### `npm run dev`
+
+Runs the server in the development mode.<br />
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+
+The server will restart if you make edits.<br />
+You will also see any lint errors in the console.
+
+#### `npm run start`
+
+Runs the server for production.
+
+### React
+
+In the project directory, you can run:
+
+#### `npm run start`
+
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
+
+#### `npm run test`
+
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+#### `npm run build`
+
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+#### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+### Loading sample data
+
+Sample datas are ready to be injected into the database to test or develop the application more easily. To load or delete this data, these npm scripts are available :
+
+#### `npm run sample`
+
+Load sample data in the database (in the server/ folder).
+
+#### `npm run blowitallaway`
+
+Clear the database.
