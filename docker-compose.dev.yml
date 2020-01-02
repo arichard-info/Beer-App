@@ -15,6 +15,8 @@ services:
       dockerfile: ./../docker/dockerfile/dev.node.dockerfile
     environment:
       - DATABASE=${DATABASE:-mongodb://database:27017/beer_app}
+      - MAIL_USER
+      - MAIL_PASS
     command: npm run dev
     image: beer_app/app_server
     ports:

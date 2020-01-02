@@ -63,6 +63,10 @@ DATABASE_PORT=27017
 # mongodb connection
 DATABASE=mongodb://database:27017/beer_app
 
+# nodemailer authentication
+MAIL_USER=mail@example.com
+MAIL_PASS=mail_password
+
 # frontend variables
 REACT_APP_PROXY=http://backend:5000
 ```
