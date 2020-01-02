@@ -6,20 +6,19 @@ services:
     volumes:
       - ./data:/data/db
     ports:
-      - "27017:27017"
+      - "${DATABASE_PORT:-27017}:27017"
   backend:
     container_name: app_server
     restart: on-failure
     build:
       context: ./server/
       dockerfile: ./../docker/dockerfile/dev.node.dockerfile
+    environment:
+      - DATABASE=${DATABASE:-mongodb://database:27017/beer_app}
     command: npm run dev
     image: beer_app/app_server
-    environment:
-      - NODE_ENV=development
-      - DATABASE=mongodb://database/beer_app
     ports:
-      - "8000:5000"
+      - "${SERVER_PORT:-5000}:5000"
     working_dir: /usr/src/app
     volumes:
       - ./server:/usr/src/app
@@ -31,15 +30,16 @@ services:
     build:
       context: ./client/
       dockerfile: ./../docker/dockerfile/dev.react.dockerfile
+    environment:
+      - REACT_APP_PROXY=${REACT_APP_PROXY:-http://backend:5000}
     command: npm run start
     image: beer_app/app_client
     links:
       - backend
     ports:
-      - "3000:3000"
+      - "${CLIENT_PORT:-3000}:3000"
     working_dir: /usr/src/app
     volumes:
       - ./client:/usr/src/app
-      - ./.env:/usr/src/app/.env
     depends_on:
       - backend

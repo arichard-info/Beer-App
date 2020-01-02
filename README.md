@@ -43,6 +43,21 @@ REACT_APP_PROXY=http://localhost:5000
 
 ### environment variables
 
+Currently available variables (.env):
+
+```conf
+# Docker settings
+CLIENT_PORT=2000
+SERVER_PORT=7777
+DATABASE_PORT=27017
+
+# mongodb connection
+DATABASE=mongodb://database:27017/beer_app
+
+# frontend variables
+REACT_APP_PROXY=http://backend:5000
+```
+
 #### with Docker
 
 The project uses default environment variables, but if you want to override some, you can define them in a .env file at the root directory. These variables are used both client and server side.
