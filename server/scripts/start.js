@@ -5,20 +5,25 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-mongoose.connect(process.env.DATABASE);
+mongoose.connect(process.env.DATABASE, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 mongoose.Promise = global.Promise;
 mongoose.connection.on("error", err => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
   process.exit();
 });
 
-require("./models/Beer");
+require("./../models/Beer");
+require("./../models/Drink");
+require("./../models/User");
 
 /**
  * Module dependencies.
  */
 
-var app = require("./app");
+var app = require("./../app");
 var debug = require("debug")("rungis-express:server");
 var http = require("http");
 

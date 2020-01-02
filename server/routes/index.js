@@ -1,10 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const mainController = require("./../controllers/mainController");
+const beerController = require("./../controllers/beerController");
 
-/* GET default route. */
-router.get("/api", mainController.getDefault);
-
-router.get("/api/add", mainController.addEntry);
+router.get("/api/beers", beerController.getBeers);
+router.get("/api/beers/:slug", beerController.getBeerFromSlug);
 
 module.exports = router;

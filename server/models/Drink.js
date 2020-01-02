@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const drinkSchema = new mongoose.Schema({
-  user: {
+  drinker: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: "You must supply a user"
@@ -20,11 +20,6 @@ const drinkSchema = new mongoose.Schema({
   quantity: {
     type: Number,
     min: 0
-  },
-  deg: {
-    type: Number,
-    min: 0,
-    max: 100
   }
 });
 

@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node start.js",
-    "dev": "supervisor -w routes, models, controllers -e ejs,js,json, start.js"
+    "start": "node scripts/start.js",
+    "dev": "supervisor -w routes, models, controllers -e ejs,js,json, scripts/start.js",
+    "sample": "node ./scripts/data/sampleData.js",
+    "blowitallaway": "node ./scripts/data/sampleData.js --delete"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

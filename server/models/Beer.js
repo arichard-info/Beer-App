@@ -13,11 +13,13 @@ const beerSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  tags: [String],
-  created: {
-    type: Date,
-    default: Date.now
+  abv: {
+    type: Number,
+    required: "Please enter the ABV",
+    min: 0,
+    max: 100
   },
+  tags: [String],
   photo: String
 });
 
