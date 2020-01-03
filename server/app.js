@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
+const passport = require("passport");
 
 require("./handlers/passport");
 
@@ -18,6 +19,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.locals.env = process.env;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/", routes);
 
 if (process.env.NODE_ENV === "production") {

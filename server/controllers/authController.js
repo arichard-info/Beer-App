@@ -3,12 +3,42 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const promisify = require("es6-promisify");
+const jwt = require("jsonwebtoken");
 const mail = require("./../handlers/mail");
 
-exports.login = passport.authenticate("local");
+exports.login = (req, res, next) => {
+  passport.authenticate("local", { session: false }, function(err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.json({
+        error: true,
+        message: info && info.message ? info.message : ""
+      });
+    }
 
-exports.logout = (req, res) => {
-  req.logout();
+    const payload = {
+      sub: user._id
+    };
+
+    const token = jwt.sign(payload, process.env.SECRET_JWT);
+    return res.json({
+      error: false,
+      message: "User logged in!",
+      token,
+      user: { email: user.email }
+    });
+  })(req, res, next);
+};
+
+exports.verifyToken = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).end();
+  }
+  return res.json({
+    error: false,
+    message: "Valid Token",
+    user: req.user
+  });
 };
 
 exports.forgot = async () => {

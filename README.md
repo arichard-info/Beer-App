@@ -67,6 +67,9 @@ DATABASE=mongodb://database:27017/beer_app
 MAIL_USER=mail@example.com
 MAIL_PASS=mail_password
 
+# JWT Authentication
+SECRET_JWT=my_secret_jwt
+
 # frontend variables
 REACT_APP_PROXY=http://backend:5000
 ```

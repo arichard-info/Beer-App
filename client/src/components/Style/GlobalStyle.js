@@ -12,6 +12,9 @@ const GlobalStyle = createGlobalStyle`
             box-sizing: border-box;
         }
     }
+    #root{
+        height: 100vh;
+    }
   
     code {
         font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
