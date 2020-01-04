@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { useUser } from "./../../state/authentication";
+import { useUser } from "./../../../state/authentication";
 
 const SettingsPage = ({ className }) => {
   const [, dispatch] = useUser();

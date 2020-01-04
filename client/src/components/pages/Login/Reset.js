@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import axios from "axios";
 
-import { useUser } from "./../../state/authentication";
+import { useUser } from "./../../../state/authentication";
 
 const Forgot = ({ className }) => {
   const [, dispatch] = useUser();

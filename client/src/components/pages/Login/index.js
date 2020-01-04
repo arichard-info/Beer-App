@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import axios from "axios";
 
-import { useUser } from "./../../state/authentication";
+import { useUser } from "./../../../state/authentication";
 
 const LoginPage = ({ className }) => {
   const [, dispatch] = useUser();
-  let history = useHistory();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

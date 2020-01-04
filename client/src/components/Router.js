@@ -3,14 +3,14 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Layout from "./Layout";
 
-import Calendar from "./CalendarPage";
-import Settings from "./SettingsPage";
-import Profile from "./ProfilePage";
-import Login from "./LoginPage";
-import HomeScreen from "./HomeScreenPage";
-import Forgot from "./LoginPage/Forgot";
-import Reset from "./LoginPage/Reset";
-import Signup from "./SignupPage";
+import Calendar from "./pages/Calendar";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import HomeScreen from "./pages/HomeScreen";
+import Forgot from "./pages/LoginPage/Forgot";
+import Reset from "./pages/LoginPage/Reset";
+import Signup from "./pages/Signup";
 
 const Router = ({ user }) => {
   if (user && user !== null) {

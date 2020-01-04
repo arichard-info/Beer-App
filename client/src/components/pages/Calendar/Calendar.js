@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { debounce } from "./../../utils";
-import { useCalendar } from "./../../state/calendar";
+import { debounce } from "./../../../utils";
+import { useCalendar } from "./../../../state/calendar";
 import Month from "./Month";
 
 const Calendar = ({ className }) => {

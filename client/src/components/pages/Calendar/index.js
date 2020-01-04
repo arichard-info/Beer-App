@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { CalendarProvider } from "./../../state/calendar";
+import { CalendarProvider } from "./../../../state/calendar";
 
 import Header from "./Header";
 import Calendar from "./Calendar";

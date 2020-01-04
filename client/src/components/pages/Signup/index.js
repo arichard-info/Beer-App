@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import axios from "axios";
 
-import { useUser } from "./../../state/authentication";
-import { formReducer } from "./../../utils/form";
+import { useUser } from "./../../../state/authentication";
+import { formReducer } from "./../../../utils/form";
 
 const initialFields = {
   name: "",
