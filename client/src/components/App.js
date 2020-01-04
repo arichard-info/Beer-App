@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
 
+import Router from "./Router";
 import { UserProvider, useUser } from "./../state/authentication";
 import GlobalStyle from "./Style/GlobalStyle";
 import ThemeProvider from "./Style/ThemeProvider";
-
-import LoggedOutRoute from "./LoggedOutRoute";
-import PrivateRoute from "./PrivateRoute";
-import Layout from "./Layout";
-
 import Loading from "./LoadingPage";
-import Calendar from "./CalendarPage";
-import Settings from "./SettingsPage";
-import Profile from "./ProfilePage";
-import Login from "./LoginPage";
-import Error from "./ErrorPage";
 
 const App = () => {
-  const [, dispatch] = useUser();
+  const [user, dispatch] = useUser();
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     async function checkAuth() {
       const authToken = window.localStorage.getItem("auth_token");
@@ -29,11 +18,7 @@ const App = () => {
           const checkToken = await axios.post(
             `/api/verify-token`,
             {},
-            {
-              headers: {
-                Authorization: `Bearer ${authToken}`
-              }
-            }
+            { headers: { Authorization: `Bearer ${authToken}` } }
           );
           if (
             checkToken &&
@@ -59,35 +44,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      {loading ? (
-        <Loading />
-      ) : (
-        <Router>
-          <Switch>
-            <LoggedOutRoute exact path="/login">
-              <Login />
-            </LoggedOutRoute>
-            <Route path="*">
-              <Layout>
-                <Switch>
-                  <PrivateRoute exact path="/">
-                    <Calendar />
-                  </PrivateRoute>
-                  <PrivateRoute path="/profile">
-                    <Profile />
-                  </PrivateRoute>
-                  <PrivateRoute path="/settings">
-                    <Settings />
-                  </PrivateRoute>
-                  <Route path="*">
-                    <Error />
-                  </Route>
-                </Switch>
-              </Layout>
-            </Route>
-          </Switch>
-        </Router>
-      )}
+      {loading ? <Loading /> : <Router user={user} />}
     </>
   );
 };

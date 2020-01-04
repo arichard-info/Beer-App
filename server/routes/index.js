@@ -32,7 +32,8 @@ router.post("/api/account/forgot", catchErrors(authController.forgot));
 router.post(
   "/api/account/reset/:token",
   authController.confirmedPasswords,
-  catchErrors(authController.update)
+  catchErrors(authController.updatePassword),
+  authController.login
 );
 
 module.exports = router;

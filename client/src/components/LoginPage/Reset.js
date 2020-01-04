@@ -1,25 +1,34 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import axios from "axios";
 
 import { useUser } from "./../../state/authentication";
 
-const LoginPage = ({ className }) => {
+const Forgot = ({ className }) => {
   const [, dispatch] = useUser();
-  let history = useHistory();
-
-  const [email, setEmail] = useState("");
+  const { token } = useParams();
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const submitForm = async e => {
     e.preventDefault();
-    const response = await axios.post(`/api/login`, { email, password });
-    if (response.status === 200 && response.data.token && response.data.user) {
+    const response = await axios.post(`/api/account/reset/${token}`, {
+      password,
+      "password-confirm": passwordConfirm
+    });
+    if (
+      response.status === 200 &&
+      response.data &&
+      response.data.user &&
+      response.data.token
+    ) {
       const { user, token } = response.data;
       dispatch({ type: "LOG_IN", value: { user, token } });
     } else {
-      console.error("Error whe trying to login");
+      if (response.data && response.data.message)
+        console.error(response.data.message);
+      else console.error("Error when trying to send email");
       // TODO : Log error to user
     }
   };
@@ -27,18 +36,7 @@ const LoginPage = ({ className }) => {
     <div className={className}>
       <form onSubmit={submitForm}>
         <div className="form-row">
-          <label htmlFor="username">Nom d'utilisateur ou email</label>
-          <input
-            id="email"
-            name="email"
-            type="text"
-            placeholder="Nom d'utilisateur"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-row">
-          <label htmlFor="password">Mot de passe</label>
+          <label htmlFor="password">Nouveau mot de passe</label>
           <input
             id="password"
             name="password"
@@ -49,17 +47,25 @@ const LoginPage = ({ className }) => {
           />
         </div>
         <div className="form-row">
-          <input type="submit" value="Connexion" />
+          <label htmlFor="password-confirm">Confirmation du mot de passe</label>
+          <input
+            id="password-confirm"
+            name="password-confirm"
+            type="password"
+            placeholder="Confirmation du mot de passe"
+            value={passwordConfirm}
+            onChange={e => setPasswordConfirm(e.target.value)}
+          />
+        </div>
+        <div className="form-row">
+          <input type="submit" value="Envoyer" />
         </div>
       </form>
-      <div className="form-row">
-        <Link to="/login/forgot">Mot de passe oublié?</Link>
-      </div>
     </div>
   );
 };
 
-export default styled(LoginPage)(
+export default styled(Forgot)(
   () => css`
     height: 100%;
     max-width: 600px;

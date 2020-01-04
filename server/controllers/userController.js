@@ -1,27 +1,24 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-const promisify = require("es6-promisify");
+
+const { body, sanitizeBody, validationResult } = require("express-validator");
 
 exports.validateRegister = (req, res, next) => {
-  req.sanitizeBody("name");
-  req.checkBody("name", "You must supply a name !").notEmpty();
-  req.checkBody("email", "That Email is not valid !").isEmail();
-  req.sanitizeBody("email").normalizeEmail({
-    remove_dots: false,
-    remove_extension: false,
-    gmail_remove_subaddress: false
-  });
-  req.checkBody("password", "Password Cannot be Blank !").notEmpty();
-  req
-    .checkBody("password-confirm", "Confirmed Password cannot be blank!")
-    .notEmpty();
-  req
-    .checkBody("password-confirm", "Oops! Your passwords do not match")
-    .equals(req.body.password);
+  sanitizeBody("name");
+  body("name", "You must supply a name !").notEmpty();
+  body("email", "That Email is not valid !")
+    .isEmail()
+    .normalizeEmail();
 
-  const errors = req.validationErrors();
+  body("password", "Password Cannot be Blank !").notEmpty();
+  body("password-confirm", "Confirmed Password cannot be blank!").notEmpty();
+  body("password-confirm", "Oops! Your passwords do not match").equals(
+    req.body.password
+  );
 
-  if (errors) {
+  const errors = validationResult(req).array();
+
+  if (errors && errors.length) {
     return res.json({
       error: true,
       messages: errors.map(err => err.msg)
@@ -31,9 +28,15 @@ exports.validateRegister = (req, res, next) => {
 };
 
 exports.register = async (req, res, next) => {
+  const existingUser = User.findOne({ email: req.body.email });
+  if (existingUser) {
+    return res.json({
+      error: true,
+      messages: "Email already registered"
+    });
+  }
   const user = new User({ email: req.body.email, name: req.body.name });
-  const register = promisify(User.register, User);
-  await register(user, req.body.password);
+  await User.register(user, req.body.password);
   next();
 };
 

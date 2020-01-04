@@ -13,7 +13,7 @@ module.exports = {
     });
   },
 
-  send: function({ to, html = "", subject = "" }) {
+  send: function({ to, html = "", subject = "", content = "" }) {
     const transporter = this.getTransporter();
     if (to) {
       let mailOptions = {
