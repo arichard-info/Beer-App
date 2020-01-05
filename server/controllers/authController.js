@@ -94,36 +94,29 @@ exports.addSocketIdtoSession = (req, res, next) => {
   next();
 };
 
-exports.googleAuth = passport.authenticate("google", {
-  scope: ["profile", "email", "openid"]
-});
+exports.googleAuth = (req, res, next) => {
+  passport.authenticate(
+    "google",
+    {
+      scope: ["profile", "email", "openid"]
+    },
+    (err, user, info) => {
+      const io = req.app.get("io");
+      let data = { error: false };
+      if (err || !user) {
+        data.error = true;
+      } else {
+        if (user.googleId) {
+          data.token = signToken(user._id);
+          data.user = user;
+        } else {
+          data.error = true;
+          data.user = null;
+          data.message = "email already taken";
+        }
+      }
 
-exports.socketGoogleAuth = (req, res) => {
-  const io = req.app.get("io");
-  const { user } = req;
-  io.in(req.session.socketId).emit("google", user);
+      io.in(req.session.socketId).emit("google", data);
+    }
+  )(req, res, next);
 };
-
-/*
-exports.twitterAuth = passport.authenticate('twitter')
-exports.facebookAuth = passport.authenticate('facebook')
-exports.githubAuth = passport.authenticate('github')
-*/
-
-/*
-exports.twitter = (req, res) => {
-  const io = req.app.get("io");
-  io.in(req.session.socketId).emit("twitter", req.user);
-};
-
-exports.facebook = (req, res) => {
-  const io = req.app.get("io");
-  const { givenName, familyName } = req.user.name;
-  io.in(req.session.socketId).emit("facebook", req.user);
-};
-
-exports.github = (req, res) => {
-  const io = req.app.get("io");
-  io.in(req.session.socketId).emit("github", req.user);
-};
-*/

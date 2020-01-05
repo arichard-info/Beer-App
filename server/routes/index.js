@@ -42,10 +42,6 @@ router.get(
   authController.googleAuth
 );
 
-router.get(
-  "/api/auth/google/callback",
-  authController.googleAuth,
-  authController.socketGoogleAuth
-);
+router.get("/api/auth/google/callback", authController.googleAuth);
 
 module.exports = router;

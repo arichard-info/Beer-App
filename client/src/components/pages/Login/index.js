@@ -29,10 +29,6 @@ const LoginPage = ({ className }) => {
   };
   return (
     <div className={className}>
-      {providers.map(provider => (
-        <OAuth provider={provider} key={provider} socket={socket} />
-      ))}
-
       <form onSubmit={submitForm}>
         <div className="form-row">
           <label htmlFor="username">Nom d'utilisateur ou email</label>
@@ -57,11 +53,21 @@ const LoginPage = ({ className }) => {
           />
         </div>
         <div className="form-row">
+          <Link to="/login/forgot">Mot de passe oublié?</Link>
+        </div>
+        <div className="form-row">
           <input type="submit" value="Connexion" />
         </div>
       </form>
+
       <div className="form-row">
-        <Link to="/login/forgot">Mot de passe oublié?</Link>
+        <span>OR</span>
+      </div>
+
+      <div className="form-row">
+        {providers.map(provider => (
+          <OAuth provider={provider} key={provider} socket={socket} />
+        ))}
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import Calendar from "./pages/Calendar";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
-import HomeScreen from "./pages/HomeScreen";
 import Forgot from "./pages/Login/Forgot";
 import Reset from "./pages/Login/Reset";
 import Signup from "./pages/Signup";
@@ -40,13 +39,10 @@ const Router = ({ user }) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <HomeScreen />
+          <Login />
         </Route>
         <Route exact path="/signup">
           <Signup />
-        </Route>
-        <Route exact path="/login">
-          <Login />
         </Route>
         <Route path="/login/reset/:token">
           <Reset />

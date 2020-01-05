@@ -5,15 +5,14 @@ import { useUser } from "./../../../state/authentication";
 const OAuth = ({ socket, provider }) => {
   const [, dispatch] = useUser();
   const [popup, setPopup] = useState(null);
-  const [user, setUser] = useState({});
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    socket.on(provider, ({ user, token }) => {
+    socket.on(provider, ({ user, token, error, message }) => {
       if (popup) popup.close();
       if (user && token) dispatch({ type: "LOG_IN", value: { user, token } });
     });
-  }, [popup, provider, socket]);
+  }, [popup, provider, socket, dispatch]);
 
   const checkPopup = () => {
     const check = setInterval(() => {
@@ -45,28 +44,20 @@ const OAuth = ({ socket, provider }) => {
       e.preventDefault();
       const opennedPopup = openPopup();
       setPopup(opennedPopup);
-      checkPopup();
       setDisabled(true);
+      checkPopup();
     }
   };
 
   return (
     <div>
-      {user && user.name ? (
-        <div className="card">
-          <img width="50" height="50" src={user.picture} alt={user.name} />
-          <h4>{user.name}</h4>
-        </div>
-      ) : (
-        <div className="button-wrapper fadein-fast">
-          <button
-            onClick={startAuth}
-            className={`${provider} ${disabled} button`}
-          >
-            Sign up with {provider}
-          </button>
-        </div>
-      )}
+      <button
+        onClick={startAuth}
+        disabled={disabled}
+        className={`${provider} button`}
+      >
+        Connect with {provider}
+      </button>
     </div>
   );
 };
