@@ -8,8 +8,8 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import HomeScreen from "./pages/HomeScreen";
-import Forgot from "./pages/LoginPage/Forgot";
-import Reset from "./pages/LoginPage/Reset";
+import Forgot from "./pages/Login/Forgot";
+import Reset from "./pages/Login/Reset";
 import Signup from "./pages/Signup";
 
 const Router = ({ user }) => {

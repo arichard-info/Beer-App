@@ -22,7 +22,6 @@ const Forgot = ({ className }) => {
     formDispatch({ field: e.target.name, value: e.target.value });
 
   const submitForm = async e => {
-    console.log("submit");
     e.preventDefault();
     const response = await axios.post(`/api/register`, {
       name,
@@ -36,11 +35,9 @@ const Forgot = ({ className }) => {
       response.data.user &&
       response.data.token
     ) {
-      console.log("login");
       const { user, token } = response.data;
       authDispatch({ type: "LOG_IN", value: { user, token } });
     } else {
-      console.log(response);
       console.error("Error while trying to signup");
     }
   };

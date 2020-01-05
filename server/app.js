@@ -3,6 +3,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
+const cors = require("cors");
+const session = require("express-session");
 const passport = require("passport");
 
 require("./handlers/passport");
@@ -21,6 +23,20 @@ app.locals.env = process.env;
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000"
+  })
+);
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
 app.use("/", routes);
 

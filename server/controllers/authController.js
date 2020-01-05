@@ -86,9 +86,47 @@ exports.updatePassword = async (req, res, next) => {
     });
   }
   await user.setPassword(req.body.password);
-  // user.resetPasswordToken = undefined;
-  // user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
   const updateUser = await user.save();
   req.body.email = updateUser.email;
   return next();
 };
+
+exports.addSocketIdtoSession = (req, res, next) => {
+  req.session.socketId = req.query.socketId;
+  next();
+};
+
+exports.googleAuth = passport.authenticate("google", {
+  scope: ["profile", "email", "openid"]
+});
+
+exports.google = (req, res) => {
+  const io = req.app.get("io");
+  io.in(req.session.socketId).emit("google", req.user);
+};
+
+/*
+exports.twitterAuth = passport.authenticate('twitter')
+exports.facebookAuth = passport.authenticate('facebook')
+exports.githubAuth = passport.authenticate('github')
+*/
+
+/*
+exports.twitter = (req, res) => {
+  const io = req.app.get("io");
+  io.in(req.session.socketId).emit("twitter", req.user);
+};
+
+exports.facebook = (req, res) => {
+  const io = req.app.get("io");
+  const { givenName, familyName } = req.user.name;
+  io.in(req.session.socketId).emit("facebook", req.user);
+};
+
+exports.github = (req, res) => {
+  const io = req.app.get("io");
+  io.in(req.session.socketId).emit("github", req.user);
+};
+*/

@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import axios from "axios";
 
+import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
 
+const socket = io("http://localhost:5000");
+
 const LoginPage = ({ className }) => {
+  const providers = ["google"];
   const [, dispatch] = useUser();
 
   const [email, setEmail] = useState("");
@@ -24,6 +29,10 @@ const LoginPage = ({ className }) => {
   };
   return (
     <div className={className}>
+      {providers.map(provider => (
+        <OAuth provider={provider} key={provider} socket={socket} />
+      ))}
+
       <form onSubmit={submitForm}>
         <div className="form-row">
           <label htmlFor="username">Nom d'utilisateur ou email</label>

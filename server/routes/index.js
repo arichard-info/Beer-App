@@ -36,4 +36,28 @@ router.post(
   authController.login
 );
 
+router.get(
+  "/api/auth/google",
+  authController.addSocketIdtoSession,
+  authController.googleAuth
+);
+/*
+router.get('/api/auth/twitter', addSocketIdtoSession, twitterAuth)
+router.get('/api/auth/facebook', addSocketIdtoSession, facebookAuth)
+router.get('/api/auth/github', addSocketIdtoSession, githubAuth)
+*/
+
+// Routes that are triggered by callbacks from OAuth providers once
+// the user has authenticated successfully
+router.get(
+  "/api/auth/google/callback",
+  authController.googleAuth,
+  authController.google
+);
+/*
+router.get('/api/auth/twitter/callback', authController.twitterAuth, authController.twitter)
+router.get('/api/auth/facebook/callback', authController.facebookAuth, authController.facebook)
+router.get('/api/auth/github/callback', authController.githubAuth, authController.github)
+*/
+
 module.exports = router;

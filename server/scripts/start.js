@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const socketio = require("socket.io");
 
 dotenv.config();
 
@@ -42,6 +43,9 @@ var server = http.createServer(app);
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+const io = socketio(server);
+app.set("io", io);
 
 /**
  * Normalize a port into a number, string, or false.

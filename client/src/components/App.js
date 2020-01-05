@@ -5,7 +5,7 @@ import Router from "./Router";
 import { UserProvider, useUser } from "./../state/authentication";
 import GlobalStyle from "./Style/GlobalStyle";
 import ThemeProvider from "./Style/ThemeProvider";
-import Loading from "./LoadingPage";
+import Loading from "./pages/Loading";
 
 const App = () => {
   const [user, dispatch] = useUser();
