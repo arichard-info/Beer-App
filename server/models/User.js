@@ -33,16 +33,4 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 userSchema.plugin(mongodbErrorHandler);
 
-userSchema.statics.findOrCreate = function(user, done) {
-  const newUser = new this(user);
-  this.findOne({ email: user.email }, function(err, result) {
-    //  console.log(result);
-    if (!result) {
-      newUser.save(done(err, newUser));
-    } else {
-      done(err, result);
-    }
-  });
-};
-
 module.exports = mongoose.model("User", userSchema);

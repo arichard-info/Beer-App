@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 
+import { useUser } from "./../../../state/authentication";
+
 const OAuth = ({ socket, provider }) => {
+  const [, dispatch] = useUser();
   const [popup, setPopup] = useState(null);
   const [user, setUser] = useState({});
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    socket.on(provider, user => {
+    socket.on(provider, ({ user, token }) => {
       if (popup) popup.close();
-      console.log(user);
-      setUser(user);
+      if (user && token) dispatch({ type: "LOG_IN", value: { user, token } });
     });
   }, [popup, provider, socket]);
 

@@ -15,13 +15,13 @@ const googleCallback = (accessToken, refreshToken, profile, done) => {
     profile.photos && profile.photos[0] && profile.photos[0].value
       ? profile.photos[0].value
       : "";
-
-  User.findOrCreate(
-    { googleId: profile.id, name: profile.displayName, email, picture },
-    function(err, user) {
-      return done(err, user);
-    }
-  );
+  const user = {
+    googleId: profile.id,
+    name: profile.displayName,
+    email,
+    picture
+  };
+  return done(err, user);
 };
 
 passport.use(User.createStrategy());

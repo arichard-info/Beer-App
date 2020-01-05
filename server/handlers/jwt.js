@@ -2,10 +2,17 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
+exports.signToken = userId => {
+  const payload = {
+    sub: userId
+  };
+  return jwt.sign(payload, process.env.SECRET_JWT);
+};
+
 /**
  *  The Auth Checker middleware function.
  */
-module.exports = (req, res, next) => {
+exports.checkToken = (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).end();
   }

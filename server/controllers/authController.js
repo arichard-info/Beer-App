@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const mail = require("./../handlers/mail");
+const { signToken } = require("./../handlers/jwt");
 const User = mongoose.model("User");
 
 exports.login = (req, res, next) => {
@@ -14,12 +15,7 @@ exports.login = (req, res, next) => {
         message: info && info.message ? info.message : ""
       });
     }
-
-    const payload = {
-      sub: user._id
-    };
-
-    const token = jwt.sign(payload, process.env.SECRET_JWT);
+    const token = signToken(user._id);
     return res.json({
       error: false,
       message: "User logged in!",
@@ -102,9 +98,10 @@ exports.googleAuth = passport.authenticate("google", {
   scope: ["profile", "email", "openid"]
 });
 
-exports.google = (req, res) => {
+exports.socketGoogleAuth = (req, res) => {
   const io = req.app.get("io");
-  io.in(req.session.socketId).emit("google", req.user);
+  const { user } = req;
+  io.in(req.session.socketId).emit("google", user);
 };
 
 /*
