@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
   googleId: {
     type: String
   },
+  completed: {
+    type: "Boolean",
+    required: "Please provide the completed status"
+  },
   resetPasswordToken: String,
   resetPasswordExpires: Date
 });

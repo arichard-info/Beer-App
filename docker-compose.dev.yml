@@ -18,6 +18,8 @@ services:
       - MAIL_USER
       - MAIL_PASS
       - SECRET_JWT
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
     command: npm run dev
     image: beer_app/app_server
     ports:

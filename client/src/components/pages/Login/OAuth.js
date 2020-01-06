@@ -28,7 +28,7 @@ const OAuth = ({ socket, provider }) => {
       height = 600;
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
-    const url = `http://localhost:3000/api/auth/${provider}?socketId=${socket.id}`;
+    const url = `/api/auth/${provider}?socketId=${socket.id}`;
 
     return window.open(
       url,

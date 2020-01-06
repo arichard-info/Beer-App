@@ -22,7 +22,8 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
       googleId: profile.id,
       name: profile.displayName,
       email,
-      picture
+      picture,
+      completed: false
     });
     user.save();
   }
