@@ -1,0 +1,128 @@
+[
+  {
+    "_id": "58c039938060197ca0b52d4d",
+    "name": "Small Batch: Cranachan Cream Ale",
+    "slug": "small-batch-cranachan-cream-ale",
+    "description": "A cream ale, brewed with raspberry and milk sugars, balancing sweet and tart summer berry with soft bitterness and a full bodied smooth mouthfeel.",
+    "abv": 6.5,
+    "tags": ["raspberry-cream-ale", "fruit-beer"],
+    "photo": "https://images.punkapi.com/v2/keg.png"
+  },
+  {
+    "_id": "58c039ee8060197ca0b52d4e",
+    "name": "New England IPA",
+    "slug": "new-england-ipa",
+    "description": "BrewDog vs Cloudwater is a 6.8% Vermont-style India Pale Ale, hopped with Mosaic in the whirlpool only. Without any big- hitting additions of hops in the boil, we carried the flavour by heavily dry-hopping the brew with Citra and Mosaic. We also used oats in the recipe to deliver the trademark smooth mouthfeel – and made it truly authentic by propagating a one-off culture of Vermont yeast, specifically for the brew.",
+    "abv": 6.8,
+    "tags": ["ipa"],
+    "photo": null
+  },
+  {
+    "_id": "58c03a428060197ca0b52d4f",
+    "name": "Dog A",
+    "slug": "dog-a",
+    "description": "Our anniversary stout was based on AB:04, one of our most sought after beers ever. This beer is slightly different each year, with subtle variations coming into play purely down to environmental and fermentation factors. What doesn't change is the rich dark chocolate, bitter coffee and chili warmth of this monumental stout.",
+    "abv": 15,
+    "tags": ["stout"],
+    "photo": "https://images.punkapi.com/v2/138.png"
+  },
+  {
+    "_id": "58c03a958060197ca0b52d50",
+    "name": "Bourbon Baby",
+    "slug": "bourbon-baby",
+    "description": "Santa Paws Scotch ale aged in bourbon barrels - light, dry and toasty, with vanilla, hints of chocolate and ginger biscuit, and a faint spicy hoppiness.",
+    "abv": 5.8,
+    "tags": ["ale"],
+    "photo": "https://images.punkapi.com/v2/34.png"
+  },
+  {
+    "_id": "58c057838060197ca0b52d54",
+    "name": "Mallow Mafia",
+    "slug": "mallow-mafia",
+    "description": "BrewDog vs Amundsen. One of a series of collaborations with European craft breweries, aimed at promoting engagement and market growth. With Norwegian craft brewers Amundsen, we are creating a mash-up of two existing beers, resulting in a coffee, chocolate and marshmallow Russian Imperial Stout.",
+    "abv": 12,
+    "tags": ["stout"],
+    "photo": null
+  },
+  {
+    "_id": "58c05aef8060197ca0b52d55",
+    "name": "Galaxy",
+    "slug": "Galaxy",
+    "description": "With all the rich tropical flavour you'd expect from Australia's Galaxy, this beer backs up a strong citrus aroma and flavour with a mellow undercurrent of passion fruit and mango. Zingy and sweet but not too sweet, Galaxy has a soft and inviting fruity hop character.",
+    "abv": 6.7,
+    "tags": ["ipa"],
+    "photo": "https://images.punkapi.com/v2/127.png"
+  },
+  {
+    "_id": "58c05b558060197ca0b52d56",
+    "name": "Punk IPA",
+    "slug": "punk-ipa",
+    "description": "Our flagship beer that kick started the craft beer revolution. This is James and Martin's original take on an American IPA, subverted with punchy New Zealand hops. Layered with new world hops to create an all-out riot of grapefruit, pineapple and lychee before a spiky, mouth-puckering bitter finish.",
+    "abv": 6,
+    "tags": ["ipa"],
+    "photo": "https://images.punkapi.com/v2/192.png"
+  },
+  {
+    "_id": "58c05bcd8060197ca0b52d57",
+    "name": "Hoppy Christmas",
+    "slug": "hoppy-christmas",
+    "description": "Pineapple, citrus and papaya; single-hopped with Simcoe, Hoppy Christmas is an anti-festive IPA, redolent with summery flavours. Small caramel malt additions provide a touch of malt complexity. Simcoe, arguably our favourite hop, carries this beer - pine, tropical fruit and bitterness are its specialities.",
+    "abv": 7.2,
+    "tags": ["season-beer", "christmas-beer", "fruit-beer", "ipa"],
+    "photo": "https://images.punkapi.com/v2/156.png"
+  },
+  {
+    "_id": "58c05c208060197ca0b52d58",
+    "name": "The End Of History",
+    "slug": "the-end-of-history",
+    "description": "The End of History: The name derives from the famous work of philosopher Francis Fukuyama, this is to beer what democracy is to history. Complexity defined. Floral, grapefruit, caramel and cloves are intensified by boozy heat.",
+    "abv": 55,
+    "tags": [],
+    "photo": "https://images.punkapi.com/v2/24.png"
+  },
+  {
+    "_id": "58c05f928060197ca0b52d59",
+    "name": "Grano Giusto",
+    "slug": "grano-giusto",
+    "description": "rewDog vs Birrificiano Italiano. One of a series of collaborations with European craft breweries, aimed at promoting engagement\nand market growth. Our Italian collaboration is with Birrificiano Italiano, and the beer is a dark lager brewed with a unique dark malt from an Italian micro-maltster.",
+    "abv": 5.5,
+    "tags": ["lager", "dark-lager"],
+    "photo": null
+  },
+  {
+    "_id": "58c05fd08060197ca0b52d5a",
+    "name": "Pumpkin King",
+    "slug": "pumpkin-king",
+    "description": "We're turning Hallowe’en inside out and upside down. Pumpkin King is not your usual unctuous, cloyingly sweet Hallowe’en pumpkin ale. Sure, there’s a huge heady hit of pungent spice on the nose, but it’s followed with bright and zesty citrus flavours, and a light mouthfeel. Spicy and sweet autumnal favourites like toasted marshmallow and toffee apple are just some of the complex notes you’ll find in our twisted take on a pumpkin ale, which weighs in at 5.4% ABV.",
+    "abv": 5.4,
+    "tags": ["ale", "fruit-lager"],
+    "photo": "https://images.punkapi.com/v2/98.png"
+  },
+  {
+    "_id": "58c060e98060197ca0b52d5d",
+    "name": "77 Lager",
+    "slug": "77-lager",
+    "description": "Think of everything you know about lagers. Then forget it all instantly. 77 will redefine the experience forever. A Lager that actually tastes of something? You have to be kidding, right? 77 lager is made with 100% malt and whole leaf hops. It contains no preservatives, additives, cheap substitutes or any other junk. Maybe we are crazy. So what? Taste 77 Lager and we are pretty sure you will agree that the fine line between genius and insanity has just become a little more blurred.",
+    "abv": 4.9,
+    "tags": ["lager", "pilsner"],
+    "photo": "https://images.punkapi.com/v2/162.png"
+  },
+  {
+    "_id": "58c0609b8060197ca0b52d5c",
+    "name": "Peach Therapy",
+    "slug": "peach-therapy",
+    "description": "9% abv sour tripel, infused with peach and apricot in collaboration with some of our favourite beer writers Adrian Tierney-Jones, Matt Curtis and Jonny and Brad from The Craft Beer Channel.",
+    "abv": 9,
+    "tags": ["triple", "fruit-beer", "belgian"],
+    "photo": null
+  },
+  {
+    "_id": "58c061518060197ca0b52d5e",
+    "name": "Anarchist Alchemist",
+    "slug": "anarchist-alchemist",
+    "description": "About as far as you can push an IPA; Anarchist Alchemist packs in three times the malt and three of our favourite hops. Nelson Sauvin, Amarillo and Centennial bring a range of flavours, touching on tropical fruit, white grape, tangerine, grapefruit, pine, spiced orange... the list goes on!",
+    "abv": 16.5,
+    "tags": ["triple", "ipa"],
+    "photo": "https://images.punkapi.com/v2/46.png"
+  }
+]
