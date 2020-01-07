@@ -40,20 +40,29 @@ exports.register = async (req, res, next) => {
   next();
 };
 
-exports.updateAccount = async () => {
+exports.updateAccount = async (req, res, next) => {
   const updates = {
     name: req.body.name,
-    email: req.body.email
+    email: req.body.email,
+    completed: true
   };
 
   const user = await User.findOneAndUpdate(
-    { _id: req.user._id },
+    { _id: req.body.user_id },
     { $set: updates },
     { new: true, runValidators: true, context: "query" }
   );
 
+  if (!user) {
+    return res.json({
+      error: true,
+      message: "Error when updating user"
+    });
+  }
+
   return res.json({
     error: false,
-    message: "Updated User!"
+    message: "Updated User!",
+    user
   });
 };

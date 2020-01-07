@@ -36,6 +36,8 @@ router.post(
   authController.login
 );
 
+router.post("/api/complete-profile", catchErrors(userController.updateAccount));
+
 router.get(
   "/api/auth/google",
   authController.addSocketIdtoSession,
