@@ -68,10 +68,10 @@ MAIL_USER=mail@example.com
 MAIL_PASS=mail_password
 
 # authentification variables
-SECRET_JWT=VFKF8F74WUg5hh2WNyu8CmANVbZK2a
-SESSION_SECRET=VFKF8F74WUg5hh2WNyu8CmANVbZK2a
-GOOGLE_CLIENT_ID=784138228278-lftaqbi8ofgt908h4liddo3psig3ss02.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=Sn-xQAcJh_ikYoEfZMDUDc9u
+SECRET_JWT=my_secret_jwt
+SESSION_SECRET=my_secret_session
+GOOGLE_CLIENT_ID=my_google_client_id
+GOOGLE_CLIENT_SECRET=my_google_client_secret
 
 # frontend variables
 REACT_APP_PROXY=http://backend:5000
