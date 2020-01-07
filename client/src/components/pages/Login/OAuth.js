@@ -10,6 +10,10 @@ const OAuth = ({ socket, provider }) => {
   useEffect(() => {
     socket.on(provider, ({ user, token, error, message }) => {
       if (popup) popup.close();
+      if (error) {
+        console.error(message ? message : "Error when receiving user data");
+        return;
+      }
       if (user && token) dispatch({ type: "LOG_IN", value: { user, token } });
     });
   }, [popup, provider, socket, dispatch]);

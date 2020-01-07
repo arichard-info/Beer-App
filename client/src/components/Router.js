@@ -10,9 +10,24 @@ import Login from "./pages/Login";
 import Forgot from "./pages/Login/Forgot";
 import Reset from "./pages/Login/Reset";
 import Signup from "./pages/Signup";
+import CompleteProfile from "./pages/Signup/CompleteProfile";
 
 const Router = ({ user }) => {
   if (user && user !== null) {
+    if (!user.completed) {
+      return (
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <CompleteProfile />
+            </Route>
+            <Route path="*">
+              <Redirect to="/" />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      );
+    }
     return (
       <BrowserRouter>
         <Layout>

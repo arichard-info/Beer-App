@@ -11,7 +11,8 @@ const reducer = (state, action) => {
       return { ...user, token };
     }
     case "UPDATE": {
-      const user = action.value;
+      const { user, token } = action.value;
+      if (token) window.localStorage.setItem("auth_token", token);
       return { ...state, ...user };
     }
     case "REMOVE":
