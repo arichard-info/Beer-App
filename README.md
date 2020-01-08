@@ -143,6 +143,12 @@ Sample datas are ready to be injected into the database to test or develop the a
 
 Load sample data in the database (in the server/ folder).
 
+If you're using docker, you will need to run this script inside the container :
+`docker exec -it [my_container_id] npm run sample`
+
 #### `npm run blowitallaway`
 
 Clear the database.
+
+To run this script inside the container :
+`docker exec -it [my_container_id] npm run blowitallaway`

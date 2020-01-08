@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 dotenv.config({ path: __dirname + "/../../.env" });
 
-mongoose.connect(process.env.DATABASE || 27107, {
+mongoose.connect(process.env.DATABASE || "27107", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
