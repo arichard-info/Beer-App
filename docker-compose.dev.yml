@@ -18,6 +18,7 @@ services:
       - MAIL_USER
       - MAIL_PASS
       - SECRET_JWT
+      - SESSION_SECRET
       - GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET
     command: npm run dev

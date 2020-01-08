@@ -6,13 +6,10 @@ import axios from "axios";
 import { useUser } from "./../../../state/authentication";
 import { formReducer } from "./../../../utils/form";
 
-const initialFields = {
-  name: "",
-  email: ""
-};
-
 const Forgot = ({ className }) => {
   const [user, authDispatch] = useUser();
+
+  const initialFields = { name: user.name, email: user.email };
   const [fields, formDispatch] = useReducer(formReducer, initialFields);
   const { name, email } = fields;
 
