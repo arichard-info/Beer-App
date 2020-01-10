@@ -1,7 +1,9 @@
 const providers = ["twitter", "google", "facebook", "github"];
 
 const callbacks = providers.map(
-  provider => `http://localhost:5000/api/auth/${provider}/callback`
+  provider =>
+    `${process.env.SERVER_URL ||
+      "http://localhost:5000"}/api/auth/${provider}/callback`
 );
 
 const [twitterURL, googleURL, facebookURL, githubURL] = callbacks;

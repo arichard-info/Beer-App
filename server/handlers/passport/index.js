@@ -18,14 +18,13 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
   });
 
   if (!user) {
-    user = new User({
+    user = {
       googleId: profile.id,
       name: profile.displayName,
       email,
       picture,
       completed: false
-    });
-    user.save();
+    };
   }
   return done(null, user);
 };

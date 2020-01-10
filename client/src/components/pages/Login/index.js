@@ -7,7 +7,7 @@ import axios from "axios";
 import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
 
-const socket = io("http://localhost:5000");
+const socket = io(process.env.REACT_APP_SERVER_URL || "http://localhost:5000");
 
 const LoginPage = ({ className }) => {
   const providers = ["google"];
