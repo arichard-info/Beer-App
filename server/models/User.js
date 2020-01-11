@@ -23,12 +23,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  googleId: {
+  authProviderId: {
     type: String
   },
-  completed: {
-    type: "Boolean",
-    required: "Please provide the completed status"
+  authProvider: {
+    type: String
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date

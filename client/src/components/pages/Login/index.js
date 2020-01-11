@@ -19,9 +19,9 @@ const LoginPage = ({ className }) => {
   const submitForm = async e => {
     e.preventDefault();
     const response = await axios.post(`/api/login`, { email, password });
-    if (response.status === 200 && response.data.token && response.data.user) {
-      const { user, token } = response.data;
-      dispatch({ type: "LOG_IN", value: { user, token } });
+    if (response.status === 200 && response.data.user) {
+      const { user } = response.data;
+      dispatch({ type: "LOG_IN", value: user });
     } else {
       console.error("Error whe trying to login");
       // TODO : Log error to user

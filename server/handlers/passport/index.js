@@ -14,18 +14,19 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
       : "";
 
   let user = await User.findOne({
-    $or: [{ googleId: profile.id }, { email: email }]
+    $and: [{ authProvider: "google" }, { authProviderId: profile.id }]
   });
 
   if (!user) {
     user = {
-      googleId: profile.id,
+      authProvider: "google",
+      authProviderId: profile.id,
       name: profile.displayName,
       email,
       picture,
-      completed: false
+      toComplete: true
     };
-  }
+  } else user = user.toObject();
   return done(null, user);
 };
 

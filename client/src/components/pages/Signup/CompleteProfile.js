@@ -20,21 +20,20 @@ const Forgot = ({ className }) => {
     e.preventDefault();
 
     const authToken = window.localStorage.getItem("auth_token");
-    const response = await axios.post(
-      `/api/complete-profile`,
-      {
-        user_id: user._id,
-        name,
-        email
-      },
-      {},
-      { headers: { Authorization: `Bearer ${authToken}` } }
-    );
-    if (response.status === 200 && response.data && response.data.user) {
-      const { error, message, user } = response.data;
-      authDispatch({ type: "UPDATE", value: { user } });
-    } else {
-      console.error("Error while trying to update user");
+
+    try {
+      const response = await axios.post(
+        `/api/auth/complete-profile`,
+        { ...user, email, name },
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      if (response.status === 200 && response.data && response.data.user) {
+        const { error, message, user: createdUser } = response.data;
+        authDispatch({ type: "LOG_IN", value: createdUser });
+      }
+    } catch (err) {
+      authDispatch({ type: "REMOVE" });
+      console.error("Invalid user");
     }
   };
   return (

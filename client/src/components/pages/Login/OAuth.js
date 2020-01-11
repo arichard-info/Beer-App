@@ -14,7 +14,7 @@ const OAuth = ({ socket, provider }) => {
         console.error(message ? message : "Error when receiving user data");
         return;
       }
-      if (user && token) dispatch({ type: "LOG_IN", value: { user, token } });
+      if (user) dispatch({ type: "LOG_IN", value: user });
     });
   }, [popup, provider, socket, dispatch]);
 

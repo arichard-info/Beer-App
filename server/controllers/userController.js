@@ -10,11 +10,15 @@ exports.validateRegister = (req, res, next) => {
     .isEmail()
     .normalizeEmail();
 
-  body("password", "Password Cannot be Blank !").notEmpty();
-  body("password-confirm", "Confirmed Password cannot be blank!").notEmpty();
-  body("password-confirm", "Oops! Your passwords do not match").equals(
-    req.body.password
-  );
+  if (!req.body.provider) {
+    body("password", "Password Cannot be Blank !").notEmpty();
+    body("password-confirm", "Confirmed Password cannot be blank!").notEmpty();
+    body("password-confirm", "Oops! Your passwords do not match").equals(
+      req.body.password
+    );
+  } else {
+    body("providerId", "Invalid providerId").notEmpty();
+  }
 
   const errors = validationResult(req).array();
 
@@ -27,7 +31,7 @@ exports.validateRegister = (req, res, next) => {
   next();
 };
 
-exports.register = async (req, res, next) => {
+exports.localRegister = async (req, res, next) => {
   const existingUser = User.findOne({ email: req.body.email });
   if (existingUser) {
     return res.json({
@@ -43,8 +47,7 @@ exports.register = async (req, res, next) => {
 exports.updateAccount = async (req, res, next) => {
   const updates = {
     name: req.body.name,
-    email: req.body.email,
-    completed: true
+    email: req.body.email
   };
 
   const user = await User.findOneAndUpdate(

@@ -14,7 +14,7 @@ import CompleteProfile from "./pages/Signup/CompleteProfile";
 
 const Router = ({ user }) => {
   if (user && user !== null) {
-    if (!user.completed) {
+    if (user.toComplete) {
       return (
         <BrowserRouter>
           <Switch>

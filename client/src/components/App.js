@@ -26,12 +26,14 @@ const App = () => {
             checkToken.data &&
             checkToken.data.user
           ) {
+            console.log(checkToken.data);
             dispatch({
               type: "INIT",
-              value: { user: checkToken.data.user, token: authToken }
+              value: { user: checkToken.data.user }
             });
           }
         } catch (err) {
+          dispatch({ type: "REMOVE" });
           console.error("Invalid user token");
         }
       }
