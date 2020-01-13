@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import axios from "axios";
 
 import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
+import { login } from "./../../../utils/api";
 
 const socket = io(process.env.REACT_APP_SERVER_URL || "http://localhost:5000");
 
@@ -16,20 +16,15 @@ const LoginPage = ({ className }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitForm = async e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const response = await axios.post(`/api/login`, { email, password });
-    if (response.status === 200 && response.data.user) {
-      const { user } = response.data;
-      dispatch({ type: "LOG_IN", value: user });
-    } else {
-      console.error("Error whe trying to login");
-      // TODO : Log error to user
-    }
+    const user = await login(email, password);
+    if (user) dispatch({ type: "LOG_IN", value: user });
+    // TODO : Alert if no user
   };
   return (
     <div className={className}>
-      <form onSubmit={submitForm}>
+      <form onSubmit={handleSubmit}>
         <div className="form-row">
           <label htmlFor="username">Nom d'utilisateur ou email</label>
           <input
