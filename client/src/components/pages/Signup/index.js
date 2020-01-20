@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { useUser } from "./../../../state/authentication";
 import { formReducer } from "./../../../utils/form";
+import { signup } from "../../../utils/api";
 
 const initialFields = {
   name: "",
@@ -23,18 +24,8 @@ const Forgot = ({ className }) => {
 
   const submitForm = async e => {
     e.preventDefault();
-    const response = await axios.post(`/api/register`, {
-      name,
-      email,
-      password,
-      "password-confirm": passwordConfirm
-    });
-    if (response.status === 200 && response.data && response.data.user) {
-      const { user, token } = response.data;
-      authDispatch({ type: "LOG_IN", value: { user, token } });
-    } else {
-      console.error("Error while trying to signup");
-    }
+    const user = await signup(fields);
+    if (user) authDispatch({ type: "LOG_IN", value: user });
   };
   return (
     <div className={className}>

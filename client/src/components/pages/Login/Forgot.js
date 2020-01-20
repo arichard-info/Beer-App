@@ -1,26 +1,15 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import axios from "axios";
+import { forgot } from "./../../../utils/api";
 
 const Forgot = ({ className }) => {
   let history = useHistory();
   const [email, setEmail] = useState("");
   const submitForm = async e => {
     e.preventDefault();
-    const response = await axios.post(`/api/account/forgot`, { email });
-    if (
-      response.status === 200 &&
-      response.data &&
-      response.data.error !== true
-    ) {
-      history.push("/login", { message: "Email has been sent" });
-    } else {
-      if (response.data && response.data.message)
-        console.error(response.data.message);
-      else console.error("Error when trying to send email");
-      // TODO : Log error to user
-    }
+    const response = await forgot(email);
+    if (response) history.push("/login", { message: "Email has been sent" });
   };
   return (
     <div className={className}>

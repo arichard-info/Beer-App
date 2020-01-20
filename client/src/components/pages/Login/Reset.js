@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
-import axios from "axios";
+import { resetPassword } from "./../../../utils/api";
 
 import { useUser } from "./../../../state/authentication";
 
@@ -13,24 +13,8 @@ const Forgot = ({ className }) => {
 
   const submitForm = async e => {
     e.preventDefault();
-    const response = await axios.post(`/api/account/reset/${token}`, {
-      password,
-      "password-confirm": passwordConfirm
-    });
-    if (
-      response.status === 200 &&
-      response.data &&
-      response.data.user &&
-      response.data.token
-    ) {
-      const { user, token } = response.data;
-      dispatch({ type: "LOG_IN", value: { user, token } });
-    } else {
-      if (response.data && response.data.message)
-        console.error(response.data.message);
-      else console.error("Error when trying to send email");
-      // TODO : Log error to user
-    }
+    const user = await resetPassword(token, { password, passwordConfirm });
+    if (user) dispatch({ type: "LOG_IN", value: user });
   };
   return (
     <div className={className}>

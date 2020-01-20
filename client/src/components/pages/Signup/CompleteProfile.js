@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import axios from "axios";
+import { completeProfile } from "./../../../utils/api";
 
 import { useUser } from "./../../../state/authentication";
 import { formReducer } from "./../../../utils/form";
@@ -18,24 +18,14 @@ const Forgot = ({ className }) => {
 
   const submitForm = async e => {
     e.preventDefault();
-
-    const authToken = window.localStorage.getItem("auth_token");
-
-    try {
-      const response = await axios.post(
-        `/api/auth/complete-profile`,
-        { ...user, email, name },
-        { headers: { Authorization: `Bearer ${authToken}` } }
-      );
-      if (response.status === 200 && response.data && response.data.user) {
-        const { error, message, user: createdUser } = response.data;
-        authDispatch({ type: "LOG_IN", value: createdUser });
-      }
-    } catch (err) {
+    const user = await completeProfile({ ...user, email, name });
+    if (user) authDispatch({ type: "LOG_IN", value: user });
+    else {
       authDispatch({ type: "REMOVE" });
       console.error("Invalid user");
     }
   };
+
   return (
     <div className={className}>
       <div className="form-row">
