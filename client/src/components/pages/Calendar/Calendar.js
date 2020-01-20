@@ -26,7 +26,7 @@ const Calendar = ({ className }) => {
         }
       });
       dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: newIndex });
-    }, 10);
+    }, 15);
     container.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -53,7 +53,15 @@ export default styled(Calendar)(
     max-height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    @supports (scrollbar-width: none) {
+      scrollbar-width: none;
+      scrollbar-color: transparent transparent;
+    }
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    /* scroll-behavior: smooth; */
     position: relative;
     /*scroll-snap-type: y proximity;*/
   `

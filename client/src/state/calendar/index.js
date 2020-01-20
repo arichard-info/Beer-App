@@ -8,12 +8,15 @@ const StateContext = createContext();
 //Reducer
 const reducer = (state, action) => {
   const { highlight, scrollContainer, today, months } = state;
+  console.log(action);
   switch (action.type) {
     case "INIT":
       const container = action.value;
       if (months && today) {
         const index = getMonthElIndex(months, today);
-        scrollToMonth(container, index);
+        const currentEl = container.childNodes[index];
+        const scrollPosition = currentEl.offsetTop;
+        container.scrollTop = scrollPosition;
       }
       return { ...state, scrollContainer: container };
 
@@ -43,7 +46,6 @@ const reducer = (state, action) => {
 
     case "UPDATE_HIGHLIGHT_MONTH":
       const highlightMonth = state.months[action.value];
-
       if (highlightMonth) {
         return {
           ...state,
