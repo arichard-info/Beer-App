@@ -15,7 +15,6 @@ exports.localAuth = (req, res, next) => {
   passport.authenticate("local", { session: false }, function(err, user, info) {
     if (err) return next(err);
     if (!user) {
-      console.log("Pas d'utilisateur :/ ");
       return res.json({
         error: true,
         message: info && info.message ? info.message : ""

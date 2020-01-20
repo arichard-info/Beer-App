@@ -32,7 +32,7 @@ exports.validateRegister = (req, res, next) => {
 };
 
 exports.localRegister = async (req, res, next) => {
-  const existingUser = User.findOne({ email: req.body.email });
+  const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
     return res.json({
       error: true,

@@ -29,12 +29,7 @@ const Forgot = ({ className }) => {
       password,
       "password-confirm": passwordConfirm
     });
-    if (
-      response.status === 200 &&
-      response.data &&
-      response.data.user &&
-      response.data.token
-    ) {
+    if (response.status === 200 && response.data && response.data.user) {
       const { user, token } = response.data;
       authDispatch({ type: "LOG_IN", value: { user, token } });
     } else {

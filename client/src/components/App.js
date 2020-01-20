@@ -26,7 +26,6 @@ const App = () => {
             checkToken.data &&
             checkToken.data.user
           ) {
-            console.log(checkToken.data);
             dispatch({
               type: "INIT",
               value: { user: checkToken.data.user }
