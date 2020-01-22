@@ -25,7 +25,10 @@ const Forgot = ({ className }) => {
   const submitForm = async e => {
     e.preventDefault();
     const user = await signup(fields);
-    if (user) authDispatch({ type: "LOG_IN", value: user });
+    if (!user.error) authDispatch({ type: "LOG_IN", value: user });
+    else {
+      console.error("Error when trying to signup", user.message || "");
+    }
   };
   return (
     <div className={className}>
