@@ -10,7 +10,7 @@ export const postRequest = async (route, body = {}, headers = {}) => {
   try {
     const response = await axios.post(route, body, { headers });
     if (response.status === 200) return response;
-    throw `Error when trying to fetch ${route}`;
+    throw new Error(`Error when trying to fetch ${route}`);
   } catch (err) {
     return {
       error: true,
