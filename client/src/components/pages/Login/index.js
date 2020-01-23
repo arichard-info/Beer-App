@@ -64,6 +64,9 @@ const LoginPage = ({ className }) => {
           <OAuth provider={provider} key={provider} socket={socket} />
         ))}
       </div>
+      <div className="form-row">
+        <Link to="/signup">Créer un compte</Link>
+      </div>
     </div>
   );
 };
