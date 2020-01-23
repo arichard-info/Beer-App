@@ -9,7 +9,7 @@ export const login = async (email, password) => {
   try {
     const {
       data: { user }
-    } = await postRequest(`/api/login`, { email, password });
+    } = await postRequest(`/api/auth/login`, { email, password });
     if (!user) throw new Error("Error while trying to login");
     return user;
   } catch (err) {
@@ -25,7 +25,7 @@ export const login = async (email, password) => {
  * @param {string} email
  */
 export const forgot = async email => {
-  const response = await postRequest(`/api/account/forgot`, { email });
+  const response = await postRequest(`/api/auth/forgot`, { email });
   return response;
 };
 
@@ -43,7 +43,7 @@ export const resetPassword = async (
       throw new Error("Missing token or wrong password confirm");
     const {
       data: { user }
-    } = await postRequest(`/api/account/reset/${token}`, {
+    } = await postRequest(`/api/auth/reset/${token}`, {
       password,
       "password-confirm": passwordConfirm
     });
@@ -68,7 +68,7 @@ export const signup = async ({ name, email, password, passwordConfirm }) => {
 
     const {
       data: { user }
-    } = await postRequest(`/api/register`, {
+    } = await postRequest(`/api/auth/register`, {
       name,
       email,
       password,
