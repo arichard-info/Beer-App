@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { forgot } from "./../../../utils/api";
+import { forgot } from "./../../../utils/api/authentication";
 
 const Forgot = ({ className }) => {
   let history = useHistory();
   const [email, setEmail] = useState("");
+
   const submitForm = async e => {
     e.preventDefault();
     const response = await forgot(email);
     if (response) history.push("/login", { message: "Email has been sent" });
   };
+
   return (
     <div className={className}>
       <div className="form-row">

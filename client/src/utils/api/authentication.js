@@ -1,23 +1,10 @@
-import axios from "axios";
+import { postRequest, authPostRequest } from "./index";
 
-export const postRequest = async (route, body = {}, headers = {}) => {
-  try {
-    const response = await axios.post(route, body, { headers });
-    if (response.status === 200) return response;
-    throw `Error when trying to fetch ${route}`;
-  } catch (err) {
-    return {
-      error: true,
-      message: err
-    };
-  }
-};
-
-export const authPostRequest = async (route, body) => {
-  const authToken = window.localStorage.getItem("auth_token");
-  return postRequest(route, body, { Authorization: `Bearer ${authToken}` });
-};
-
+/**
+ * log user in with email and password
+ * @param {string} email
+ * @param {string} password
+ */
 export const login = async (email, password) => {
   try {
     const {
@@ -33,11 +20,20 @@ export const login = async (email, password) => {
   }
 };
 
+/**
+ * forgot email call (will send reset email to user)
+ * @param {string} email
+ */
 export const forgot = async email => {
   const response = await postRequest(`/api/account/forgot`, { email });
   return response;
 };
 
+/**
+ * reset password call
+ * @param {string} token
+ * @param {object} param1 password and confirm password strings
+ */
 export const resetPassword = async (
   token = false,
   { password, passwordConfirm }
@@ -61,6 +57,10 @@ export const resetPassword = async (
   }
 };
 
+/**
+ * signup call
+ * @param {object} param0 User signup fields
+ */
 export const signup = async ({ name, email, password, passwordConfirm }) => {
   try {
     if (!name || !email || !password || !passwordConfirm)
@@ -85,6 +85,10 @@ export const signup = async ({ name, email, password, passwordConfirm }) => {
   }
 };
 
+/**
+ * profile complete call (after first auth with provider)
+ * @param {object} userObject completed user object
+ */
 export const completeProfile = async userObject => {
   try {
     const { data: user } = authPostRequest(

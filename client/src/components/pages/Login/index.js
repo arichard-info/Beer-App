@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 
 import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
-import { login } from "./../../../utils/api";
+import { login } from "./../../../utils/api/authentication";
 
 const socket = io(process.env.REACT_APP_SERVER_URL || "http://localhost:5000");
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { resetPassword } from "./../../../utils/api";
 
+import { resetPassword } from "./../../../utils/api/authentication";
 import { useUser } from "./../../../state/authentication";
 
 const Forgot = ({ className }) => {

@@ -1,8 +1,8 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { completeProfile } from "./../../../utils/api";
 
+import { completeProfile } from "./../../../utils/api/authentication";
 import { useUser } from "./../../../state/authentication";
 import { formReducer } from "./../../../utils/form";
 

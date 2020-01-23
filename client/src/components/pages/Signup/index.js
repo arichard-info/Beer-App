@@ -1,11 +1,10 @@
 import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import axios from "axios";
 
 import { useUser } from "./../../../state/authentication";
 import { formReducer } from "./../../../utils/form";
-import { signup } from "../../../utils/api";
+import { signup } from "../../../utils/api/authentication";
 
 const initialFields = {
   name: "",
