@@ -19,7 +19,8 @@ const Forgot = ({ className }) => {
   const submitForm = async e => {
     e.preventDefault();
     const finalUser = await completeProfile({ ...user, email, name });
-    if (!finalUser.error) authDispatch({ type: "LOG_IN", value: finalUser });
+    if (finalUser && !finalUser.error)
+      authDispatch({ type: "LOG_IN", value: finalUser });
     else {
       authDispatch({ type: "REMOVE" });
       console.error("Invalid user");

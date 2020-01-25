@@ -7,14 +7,16 @@ import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
 import { login } from "./../../../utils/api/authentication";
 
-const socket = io(process.env.REACT_APP_SERVER_URL || "http://localhost:5000");
-
 const LoginPage = ({ className }) => {
   const providers = ["google"];
   const [, dispatch] = useUser();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const socket = io(
+    process.env.REACT_APP_SERVER_URL || "http://localhost:5000"
+  );
 
   const handleSubmit = async e => {
     e.preventDefault();
