@@ -22,11 +22,7 @@ jobs:
           time: "60s"
       - name: Check running containers
         run: docker ps
-
-  cypress-run:
-    needs: build
-    runs-on: ubuntu-16.04
-    container: app_client
-    steps:
-      - uses: actions/checkout@v1
-      - uses: cypress-io/github-action@v1
+      - name: Install Cypress and run tests
+        uses: cypress-io/github-action@v1
+        with:
+          working-directory: client
