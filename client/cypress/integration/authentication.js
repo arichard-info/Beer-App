@@ -51,9 +51,11 @@ context("Authentication", () => {
     });
   });
 
+  /*
   it("Forgotten password", () => {});
 
   it("Google authentication", () => {
     // cy.get("button.google").click();
   });
+  */
 });
