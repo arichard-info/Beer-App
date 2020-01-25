@@ -23,4 +23,4 @@ jobs:
       - name: Check running containers
         run: docker ps
       - name: Run cypress tests
-        run: docker exec -it app_client npm run cy:run
+        run: cd client && npm run cy:run
