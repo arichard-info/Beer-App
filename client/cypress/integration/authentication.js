@@ -2,7 +2,7 @@
 
 context("Authentication", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
   });
 
   it("Login", () => {
