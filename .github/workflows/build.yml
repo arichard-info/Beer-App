@@ -16,11 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.yml up
+        run: docker-compose -f docker-compose.yml up -d
       - name: Sleep
         uses: jakejarvis/wait-action@master
         with:
-          time: "60s"
+          time: "30s"
       - name: Install client dependencies
         run: cd client && npm ci
       - name: Run cypress tests
