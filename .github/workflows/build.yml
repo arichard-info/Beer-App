@@ -21,6 +21,7 @@ jobs:
         with:
           time: "60s"
       - name: Check running containers
-        run: docker ps
+        run: Check client folder
+        run: ls -l client
       - name: Run cypress tests
-        run: cd client && npm run cy:run
+        run: cd client && node_modules/cypress/bin/cypress run
