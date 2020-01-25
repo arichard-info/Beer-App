@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.yml up -d
+        run: docker-compose -f docker-compose.yml up
       - name: Sleep
         uses: jakejarvis/wait-action@master
         with:
