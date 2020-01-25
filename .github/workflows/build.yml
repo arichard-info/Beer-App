@@ -22,7 +22,5 @@ jobs:
           time: "60s"
       - name: Check running containers
         run: docker ps
-      - name: Install Cypress and run tests
-        uses: cypress-io/github-action@v1
-        with:
-          working-directory: client
+      - name: Run cypress tests
+        run: docker exec -it app_client npm run cy:run
