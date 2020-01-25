@@ -11,6 +11,7 @@ services:
     container_name: prod_server
     environment:
       - NODE_ENV=production
+      - DATABASE=${DATABASE:-mongodb://database:27017/beer_app}
     build:
       context: .
       dockerfile: ./docker/dockerfile/prod.node.dockerfile
