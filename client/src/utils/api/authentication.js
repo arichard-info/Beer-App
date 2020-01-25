@@ -10,7 +10,8 @@ export const login = async (email, password) => {
     const {
       data: { user }
     } = await postRequest(`/api/auth/login`, { email, password });
-    if (!user) throw new Error("Error while trying to login");
+    if (!user || user === undefined)
+      throw new Error("Error while trying to login");
     return user;
   } catch (err) {
     return {

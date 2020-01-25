@@ -19,7 +19,7 @@ const LoginPage = ({ className }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     const user = await login(email, password);
-    if (user) dispatch({ type: "LOG_IN", value: user });
+    if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
     // TODO : Alert if no user
   };
   return (
