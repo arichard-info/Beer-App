@@ -20,7 +20,7 @@ jobs:
         uses: jakejarvis/wait-action@master
         with:
           time: "60s"
-      - name: Check client folder
-        run: ls -l client
+      - name: Install client dependencies
+        run: cd client && npm ci
       - name: Run cypress tests
         run: cd client && node_modules/cypress/bin/cypress run
