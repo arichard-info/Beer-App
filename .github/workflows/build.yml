@@ -21,6 +21,13 @@ jobs:
         uses: jakejarvis/wait-action@master
         with:
           time: "30s"
+
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      CYPRESS_baseUrl: http://localhost:5000
+    steps:
+      - uses: actions/checkout@v1
       - name: Install client dependencies
         run: cd client && npm ci
       - name: Run cypress tests
