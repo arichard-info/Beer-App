@@ -12,6 +12,7 @@ jobs:
       GOOGLE_CLIENT_SECRET: ${{ secrets.MAIL_PASS }}
       SECRET_JWT: CQqMO4SNlgGHbHiovAqK
       SESSION_SECRET: Bf6Y0ZQBHwZb1DK2MbBq
+      CYPRESS_baseUrl: http://localhost:5000
     steps:
       - uses: actions/checkout@v1
       - name: Build the docker-compose stack
