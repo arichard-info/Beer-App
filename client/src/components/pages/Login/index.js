@@ -25,9 +25,9 @@ const LoginPage = ({ className }) => {
   const fields = {
     email: {
       field: "textField",
-      type: "text",
+      type: "email",
       placeholder: "Nom d'utilisateur",
-      label: "Nom d'utilisateur ou email"
+      label: "Adresse email"
     },
     password: {
       field: "textField",
@@ -39,7 +39,11 @@ const LoginPage = ({ className }) => {
 
   return (
     <div className={className}>
-      <Form onSubmit={handleSubmit} fields={fields} submitLabel="Connexion" />
+      <Form
+        onValidSubmit={handleSubmit}
+        fields={fields}
+        submitLabel="Connexion"
+      />
 
       <div className="form-row">
         <span>OR</span>

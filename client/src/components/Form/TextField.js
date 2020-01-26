@@ -7,8 +7,7 @@ const TextField = ({
   label = "",
   required = false,
   placeholder = "",
-  onChange,
-  ...rest
+  onChange
 }) => {
   return (
     <>
@@ -20,7 +19,6 @@ const TextField = ({
         value={value}
         placeholder={placeholder}
         onChange={e => onChange({ name, value: e.target.value })}
-        {...rest}
       />
     </>
   );
