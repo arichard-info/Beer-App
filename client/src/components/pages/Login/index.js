@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
 import { login } from "./../../../utils/api/authentication";
+import Form from "./../../Form";
 
 const LoginPage = ({ className }) => {
   const providers = ["google"];
@@ -18,44 +19,30 @@ const LoginPage = ({ className }) => {
     process.env.REACT_APP_SERVER_URL || "http://localhost:5000"
   );
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const user = await login(email, password);
+  const handleSubmit = async ({ email, password }) => {
+    const user = await login(email.value, password.value);
     if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
     // TODO : Alert if no user
   };
+
+  const fields = {
+    email: {
+      field: "textField",
+      type: "text",
+      placeholder: "Nom d'utilisateur",
+      label: "Nom d'utilisateur ou email"
+    },
+    password: {
+      field: "textField",
+      type: "password",
+      placeholder: "Mot de passe",
+      label: "Mot de passe"
+    }
+  };
+
   return (
     <div className={className}>
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <label htmlFor="username">Nom d'utilisateur ou email</label>
-          <input
-            id="email"
-            name="email"
-            type="text"
-            placeholder="Nom d'utilisateur"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-row">
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Mot de passe"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="form-row">
-          <Link to="/login/forgot">Mot de passe oublié?</Link>
-        </div>
-        <div className="form-row">
-          <input type="submit" value="Connexion" />
-        </div>
-      </form>
+      <Form onSubmit={handleSubmit} fields={fields} submitLabel="Connexion" />
 
       <div className="form-row">
         <span>OR</span>
