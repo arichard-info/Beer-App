@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -11,9 +11,6 @@ import Form from "./../../Form";
 const LoginPage = ({ className }) => {
   const providers = ["google"];
   const [, dispatch] = useUser();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const socket = io(
     process.env.REACT_APP_SERVER_URL || "http://localhost:5000"
