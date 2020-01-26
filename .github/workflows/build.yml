@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+      MAIL_PASS: ${{ secrets.MAIL_PASS }}
+      GOOGLE_CLIENT_ID: ${{ secrets.MAIL_PASS }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.MAIL_PASS }}
+      SECRET_JWT: CQqMO4SNlgGHbHiovAqK
+      SESSION_SECRET: Bf6Y0ZQBHwZb1DK2MbBq
+      CYPRESS_baseUrl: http://localhost:5000
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the docker-compose stack
+        run: docker-compose -f docker-compose.yml up -d
+      - name: Install client dependencies
+        run: cd client && npm install cypress
+      - name: Run cypress tests
+        run: cd client && node_modules/cypress/bin/cypress run
