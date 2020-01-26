@@ -1,4 +1,5 @@
 import React, { useReducer, useState } from "react";
+import styled, { css } from "styled-components";
 import verifyField from "./utils";
 import TextField from "./TextField";
 import Textarea from "./Textarea";
@@ -15,12 +16,16 @@ const formReducer = (state, { name, value }) => {
 };
 
 const Form = ({
+  className,
   fields,
   onValidSubmit,
   onErrorSubmit,
   submitLabel = "Continuer",
   ...rest
 }) => {
+  Object.keys(fields).forEach(el => {
+    fields[el] = verifyField(fields[el]);
+  });
   const [formFields, formDispatch] = useReducer(formReducer, fields);
   const [valid, setValid] = useState(true);
 
@@ -43,7 +48,7 @@ const Form = ({
   const onChange = ({ name, value }) => formDispatch({ name, value });
 
   return (
-    <form noValidate onSubmit={handleSubmit} {...rest}>
+    <form noValidate onSubmit={handleSubmit} className={className} {...rest}>
       {Object.keys(formFields).map((name, key) => {
         const field = formFields[name];
         return (
@@ -61,4 +66,10 @@ const Form = ({
   );
 };
 
-export default Form;
+export default styled(Form)(
+  () => css`
+    .form-row {
+      margin-bottom: 1.5rem;
+    }
+  `
+);

@@ -26,54 +26,73 @@ const LoginPage = ({ className }) => {
     email: {
       field: "textField",
       type: "email",
-      placeholder: "Nom d'utilisateur",
-      label: "Adresse email"
+      placeholder: "Adresse email",
+      label: "Adresse email",
+      required: true
     },
     password: {
       field: "textField",
       type: "password",
       placeholder: "Mot de passe",
-      label: "Mot de passe"
+      label: "Mot de passe",
+      infos: <Link to="/login/forgot">Mot de passe oublié ?</Link>,
+      required: true
     }
   };
 
   return (
     <div className={className}>
+      <h1>Connexion</h1>
       <Form
         onValidSubmit={handleSubmit}
         fields={fields}
         submitLabel="Connexion"
       />
 
-      <div className="form-row">
-        <span>OR</span>
+      <div className="sep">
+        <span>ou</span>
       </div>
 
-      <div className="form-row">
+      <div className="others">
+        <Link to="/signup" className="cta bg-white">
+          Créer un compte
+        </Link>
         {providers.map(provider => (
           <OAuth provider={provider} key={provider} socket={socket} />
         ))}
-      </div>
-      <div className="form-row">
-        <Link to="/signup">Créer un compte</Link>
       </div>
     </div>
   );
 };
 
 export default styled(LoginPage)(
-  () => css`
-    height: 100%;
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    label {
-      display: block;
+  ({ theme: { colors } }) => css`
+    .others {
+      .cta {
+        margin: 1.5rem 0;
+      }
     }
-    .form-row {
-      margin: 0.4rem 0;
+    .sep {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin: 3rem 0;
+      span {
+        background-color: ${colors.white};
+        font-size: 1.4rem;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        padding: 0 0.8rem;
+      }
+      &:after {
+        content: "";
+        z-index: 0;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        border-bottom: 0.1rem solid ${colors.formBorder};
+      }
     }
   `
 );

@@ -36,6 +36,7 @@ const verifyTextField = ({ type = "text", value = "", required = false }) => {
     default:
       return true;
   }
+  return true;
 };
 
 const validateEmail = email => {

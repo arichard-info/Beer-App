@@ -1,7 +1,14 @@
 {
   "colors": {
     "black": "#000000",
-    "white": "#FFFFFF"
+    "white": "#FFFFFF",
+    "primary": "#FFBF00",
+    "text": "#4D4D4D",
+    "formLabel": "#4D4D4D",
+    "formPlaceholder": "#CCCCCC",
+    "formBorder": "#E2E2E2",
+    "linkSecond": "#AFAFAF",
+    "pageTitle": "#000000"
   },
   "fw": {
     "light": "300",
@@ -10,5 +17,8 @@
     "semibold": "600",
     "bold": "700",
     "black": "900"
+  },
+  "fonts": {
+    "sansSerif": "\"Montserrat\", sans-serif"
   }
 }

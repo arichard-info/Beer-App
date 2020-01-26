@@ -54,15 +54,13 @@ const OAuth = ({ socket, provider }) => {
   };
 
   return (
-    <div>
-      <button
-        onClick={startAuth}
-        disabled={disabled}
-        className={`${provider} button`}
-      >
-        Connect with {provider}
-      </button>
-    </div>
+    <button
+      onClick={startAuth}
+      disabled={disabled}
+      className={`${provider} cta bg-white`}
+    >
+      Continuer avec {provider}
+    </button>
   );
 };
 

@@ -1,56 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { forgot } from "./../../../utils/api/authentication";
+import Form from "./../../Form";
 
 const Forgot = ({ className }) => {
   let history = useHistory();
-  const [email, setEmail] = useState("");
 
-  const submitForm = async e => {
-    e.preventDefault();
-    const response = await forgot(email);
+  const submitForm = async fields => {
+    console.log("coucou");
+    const response = await forgot(fields.email.value);
     if (response) history.push("/login", { message: "Email has been sent" });
+  };
+
+  const fields = {
+    email: {
+      field: "textField",
+      type: "email",
+      placeholder: "Adresse email",
+      label: "Adresse email",
+      required: true
+    }
   };
 
   return (
     <div className={className}>
-      <div className="form-row">
-        <Link to="/login">Retour</Link>
-      </div>
-      <form onSubmit={submitForm}>
-        <div className="form-row">
-          <label htmlFor="username">Adresse email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Addresse email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-row">
-          <input type="submit" value="Envoyer" />
-        </div>
-      </form>
+      <Link to="/login">Retour</Link>
+      <h1>Mot de passe oublié</h1>
+      <p>
+        Nous t’enverrons un email de vérification sur cette adresse. Tu pourras
+        réinitialiser ton mot de passe à partir du liens qui se trouve dans le
+        mail.
+      </p>
+      <Form fields={fields} onValidSubmit={submitForm} submitLabel="Envoyer" />
     </div>
   );
 };
 
-export default styled(Forgot)(
-  () => css`
-    height: 100%;
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    label {
-      display: block;
-    }
-    .form-row {
-      margin: 0.4rem 0;
-    }
-  `
-);
+export default styled(Forgot)(() => css``);
