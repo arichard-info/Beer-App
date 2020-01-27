@@ -45,7 +45,7 @@ context("Authentication", () => {
     cy.get('input[name="name"]').type("Test User");
     cy.get('input[name="email"]').type("test@email.com");
     cy.get('input[name="password"]').type("testpasswo");
-    cy.get('input[name="passwordConfirm"]').type("testpasswo{enter}");
+    cy.get('input[name="confirm"]').type("testpasswo{enter}");
     cy.wait("@registerRequest").then(xhrs => {
       expect(localStorage.getItem("auth_token")).to.exist;
     });
