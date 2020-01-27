@@ -10,25 +10,38 @@ const TextField = ({
   required = false,
   placeholder = "",
   infos,
-  onChange,
   errors,
-  validForm
+  validation = false,
+  onChange,
+  onFocusOut
 }) => {
   return (
     <div
-      className={`${className} ${!validForm && errors.length > 0 && "error"}`}
+      className={`${className} ${
+        validation && errors.length > 0 ? "error" : ""
+      }`}
     >
-      {label && <label>{label}</label>}
+      {label && <label htmlFor={name}>{label}</label>}
       <input
         name={name}
+        id={name}
         type={type}
         required={required}
         value={value}
         placeholder={placeholder}
-        onChange={e => onChange({ name, value: e.target.value })}
+        onBlur={e => {
+          if (typeof onFocusOut === "function") {
+            onFocusOut({ name, value: e.target.value });
+          }
+        }}
+        onChange={e => {
+          if (typeof onChange === "function") {
+            onChange({ name, value: e.target.value });
+          }
+        }}
       />
       {infos}
-      {!validForm &&
+      {validation &&
         errors.length > 0 &&
         errors.map((el, key) => <p key={key}>{el}</p>)}
     </div>

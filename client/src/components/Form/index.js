@@ -1,51 +1,38 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import styled, { css } from "styled-components";
 import verifyField from "./utils";
 import TextField from "./TextField";
 import Textarea from "./Textarea";
+import PasswordConfirm from "./PasswordConfirm";
 
 const switchFields = {
   textField: el => <TextField {...el} />,
-  textArea: el => <Textarea {...el} />
+  textArea: el => <Textarea {...el} />,
+  passwordConfirm: el => <PasswordConfirm {...el} />
 };
 
-const verifyDependencies = (fields, name) => {
-  const checkField = fields[name];
-  if (
-    checkField.equalTo &&
-    fields[checkField.equalTo] &&
-    fields[checkField.equalTo].value !== checkField.value
-  ) {
-    return ["Les champs ne sont pas identiques"];
-  }
-  return [];
-};
-
-const formReducer = (state, { name, value }) => {
+const formReducer = (state, { type, value: actionValue = {} }) => {
+  const { name, value } = actionValue;
   let fields = { ...state };
+
+  if (type === "VALIDATE_ALL") {
+    Object.keys(fields).forEach(el => {
+      fields[el].validation = true;
+    });
+    return fields;
+  }
+
   let field = fields[name];
   field.value = value;
-  field.errors = [...verifyField(field), ...verifyDependencies(fields, name)];
+  field.errors = verifyField(field);
+  if (type === "FOCUS_OUT") field.validation = true;
   fields[name] = field;
-  console.log(fields);
   return fields;
 };
 
 const initFields = fields => {
   Object.keys(fields).forEach(fieldName => {
     fields[fieldName].errors = verifyField(fields[fieldName]);
-
-    const foundDependency = Object.keys(fields).find(
-      key =>
-        fields[key] ===
-        Object.keys(fields)
-          .map(key => fields[key])
-          .find(el => el.equalTo === fieldName)
-    );
-
-    if (foundDependency !== undefined) {
-      fields[fieldName].equalTo = foundDependency;
-    }
   });
   return fields;
 };
@@ -62,7 +49,6 @@ const Form = ({
     formReducer,
     initFields(fields)
   );
-  const [valid, setValid] = useState(true);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -72,15 +58,15 @@ const Form = ({
     );
 
     if (invalidFields.length) {
-      setValid(false);
+      formDispatch({ type: "VALIDATE_ALL" });
       if (typeof onErrorSubmit === "function") onErrorSubmit(formFields);
-    } else {
-      setValid(true);
-      if (typeof onValidSubmit === "function") onValidSubmit(formFields);
-    }
+    } else if (typeof onValidSubmit === "function") onValidSubmit(formFields);
   };
 
-  const onChange = ({ name, value }) => formDispatch({ name, value });
+  const onChange = ({ name, value }) =>
+    formDispatch({ type: "CHANGE", value: { name, value } });
+  const onFocusOut = ({ name, value }) =>
+    formDispatch({ type: "FOCUS_OUT", value: { name, value } });
 
   return (
     <form noValidate onSubmit={handleSubmit} className={className} {...rest}>
@@ -93,7 +79,7 @@ const Form = ({
                 ...field,
                 name,
                 onChange,
-                validForm: valid
+                onFocusOut
               })}
           </div>
         );

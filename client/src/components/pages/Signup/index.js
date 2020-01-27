@@ -25,27 +25,20 @@ const Forgot = ({ className }) => {
       required: true
     },
     password: {
-      field: "textField",
-      type: "password",
-      placeholder: "Mot de passe",
+      field: "passwordConfirm",
       label: "Mot de passe",
-      required: true
-    },
-    passwordConfirm: {
-      field: "textField",
-      type: "password",
-      placeholder: "Confirmation du mot de passe",
-      label: "Confirmation du mot de passe",
-      required: true
+      confirmLabel: "Confirmation du mot de passe",
+      placeholder: "Mot de passe",
+      confirmPlaceholder: "Confirmation du mot de passe"
     }
   };
 
-  const submitForm = async ({ name, email, password, passwordConfirm }) => {
+  const submitForm = async ({ name, email, password }) => {
     const user = await signup({
       name: name.value,
       email: email.value,
-      password: password.value,
-      passwordConfirm: passwordConfirm.value
+      password: password.value.password,
+      passwordConfirm: password.value.confirm
     });
     if (user && !user.error) authDispatch({ type: "LOG_IN", value: user });
     else {

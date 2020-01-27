@@ -11,28 +11,21 @@ const Forgot = ({ className }) => {
   const { token } = useParams();
 
   const submitForm = async fields => {
+    const { password } = fields;
     const user = await resetPassword(token, {
-      password: fields.password.value,
-      passwordConfirm: fields.passwordConfirm.value
+      password: password.value.password,
+      passwordConfirm: password.value.confirm
     });
     if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
   };
 
   const fields = {
     password: {
-      field: "textField",
-      type: "password",
-      placeholder: "Mot de passe",
+      field: "passwordConfirm",
       label: "Mot de passe",
-      required: true
-    },
-    passwordConfirm: {
-      field: "textField",
-      type: "password",
-      placeholder: "Confirmation du mot de passe",
-      label: "Confirmation du mot de passe",
-      required: true,
-      equalTo: "password"
+      confirmLabel: "Confirmation du mot de passe",
+      placeholder: "Mot de passe",
+      confirmPlaceholder: "Confirmation du mot de passe"
     }
   };
 

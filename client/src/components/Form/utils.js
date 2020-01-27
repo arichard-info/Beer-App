@@ -6,6 +6,10 @@ const verifyField = fieldObject => {
       errors = verifyTextField(fieldObject);
       break;
     }
+    case "passwordConfirm": {
+      errors = verifyPassword(fieldObject);
+      break;
+    }
     case "textarea": {
       errors = verifyTextarea(fieldObject);
       break;
@@ -22,6 +26,16 @@ export default verifyField;
 const verifyTextarea = ({ value = "", required = false }) => {
   if (required && (!value || value === "")) return "Ce champs est requis";
   return true;
+};
+
+const verifyPassword = ({ value = {} }) => {
+  const { password = "", confirm = "" } = value;
+  let errors = [];
+  if (password.length < 6) errors.push("too_short");
+  if (confirm !== password || confirm === "") errors.push("not_confirmed");
+  if (!password.match(/[A-Z]/)) errors.push("not_uppercase");
+  if (!password.match(/[a-z]/)) errors.push("not_lowercase");
+  return errors;
 };
 
 const verifyTextField = ({ type = "text", value = "", required = false }) => {
