@@ -9,9 +9,44 @@ const switchFields = {
   textArea: el => <Textarea {...el} />
 };
 
+const verifyDependencies = (fields, name) => {
+  const checkField = fields[name];
+  if (
+    checkField.equalTo &&
+    fields[checkField.equalTo] &&
+    fields[checkField.equalTo].value !== checkField.value
+  ) {
+    return ["Les champs ne sont pas identiques"];
+  }
+  return [];
+};
+
 const formReducer = (state, { name, value }) => {
-  const fields = { ...state };
-  fields[name] = verifyField({ ...fields[name], value });
+  let fields = { ...state };
+  let field = fields[name];
+  field.value = value;
+  field.errors = [...verifyField(field), ...verifyDependencies(fields, name)];
+  fields[name] = field;
+  console.log(fields);
+  return fields;
+};
+
+const initFields = fields => {
+  Object.keys(fields).forEach(fieldName => {
+    fields[fieldName].errors = verifyField(fields[fieldName]);
+
+    const foundDependency = Object.keys(fields).find(
+      key =>
+        fields[key] ===
+        Object.keys(fields)
+          .map(key => fields[key])
+          .find(el => el.equalTo === fieldName)
+    );
+
+    if (foundDependency !== undefined) {
+      fields[fieldName].equalTo = foundDependency;
+    }
+  });
   return fields;
 };
 
@@ -23,17 +58,17 @@ const Form = ({
   submitLabel = "Continuer",
   ...rest
 }) => {
-  Object.keys(fields).forEach(el => {
-    fields[el] = verifyField(fields[el]);
-  });
-  const [formFields, formDispatch] = useReducer(formReducer, fields);
+  const [formFields, formDispatch] = useReducer(
+    formReducer,
+    initFields(fields)
+  );
   const [valid, setValid] = useState(true);
 
   const handleSubmit = e => {
     e.preventDefault();
 
     const invalidFields = Object.keys(formFields).filter(
-      el => formFields[el].valid !== true
+      el => formFields[el].errors.length
     );
 
     if (invalidFields.length) {
@@ -54,8 +89,12 @@ const Form = ({
         return (
           <div className="form-row" key={key}>
             {field.field in switchFields &&
-              switchFields[field.field]({ ...field, name, onChange })}
-            {!valid && typeof field.valid === "string" && <p>{field.valid}</p>}
+              switchFields[field.field]({
+                ...field,
+                name,
+                onChange,
+                validForm: valid
+              })}
           </div>
         );
       })}

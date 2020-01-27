@@ -31,7 +31,8 @@ const Forgot = ({ className }) => {
       type: "password",
       placeholder: "Confirmation du mot de passe",
       label: "Confirmation du mot de passe",
-      required: true
+      required: true,
+      equalTo: "password"
     }
   };
 

@@ -1,20 +1,20 @@
 const verifyField = fieldObject => {
   const { field } = fieldObject;
-  let valid = true;
+  let errors = [];
   switch (field) {
     case "textField": {
-      valid = verifyTextField(fieldObject);
+      errors = verifyTextField(fieldObject);
       break;
     }
     case "textarea": {
-      valid = verifyTextarea(fieldObject);
+      errors = verifyTextarea(fieldObject);
       break;
     }
     default:
-      return true;
+      errors = [];
   }
 
-  return { ...fieldObject, valid };
+  return errors;
 };
 
 export default verifyField;
@@ -25,18 +25,18 @@ const verifyTextarea = ({ value = "", required = false }) => {
 };
 
 const verifyTextField = ({ type = "text", value = "", required = false }) => {
-  if (required && (!value || value === "")) return "Ce champs est requis";
+  if (required && (!value || value === "")) return ["Ce champs est requis"];
   switch (type) {
     case "email":
-      if (!validateEmail(value)) return "Adresse email invalide";
+      if (!validateEmail(value)) return ["Adresse email invalide"];
       break;
     case "tel":
-      if (!validateTel(value)) return "Numéro de téléphone invalide";
+      if (!validateTel(value)) return ["Numéro de téléphone invalide"];
       break;
     default:
-      return true;
+      return [];
   }
-  return true;
+  return [];
 };
 
 const validateEmail = email => {

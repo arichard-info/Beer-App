@@ -10,10 +10,14 @@ const TextField = ({
   required = false,
   placeholder = "",
   infos,
-  onChange
+  onChange,
+  errors,
+  validForm
 }) => {
   return (
-    <div className={className}>
+    <div
+      className={`${className} ${!validForm && errors.length > 0 && "error"}`}
+    >
       {label && <label>{label}</label>}
       <input
         name={name}
@@ -24,6 +28,9 @@ const TextField = ({
         onChange={e => onChange({ name, value: e.target.value })}
       />
       {infos}
+      {!validForm &&
+        errors.length > 0 &&
+        errors.map((el, key) => <p key={key}>{el}</p>)}
     </div>
   );
 };
@@ -44,12 +51,19 @@ export default styled(TextField)(
       font-size: 1.6rem;
       border-radius: 1rem;
       padding: 1rem;
+      transition: border-color 0.1s ease;
     }
     a {
       font-size: 1.4rem;
       color: ${colors.linkSecond};
       margin-top: 0.75rem;
       display: block;
+    }
+
+    &.error {
+      input {
+        border-color: tomato;
+      }
     }
   `
 );
