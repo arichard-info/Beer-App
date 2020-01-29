@@ -7,6 +7,7 @@
     "formLabel": "#4D4D4D",
     "formPlaceholder": "#CCCCCC",
     "formBorder": "#E2E2E2",
+    "formError": "#FE7C8D",
     "linkSecond": "#AFAFAF",
     "pageTitle": "#000000"
   },

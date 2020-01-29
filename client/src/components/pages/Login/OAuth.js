@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useUser } from "./../../../state/authentication";
 
@@ -8,7 +9,7 @@ const OAuth = ({ socket, provider }) => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    socket.on(provider, ({ user, token, error, message }) => {
+    socket.on(provider.id, ({ user, error, message }) => {
       if (popup) popup.close();
       if (error) {
         console.error(message ? message : "Error when receiving user data");
@@ -32,7 +33,7 @@ const OAuth = ({ socket, provider }) => {
       height = 600;
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
-    const url = `/api/auth/${provider}?socketId=${socket.id}`;
+    const url = `/api/auth/${provider.id}?socketId=${socket.id}`;
 
     return window.open(
       url,
@@ -57,9 +58,10 @@ const OAuth = ({ socket, provider }) => {
     <button
       onClick={startAuth}
       disabled={disabled}
-      className={`${provider} cta bg-white`}
+      className={`${provider.id} cta bg-grey`}
     >
-      Continuer avec {provider}
+      <FontAwesomeIcon icon={provider.icon} />
+      Continuer avec {provider.name}
     </button>
   );
 };

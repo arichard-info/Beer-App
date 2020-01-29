@@ -2,6 +2,9 @@ import React from "react";
 import styled, { css } from "styled-components";
 import TextField from "./TextField";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+
 const checkTags = {
   too_short: "6 caractères min",
   not_uppercase: "1 majuscule",
@@ -39,6 +42,7 @@ const PasswordConfirm = ({
           type="password"
           placeholder={placeholder}
           label={label}
+          togglePassword={true}
           onChange={changePassword}
         />
       </div>
@@ -59,6 +63,7 @@ const PasswordConfirm = ({
             key={el}
             className={`check-tag ${!errors.includes(el) ? "valid" : "error"}`}
           >
+            {!errors.includes(el) && <FontAwesomeIcon icon={faCheck} />}
             {checkTags[el]}
           </span>
         ))}
@@ -79,6 +84,9 @@ export default styled(PasswordConfirm)(
       margin: 0 1rem 1rem 0;
       border-radius: 50rem;
       transition: all 0.2s ease;
+      svg {
+        margin-right: 0.5rem;
+      }
       &.valid {
         background-color: #cff7ec;
         color: #129272;

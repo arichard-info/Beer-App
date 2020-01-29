@@ -3,13 +3,15 @@ import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+
 import OAuth from "./OAuth";
 import { useUser } from "./../../../state/authentication";
 import { login } from "./../../../utils/api/authentication";
 import Form from "./../../Form";
 
 const LoginPage = ({ className }) => {
-  const providers = ["google"];
+  const providers = [{ id: "google", name: "Google", icon: faGoogle }];
   const [, dispatch] = useUser();
 
   const socket = io(
@@ -54,7 +56,7 @@ const LoginPage = ({ className }) => {
       </div>
 
       <div className="others">
-        <Link to="/signup" className="cta bg-white">
+        <Link to="/signup" className="cta bg-grey">
           Créer un compte
         </Link>
         {providers.map(provider => (

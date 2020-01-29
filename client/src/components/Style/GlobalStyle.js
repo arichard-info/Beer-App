@@ -34,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     input[type=submit], .cta {
+        cursor: pointer;
         display: block;
         text-align: center;
         text-decoration: none;
@@ -46,11 +47,48 @@ const GlobalStyle = createGlobalStyle`
         font-weight: ${props => props.theme.fw.semibold};
         background-color: ${props => props.theme.colors.primary};
         font-family: ${props => props.theme.fonts.sansSerif};
+        transition: all .2s ease;
+
+        &:hover{
+            background-color: #ff9900;
+        }
+
+        &:focus{
+            outline: none;
+            background-color: #ff9900;
+            box-shadow: 0px 0px 1px 1px rgba(255,153,0,1);
+        }
+
+        &.bg-grey {
+            background-color: #e8e8e8;
+            color: ${props => props.theme.colors.black};
+            border-color: #b5b5b5;
+            &:hover{
+                background-color: #FFEBBC;
+            }
+        }
 
         &.bg-white{
             border: .1rem solid ${props => props.theme.colors.black};
             color: ${props => props.theme.colors.black};
             background-color: transparent;
+
+            &:hover{
+                background-color: #e8e8e8;
+                border-color: #e8e8e8;
+            }
+
+            &:focus{
+                background-color: #e8e8e8;
+                border-color: #e8e8e8;
+                box-shadow: 0px 0px 1px 1px #e8e8e8;
+            }
+        }
+
+        svg {
+            margin-right: 1rem;
+            margin-left: 1rem;
+            font-size: 1.8rem;
         }
     }
   
