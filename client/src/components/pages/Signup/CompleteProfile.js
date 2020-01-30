@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { completeProfile } from "./../../../utils/api/authentication";
@@ -44,7 +43,6 @@ const Forgot = ({ className }) => {
 
   return (
     <div className={className}>
-      <Link to="/">Retour</Link>
       <h1>Compléter le profil</h1>
       <Form fields={fields} onValidSubmit={submitForm} />
     </div>

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import Emitter from "./Flashes/Emitter";
 import Router from "./Router";
 import { UserProvider, useUser } from "./../state/authentication";
 import GlobalStyle from "./Style/GlobalStyle";
 import ThemeProvider from "./Style/ThemeProvider";
 import Loading from "./pages/Loading";
+
+window.flash = flash => Emitter.emit("flash", flash);
 
 const App = () => {
   const [user, dispatch] = useUser();
@@ -16,7 +19,7 @@ const App = () => {
       if (authToken) {
         try {
           const checkToken = await axios.post(
-            `/api/verify-token`,
+            `/api/auth/verify-token`,
             {},
             { headers: { Authorization: `Bearer ${authToken}` } }
           );

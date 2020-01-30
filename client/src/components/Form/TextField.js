@@ -27,13 +27,13 @@ const TextField = ({
         validation && errors.length > 0 ? "error" : ""
       }`}
     >
-      <div class="label-wrapper">
+      <div className="label-wrapper">
         {label && <label htmlFor={name}>{label}</label>}
-        <div class="validation-wrapper">
+        <div className="validation-wrapper">
           {validation &&
             errors.length > 0 &&
             errors.map((el, key) => (
-              <p class="error-message" key={key}>
+              <p className="error-message" key={key}>
                 {el}
               </p>
             ))}
@@ -111,13 +111,13 @@ export default styled(TextField)(
       border-radius: 1rem;
       padding: 1rem;
       transition: border-color 0.1s ease, box-shadow 0.2s ease;
-      box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
       &.togglable {
         padding-right: 5rem;
       }
       &:focus {
         border-color: ${colors.primary};
-        box-shadow: 0px 0px 3px 0px rgba(255, 191, 0, 1);
+        box-shadow: 0 0 0.3rem 0 rgba(255, 191, 0, 1);
         outline: none;
       }
     }
@@ -132,7 +132,7 @@ export default styled(TextField)(
       input {
         border-color: ${colors.formError};
         &:focus {
-          box-shadow: 0px 0px 3px rgba(254, 124, 141, 1);
+          box-shadow: 0 0 0.3rem rgba(254, 124, 141, 1);
         }
       }
     }
