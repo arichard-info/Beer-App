@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Layout from "./Layout";
+import LoggedOut from "./Layout/LoggedOut";
 
 import Calendar from "./pages/Calendar";
 import Settings from "./pages/Settings";
@@ -17,14 +18,16 @@ const Router = ({ user }) => {
     if (user.toComplete) {
       return (
         <BrowserRouter>
-          <Switch>
-            <Route exact path="/">
-              <CompleteProfile />
-            </Route>
-            <Route path="*">
-              <Redirect to="/" />
-            </Route>
-          </Switch>
+          <LoggedOut>
+            <Switch>
+              <Route exact path="/">
+                <CompleteProfile />
+              </Route>
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+          </LoggedOut>
         </BrowserRouter>
       );
     }
@@ -52,23 +55,25 @@ const Router = ({ user }) => {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route exact path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/login/reset/:token">
-          <Reset />
-        </Route>
-        <Route exact path="/login/forgot">
-          <Forgot />
-        </Route>
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
-      </Switch>
+      <LoggedOut>
+        <Switch>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/login/reset/:token">
+            <Reset />
+          </Route>
+          <Route exact path="/login/forgot">
+            <Forgot />
+          </Route>
+          <Route path="*">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+      </LoggedOut>
     </BrowserRouter>
   );
 };

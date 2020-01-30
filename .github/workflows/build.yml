@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build full
 
 on: [pull_request]
 
@@ -15,9 +15,9 @@ jobs:
       CYPRESS_baseUrl: http://localhost:5000
     steps:
       - uses: actions/checkout@v1
-      - name: Build the docker-compose stack
+      - name: Build and start docker containers
         run: docker-compose -f docker-compose.yml up -d
-      - name: Install client dependencies
+      - name: Install test dependencies
         run: cd client && npm install cypress
       - name: Run cypress tests
         run: cd client && node_modules/cypress/bin/cypress run

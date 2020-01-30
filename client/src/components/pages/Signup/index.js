@@ -1,29 +1,45 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { useUser } from "./../../../state/authentication";
-import { formReducer } from "./../../../utils/form";
 import { signup } from "../../../utils/api/authentication";
-
-const initialFields = {
-  name: "",
-  email: "",
-  password: "",
-  passwordConfirm: ""
-};
+import Form from "./../../Form";
 
 const Forgot = ({ className }) => {
   const [, authDispatch] = useUser();
-  const [fields, formDispatch] = useReducer(formReducer, initialFields);
-  const { name, email, password, passwordConfirm } = fields;
 
-  const onChange = e =>
-    formDispatch({ field: e.target.name, value: e.target.value });
+  const fields = {
+    name: {
+      field: "textField",
+      type: "text",
+      placeholder: "Nom / Prénom",
+      label: "Nom / Prénom",
+      required: true
+    },
+    email: {
+      field: "textField",
+      type: "email",
+      placeholder: "Adresse email",
+      label: "Adresse email",
+      required: true
+    },
+    password: {
+      field: "passwordConfirm",
+      label: "Mot de passe",
+      confirmLabel: "Confirmation du mot de passe",
+      placeholder: "Mot de passe",
+      confirmPlaceholder: "Confirmation du mot de passe"
+    }
+  };
 
-  const submitForm = async e => {
-    e.preventDefault();
-    const user = await signup(fields);
+  const submitForm = async ({ name, email, password }) => {
+    const user = await signup({
+      name: name.value,
+      email: email.value,
+      password: password.value.password,
+      passwordConfirm: password.value.confirm
+    });
     if (user && !user.error) authDispatch({ type: "LOG_IN", value: user });
     else {
       console.error("Error when trying to signup", user.message || "");
@@ -31,75 +47,11 @@ const Forgot = ({ className }) => {
   };
   return (
     <div className={className}>
-      <div className="form-row">
-        <Link to="/">Retour</Link>
-      </div>
-      <form onSubmit={submitForm}>
-        <div className="form-row">
-          <label htmlFor="name">Prénom / Nom</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Nom"
-            value={name}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-row">
-          <label htmlFor="username">Adresse email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Addresse email"
-            value={email}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-row">
-          <label htmlFor="username">Mot de passe</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Mot de passe"
-            value={password}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-row">
-          <label htmlFor="username">Confirmation du mot de passe</label>
-          <input
-            id="passwordConfirm"
-            name="passwordConfirm"
-            type="passwordConfirm"
-            placeholder="Confirmation"
-            value={passwordConfirm}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-row">
-          <input type="submit" value="Envoyer" />
-        </div>
-      </form>
+      <Link to="/">Retour</Link>
+      <h1>Créer un compte</h1>
+      <Form onValidSubmit={submitForm} fields={fields} />
     </div>
   );
 };
 
-export default styled(Forgot)(
-  () => css`
-    height: 100%;
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    label {
-      display: block;
-    }
-    .form-row {
-      margin: 0.4rem 0;
-    }
-  `
-);
+export default styled(Forgot)(() => css``);
