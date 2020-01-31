@@ -56,7 +56,7 @@ const LoginPage = ({ className }) => {
 
       <button
         onClick={() => {
-          window.flash({ message: "Coucou ceci est un test" });
+          window.flash({ message: "Coucou ceci est un test", type: "test" });
         }}
       >
         test

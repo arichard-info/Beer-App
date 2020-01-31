@@ -7,32 +7,47 @@ import Flash from "./Flash";
 const Flashes = ({ className }) => {
   const [flashes, setFlashes] = useState([]);
 
-  const removeFlash = flash => {
-    setFlashes(flashes => flashes.filter(el => el.key !== flash.key));
+  const removeFlash = index => {
+    setFlashes(flashes => [...flashes].filter(flash => flash.index !== index));
   };
 
   useEffect(() => {
-    const onFlash = ({ message = "", type = "success", timeout = 5000 }) => {
+    const onFlash = ({ message = "", type = "success", timeout = 2000 }) => {
       if (message)
-        setFlashes(flashes => [
-          ...flashes,
-          { message, type, timeout, key: v4() }
-        ]);
+        setFlashes(flashes => {
+          const index = flashes.findIndex(el => el.message === message);
+          if (index === -1)
+            return [
+              { message, type, timeout, calls: 0, index: v4() },
+              ...flashes
+            ];
+          let flashesState = [...flashes];
+          flashesState[index] = {
+            ...flashes[index],
+            timeout,
+            calls: flashes[index].calls + 1
+          };
+          return flashesState;
+        });
     };
     Emitter.addListener("flash", onFlash);
+    return () => Emitter.removeAllListeners();
   }, []);
 
   return (
     <div className={className}>
-      {flashes.map(el => (
-        <Flash
-          key={el.key}
-          message={el.message}
-          type={el.type}
-          timeout={el.timeout}
-          onRemove={() => removeFlash(el)}
-        />
-      ))}
+      {flashes.map((el, key) => {
+        return (
+          <Flash
+            key={el.index}
+            message={el.message}
+            type={el.type}
+            timeout={el.timeout}
+            calls={el.calls}
+            onRemove={() => removeFlash(el.index)}
+          />
+        );
+      })}
     </div>
   );
 };
