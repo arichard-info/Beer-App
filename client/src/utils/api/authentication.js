@@ -92,10 +92,11 @@ export const signup = async ({ name, email, password, passwordConfirm }) => {
  */
 export const completeProfile = async userObject => {
   try {
-    const { data: user } = authPostRequest(
+    const response = await authPostRequest(
       `/api/auth/complete-profile`,
       userObject
     );
+    const { data: user } = response;
     if (!user) throw new Error("Error while trying to signup");
     return user;
   } catch (err) {

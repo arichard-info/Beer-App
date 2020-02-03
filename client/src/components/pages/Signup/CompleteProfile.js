@@ -1,13 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import { completeProfile } from "./../../../utils/api/authentication";
 import { useUser } from "./../../../state/authentication";
 import Form from "./../../Form";
 
-const Forgot = ({ className }) => {
+const CompleteProfile = ({ className }) => {
   const [user, authDispatch] = useUser();
+  const history = useHistory();
 
   const fields = {
     name: {
@@ -34,21 +35,23 @@ const Forgot = ({ className }) => {
       email: email.value,
       name: name.value
     });
-    if (finalUser && !finalUser.error)
+
+    if (finalUser && !finalUser.error) {
       authDispatch({ type: "LOG_IN", value: finalUser });
-    else {
+      history.push("/home");
+    } else {
       authDispatch({ type: "REMOVE" });
+      history.push("/");
       console.error("Invalid user");
     }
   };
 
   return (
     <div className={className}>
-      <Link to="/">Retour</Link>
       <h1>Compléter le profil</h1>
       <Form fields={fields} onValidSubmit={submitForm} />
     </div>
   );
 };
 
-export default styled(Forgot)(() => css``);
+export default styled(CompleteProfile)(() => css``);

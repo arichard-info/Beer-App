@@ -20,8 +20,15 @@ const LoginPage = ({ className }) => {
 
   const handleSubmit = async ({ email, password }) => {
     const user = await login(email.value, password.value);
-    if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
-    // TODO : Alert if no user
+    if (user && !user.error) {
+      dispatch({ type: "LOG_IN", value: user });
+      window.flash({ message: "Tu es maintenant connecté !", timeout: 3000 });
+    } else
+      window.flash({
+        message: "Erreur lors de la connexion :/",
+        type: "danger",
+        timeout: 5000
+      });
   };
 
   const fields = {

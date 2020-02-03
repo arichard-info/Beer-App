@@ -9,7 +9,11 @@
     "formBorder": "#E2E2E2",
     "formError": "#FE7C8D",
     "linkSecond": "#AFAFAF",
-    "pageTitle": "#000000"
+    "pageTitle": "#000000",
+    "flashSuccess": "#5cb85c",
+    "flashDanger": "#fe7c8d",
+    "flashWarning": "#f0ad4e",
+    "flashInfo": "#5bc0de"
   },
   "fw": {
     "light": "300",
@@ -21,5 +25,8 @@
   },
   "fonts": {
     "sansSerif": "\"Montserrat\", sans-serif"
+  },
+  "timings": {
+    "bounce": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
   }
 }

@@ -8,9 +8,18 @@ const Forgot = ({ className }) => {
   let history = useHistory();
 
   const submitForm = async fields => {
-    console.log("coucou");
     const response = await forgot(fields.email.value);
-    if (response) history.push("/login", { message: "Email has been sent" });
+    if (response) {
+      history.push("/");
+      window.flash({
+        message: "Email envoyé!",
+        timeout: 3000
+      });
+    } else
+      window.flash({
+        message: "Erreur lors de l'envoi du mail.",
+        timeout: 5000
+      });
   };
 
   const fields = {
@@ -25,7 +34,7 @@ const Forgot = ({ className }) => {
 
   return (
     <div className={className}>
-      <Link to="/login">Retour</Link>
+      <Link to="/">Retour</Link>
       <h1>Mot de passe oublié</h1>
       <p>
         Nous t’enverrons un email de vérification sur cette adresse. Tu pourras
