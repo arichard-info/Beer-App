@@ -36,7 +36,6 @@ const CompleteProfile = ({ className }) => {
       name: name.value
     });
 
-    console.log(finalUser);
     if (finalUser && !finalUser.error) {
       authDispatch({ type: "LOG_IN", value: finalUser });
       history.push("/home");

@@ -97,7 +97,6 @@ export const completeProfile = async userObject => {
       userObject
     );
     const { data: user } = response;
-    console.log(response);
     if (!user) throw new Error("Error while trying to signup");
     return user;
   } catch (err) {
