@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Layout from "./../Layout";
 import PrivateRoute from "./PrivateRoute";
@@ -31,9 +31,11 @@ const Router = ({ user }) => {
           <LoggedOutRoute exact path="/login/forgot">
             <Forgot />
           </LoggedOutRoute>
-          <PrivateRoute exact path="/complete-profile">
-            <CompleteProfile />
-          </PrivateRoute>
+          {user && user.toComplete && (
+            <Route exact path="/complete-profile">
+              <CompleteProfile />
+            </Route>
+          )}
           <PrivateRoute exact path="/home">
             <Calendar />
           </PrivateRoute>

@@ -9,7 +9,17 @@ const Forgot = ({ className }) => {
 
   const submitForm = async fields => {
     const response = await forgot(fields.email.value);
-    if (response) history.push("/", { message: "Email has been sent" });
+    if (response) {
+      history.push("/");
+      window.flash({
+        message: "Email envoyé!",
+        timeout: 3000
+      });
+    } else
+      window.flash({
+        message: "Erreur lors de l'envoi du mail.",
+        timeout: 5000
+      });
   };
 
   const fields = {

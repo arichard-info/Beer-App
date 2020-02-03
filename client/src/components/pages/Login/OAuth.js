@@ -12,10 +12,22 @@ const OAuth = ({ socket, provider }) => {
     socket.on(provider.id, ({ user, error, message }) => {
       if (popup) popup.close();
       if (error) {
+        window.flash({
+          message: "Erreur lors de l'authentification :/",
+          type: "danger",
+          timeout: 5000
+        });
         console.error(message ? message : "Error when receiving user data");
         return;
       }
-      if (user) dispatch({ type: "LOG_IN", value: user });
+      if (user) {
+        dispatch({ type: "LOG_IN", value: user });
+        if (!user.toComplete)
+          window.flash({
+            message: `Tu es connecté avec ${provider.name}.`,
+            timeout: 5000
+          });
+      }
     });
   }, [popup, provider, socket, dispatch]);
 

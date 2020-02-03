@@ -22,9 +22,13 @@ const LoginPage = ({ className }) => {
     const user = await login(email.value, password.value);
     if (user && !user.error) {
       dispatch({ type: "LOG_IN", value: user });
-      window.flash({ message: "You are now logged in!" });
-    }
-    // TODO : Alert if no user
+      window.flash({ message: "Tu es maintenant connecté !", timeout: 3000 });
+    } else
+      window.flash({
+        message: "Erreur lors de la connexion :/",
+        type: "danger",
+        timeout: 5000
+      });
   };
 
   const fields = {
@@ -53,26 +57,6 @@ const LoginPage = ({ className }) => {
         fields={fields}
         submitLabel="Connexion"
       />
-
-      <button
-        onClick={() => {
-          window.flash({
-            message: "Coucou ceci est un test",
-            type: "info",
-            timeout: 10000
-          });
-        }}
-      >
-        test
-      </button>
-
-      <button
-        onClick={() => {
-          window.flash({ message: "Coucou ceci est un yion" });
-        }}
-      >
-        yion
-      </button>
 
       <div className="sep">
         <span>ou</span>
