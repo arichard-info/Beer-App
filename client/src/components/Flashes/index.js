@@ -12,19 +12,16 @@ const Flashes = ({ className }) => {
   };
 
   useEffect(() => {
-    const onFlash = ({ message = "", type = "success", timeout = 2000 }) => {
-      if (message)
+    const onFlash = flash => {
+      if (flash.message)
         setFlashes(flashes => {
-          const index = flashes.findIndex(el => el.message === message);
+          const index = flashes.findIndex(el => el.message === flash.message);
           if (index === -1)
-            return [
-              { message, type, timeout, calls: 0, index: v4() },
-              ...flashes
-            ];
+            return [{ ...flash, calls: 0, index: v4() }, ...flashes];
           let flashesState = [...flashes];
           flashesState[index] = {
             ...flashes[index],
-            timeout,
+            timeout: flash.timeout,
             calls: flashes[index].calls + 1
           };
           return flashesState;

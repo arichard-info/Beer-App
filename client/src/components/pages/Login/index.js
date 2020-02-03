@@ -56,7 +56,11 @@ const LoginPage = ({ className }) => {
 
       <button
         onClick={() => {
-          window.flash({ message: "Coucou ceci est un test", type: "test" });
+          window.flash({
+            message: "Coucou ceci est un test",
+            type: "info",
+            timeout: 10000
+          });
         }}
       >
         test
