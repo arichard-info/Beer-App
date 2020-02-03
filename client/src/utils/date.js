@@ -20,7 +20,7 @@ export function getDaysInMonth(m, y) {
 export function getInitialMonths(month, year, length) {
   let months = [];
 
-  for (let m = month - length; m <= month + 2; m++) {
+  for (let m = month - length; m <= month + 1; m++) {
     const date = new Date(Date.UTC(year, m, 1));
     const monthNumber = date.getMonth();
     const yearNumber = date.getFullYear();

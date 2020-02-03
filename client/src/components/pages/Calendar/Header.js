@@ -4,7 +4,7 @@ import { useCalendar } from "./../../../state/calendar";
 import { getMonthName } from "./../../../utils/date";
 
 const Header = ({ className }) => {
-  const [{ highlight }, dispatch] = useCalendar();
+  const [{ highlight }] = useCalendar();
   const date = highlight
     ? {
         month: getMonthName(highlight.month),
@@ -12,20 +12,11 @@ const Header = ({ className }) => {
       }
     : { month: "", year: "" };
 
-  function handlePreviousClick() {
-    dispatch({ type: "PREVIOUS_MONTH" });
-  }
-  function handleNextClick() {
-    dispatch({ type: "NEXT_MONTH" });
-  }
-
   return (
     <header className={className}>
-      <button onClick={handlePreviousClick}>Prev</button>
       <span>
         {date.month} {date.year}
       </span>
-      <button onClick={handleNextClick}>Next</button>
     </header>
   );
 };

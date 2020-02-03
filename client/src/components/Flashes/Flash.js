@@ -72,6 +72,7 @@ export default styled(Flash)(
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
+    pointer-events: all;
 
     &.fading-out {
       animation: fadeOut 0.6s ${timings.bounce};

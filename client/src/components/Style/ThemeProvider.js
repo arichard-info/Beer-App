@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ThemeProvider, ThemeContext } from "styled-components";
-import theme from "./theme.json";
+import theme from "./theme.js";
 
 const CustomThemeProvider = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

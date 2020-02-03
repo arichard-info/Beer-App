@@ -23,18 +23,31 @@ const Layout = ({ className, loggedIn, children }) => {
 };
 
 export default styled(Layout)(
-  ({ loggedIn }) => css`
+  ({ loggedIn, theme: { device, colors } }) => css`
     ${loggedIn &&
       css`
-        display: flex;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
+        position: relative;
+        z-index: 0;
         & > header {
-          flex: 33.33%;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background-color: ${colors.white};
+          z-index: 1;
+          padding: 2rem 0;
         }
-        & > main {
-          flex: 66.66%;
+        @media ${device.gtMobile} {
+          display: flex;
+          max-width: 900px;
+          margin-left: auto;
+          margin-right: auto;
+          & > header {
+            flex: 33.33%;
+          }
+          & > main {
+            flex: 66.66%;
+          }
         }
       `}
 
