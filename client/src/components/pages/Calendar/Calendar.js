@@ -61,8 +61,6 @@ export default styled(Calendar)(
     &::-webkit-scrollbar {
       display: none;
     }
-    /* scroll-behavior: smooth; */
     position: relative;
-    /*scroll-snap-type: y proximity;*/
   `
 );

@@ -41,16 +41,16 @@ const Month = ({ className, days, month, year }) => {
 };
 
 export default styled(Month)(
-  () => css`
+  ({ theme: { device } }) => css`
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 3rem;
     scroll-snap-align: center;
     transition: padding 0.2s ease;
 
     &.current {
-      padding: 0;
+      padding: 0 1rem;
     }
 
     .offset,
@@ -74,25 +74,28 @@ export default styled(Month)(
           left: 0;
           height: 100%;
           width: 100%;
-          background-color: #f6f6f6;
+          background-color: #f0f0f0;
+          border: none;
           border-radius: 10px;
-          border: 1px solid #e0e0e0;
           outline: none;
           cursor: pointer;
           color: transparent;
-          transition: color 0.2s ease;
+          transition: color 0.2s ease, box-shadow 0.2s ease;
+          box-shadow: 0 0 0 transparent;
         }
       }
       &.today {
         .daybox__inner {
-          border-color: #ffcf40;
+          border: 0.1rem solid #ffcf40;
           box-shadow: 0px 0px 10px #ffd045;
         }
       }
       &:hover {
         padding: 0;
+
         .daybox__inner {
           color: grey;
+          box-shadow: 0 0 0 0.2rem grey;
         }
       }
     }
@@ -101,6 +104,19 @@ export default styled(Month)(
     .disabled {
       opacity: 0.3;
       pointer-events: none;
+    }
+
+    @media ${device.gtMobileSm} {
+      max-width: 50rem;
+      margin: auto;
+    }
+
+    @media ${device.gtMobile} {
+      max-width: none;
+      padding: 1rem 5rem;
+      &.current {
+        padding: 0 2.5rem;
+      }
     }
   `
 );

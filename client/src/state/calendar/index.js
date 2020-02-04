@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useReducer } from "react";
 import { getInitialMonths } from "./../../utils/date";
-import { getMonthElIndex, scrollToMonth } from "./utils";
+import { getMonthElIndex } from "./utils";
 
 //Context
 const StateContext = createContext();
 
 //Reducer
 const reducer = (state, action) => {
-  const { highlight, scrollContainer, today, months } = state;
-  console.log(action);
+  const { today, months } = state;
   switch (action.type) {
     case "INIT":
       const container = action.value;
@@ -19,30 +18,6 @@ const reducer = (state, action) => {
         container.scrollTop = scrollPosition;
       }
       return { ...state, scrollContainer: container };
-
-    case "PREVIOUS_MONTH":
-      if (highlight && scrollContainer) {
-        const index = getMonthElIndex(
-          months,
-          highlight.month - 1,
-          highlight.year
-        );
-        if (index >= 0 && index <= months.length)
-          scrollToMonth(scrollContainer, index);
-      }
-      return state;
-
-    case "NEXT_MONTH":
-      if (highlight && scrollContainer) {
-        const index = getMonthElIndex(
-          months,
-          highlight.month + 1,
-          highlight.year
-        );
-        if (index >= 0 && index <= months.length)
-          scrollToMonth(scrollContainer, index);
-      }
-      return state;
 
     case "UPDATE_HIGHLIGHT_MONTH":
       const highlightMonth = state.months[action.value];

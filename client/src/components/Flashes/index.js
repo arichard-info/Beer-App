@@ -60,5 +60,6 @@ export default styled(Flashes)(
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    pointer-events: none;
   `
 );
