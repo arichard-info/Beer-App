@@ -1,12 +1,7 @@
-let isMoving = false;
 export const scrollTo = (
   { element = document.body, left = 0, top = 0, duration = 500 } = {},
   callback
 ) => {
-  if (isMoving === element) return;
-
-  isMoving = element;
-
   const move = (left, top) => {
     element.scrollLeft = left;
     element.scrollTop = top;
@@ -51,7 +46,6 @@ export const scrollTo = (
     if (currentTime < duration) animationFrame = animationFrameReqFunc(anim);
     else {
       cancelAnimationFrame(animationFrame);
-      isMoving = false;
       element.removeAttribute("style");
       if (callback && typeof callback === "function") callback();
     }

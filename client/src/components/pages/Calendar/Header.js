@@ -15,7 +15,7 @@ const Header = ({ className }) => {
   return (
     <header className={className}>
       <h1>Mon calendrier</h1>
-      <span class="month">
+      <span className="month">
         {date.month} <small>{date.year}</small>
       </span>
       <ul>
@@ -33,10 +33,14 @@ const Header = ({ className }) => {
 
 export default styled(Header)(
   ({ theme: { fw, colors, device } }) => css`
-    padding: 3rem 1.5rem 2rem;
+    position: sticky;
+    top: 0;
+    padding: 1.5rem;
+    z-index: 1;
+    background-color: ${colors.white};
     h1 {
       margin-top: 0;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
     }
     .month {
       margin-bottom: 1.5rem;
@@ -63,8 +67,19 @@ export default styled(Header)(
       }
     }
 
+    @media ${device.gtMobileSm} {
+      max-width: 50rem;
+      width: 50rem;
+      margin: auto;
+    }
+
     @media ${device.gtMobile} {
-      padding: 3rem 2.5rem 2rem;
+      max-width: none;
+      width: 100%;
+      padding: 3rem 1.5rem 2rem;
+      h1 {
+        margin-bottom: 3rem;
+      }
     }
   `
 );

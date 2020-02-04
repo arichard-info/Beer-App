@@ -18,5 +18,5 @@ export function getMonthElIndex(months, m, y) {
 export function scrollToMonth(container, index) {
   const currentEl = container.childNodes[index];
   const scrollPosition = currentEl.offsetTop;
-  scrollTo({ element: container, top: scrollPosition });
+  scrollTo({ top: scrollPosition });
 }

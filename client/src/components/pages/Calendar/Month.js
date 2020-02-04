@@ -45,12 +45,12 @@ export default styled(Month)(
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    padding: 1rem 3rem;
+    padding: 1rem 2rem;
     scroll-snap-align: center;
     transition: padding 0.2s ease;
 
     &.current {
-      padding: 0 1rem;
+      padding: 0;
     }
 
     .offset,
@@ -113,9 +113,9 @@ export default styled(Month)(
 
     @media ${device.gtMobile} {
       max-width: none;
-      padding: 1rem 5rem;
+      padding: 1rem 2.5rem;
       &.current {
-        padding: 0 2.5rem;
+        padding: 0;
       }
     }
   `

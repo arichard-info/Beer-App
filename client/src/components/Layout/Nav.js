@@ -37,27 +37,6 @@ const Nav = ({ className }) => {
 
 export default styled(Nav)(
   ({ theme: { colors, fw, device } }) => css`
-    @keyframes deactivate {
-      0% {
-        width: auto;
-        max-width: 10rem;
-      }
-      100% {
-        width: 0;
-        max-width: 0;
-      }
-    }
-
-    @keyframes activate {
-      0% {
-        width: 0;
-        max-width: 0;
-      }
-      100% {
-        width: auto;
-        max-width: 10rem;
-      }
-    }
     ul {
       margin: 0;
       padding: 0;
@@ -93,14 +72,8 @@ export default styled(Nav)(
     }
 
     @media ${device.gtMobileSm} {
-      ul {
-        li {
-          a {
-            span {
-              display: block;
-            }
-          }
-        }
+      ul li a span {
+        display: block;
       }
     }
 

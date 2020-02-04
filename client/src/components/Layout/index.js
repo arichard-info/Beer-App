@@ -38,18 +38,19 @@ export default styled(Layout)(
           padding: 2rem 0;
         }
         @media ${device.gtMobile} {
-          display: flex;
-          max-width: 900px;
+          max-width: 90rem;
           margin-left: auto;
           margin-right: auto;
+          position: relative;
           & > header {
-            flex: 33.33%;
-            width: 33.33%;
-            position: relative;
+            width: calc(90rem / 3);
+            top: 0;
+            left: initial;
             border-right: 0.1rem solid ${colors.grey1};
           }
           & > main {
-            flex: 66.66%;
+            width: 66.66%;
+            margin-left: 33.33%;
           }
         }
       `}

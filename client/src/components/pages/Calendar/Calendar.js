@@ -15,7 +15,7 @@ const Calendar = ({ className }) => {
 
     const handleScroll = debounce(() => {
       let newIndex = false;
-      const scrollTop = container.scrollTop;
+      const scrollTop = window.scrollY;
       const monthsEls = container.childNodes;
       let closestOffset = 100000;
       monthsEls.forEach((el, index) => {
@@ -27,10 +27,10 @@ const Calendar = ({ className }) => {
       });
       dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: newIndex });
     }, 15);
-    container.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [today, months, dispatch]);
   return (
@@ -49,18 +49,7 @@ const Calendar = ({ className }) => {
 
 export default styled(Calendar)(
   () => css`
-    height: 100vh;
-    max-height: 100vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    @supports (scrollbar-width: none) {
-      scrollbar-width: none;
-      scrollbar-color: transparent transparent;
-    }
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    padding: 0 1.5rem;
     position: relative;
   `
 );

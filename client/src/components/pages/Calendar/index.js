@@ -18,11 +18,12 @@ const CalendarPage = ({ className }) => {
 };
 
 export default styled(CalendarPage)(
-  () => css`
+  ({ theme: { device } }) => css`
     width: 100%;
-    height: 100vh;
-    max-height: 100vh;
     display: flex;
     flex-direction: column;
+    @media ${device.gtMobile} {
+      padding: 0 0 0 4rem;
+    }
   `
 );
