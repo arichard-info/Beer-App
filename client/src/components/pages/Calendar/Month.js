@@ -41,16 +41,16 @@ const Month = ({ className, days, month, year }) => {
 };
 
 export default styled(Month)(
-  () => css`
+  ({ theme: { device } }) => css`
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    padding: 1rem 5rem;
+    padding: 1rem 3rem;
     scroll-snap-align: center;
     transition: padding 0.2s ease;
 
     &.current {
-      padding: 0 2.5rem;
+      padding: 0 1rem;
     }
 
     .offset,
@@ -104,6 +104,19 @@ export default styled(Month)(
     .disabled {
       opacity: 0.3;
       pointer-events: none;
+    }
+
+    @media ${device.gtMobileSm} {
+      max-width: 50rem;
+      margin: auto;
+    }
+
+    @media ${device.gtMobile} {
+      max-width: none;
+      padding: 1rem 5rem;
+      &.current {
+        padding: 0 2.5rem;
+      }
     }
   `
 );

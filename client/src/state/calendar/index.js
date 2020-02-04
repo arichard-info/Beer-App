@@ -14,10 +14,7 @@ const reducer = (state, action) => {
       if (months && today) {
         const index = getMonthElIndex(months, today);
         const currentEl = container.childNodes[index];
-        const scrollPosition =
-          currentEl.offsetTop -
-          container.clientHeight / 2 +
-          currentEl.clientHeight / 2;
+        const scrollPosition = currentEl.offsetTop;
         container.scrollTop = scrollPosition;
       }
       return { ...state, scrollContainer: container };

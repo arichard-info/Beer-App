@@ -36,7 +36,7 @@ const Nav = ({ className }) => {
 };
 
 export default styled(Nav)(
-  () => css`
+  ({ theme: { colors, fw, device } }) => css`
     @keyframes deactivate {
       0% {
         width: auto;
@@ -66,14 +66,56 @@ export default styled(Nav)(
       justify-content: space-around;
       li {
         a {
+          font-weight: ${fw.semibold};
+          padding: 0.75rem 1.4rem;
+          border-radius: 50rem;
+          color: ${colors.grey9};
           display: flex;
+          align-items: center;
+          text-decoration: none;
+          cursor: pointer;
+          font-size: 1.6rem;
           span {
+            line-height: 1;
+            font-size: 0.8em;
             display: none;
+            transition: max-width 0.5s ease;
+            padding-left: 1rem;
           }
           &.active {
+            background-color: ${colors.pastelAmber};
             span {
               display: block;
-              padding-left: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    @media ${device.gtMobileSm} {
+      ul {
+        li {
+          a {
+            span {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    @media ${device.gtMobile} {
+      ul {
+        flex-direction: column;
+        justify-content: start;
+        align-items: flex-start;
+        padding: 2rem;
+        li {
+          margin-bottom: 1rem;
+          a {
+            font-size: 1.9rem;
+            span {
+              display: block;
             }
           }
         }

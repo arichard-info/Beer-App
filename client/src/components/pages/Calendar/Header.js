@@ -14,20 +14,57 @@ const Header = ({ className }) => {
 
   return (
     <header className={className}>
-      <span>
-        {date.month} {date.year}
+      <h1>Mon calendrier</h1>
+      <span class="month">
+        {date.month} <small>{date.year}</small>
       </span>
+      <ul>
+        <li>lun</li>
+        <li>mar</li>
+        <li>mer</li>
+        <li>jeu</li>
+        <li>ven</li>
+        <li>sam</li>
+        <li>dim</li>
+      </ul>
     </header>
   );
 };
 
 export default styled(Header)(
-  () => css`
-    padding: 2rem 1rem;
-    display: flex;
-    justify-content: start;
-    span {
-      padding: 0 1rem;
+  ({ theme: { fw, colors, device } }) => css`
+    padding: 3rem 1.5rem 2rem;
+    h1 {
+      margin-top: 0;
+      margin-bottom: 3rem;
+    }
+    .month {
+      margin-bottom: 1.5rem;
+      display: block;
+      font-size: 1.8rem;
+      font-weight: ${fw.bold};
+      color: ${colors.black};
+      small {
+        font-size: 1.8rem;
+        font-weight: ${fw.semibold};
+      }
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      margin: 0;
+      li {
+        flex: 14.28%;
+        width: 14.28%;
+        max-width: 14.28%;
+        font-style: italic;
+        font-size: 1.4rem;
+      }
+    }
+
+    @media ${device.gtMobile} {
+      padding: 3rem 2.5rem 2rem;
     }
   `
 );

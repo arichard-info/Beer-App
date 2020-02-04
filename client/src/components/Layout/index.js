@@ -44,6 +44,9 @@ export default styled(Layout)(
           margin-right: auto;
           & > header {
             flex: 33.33%;
+            width: 33.33%;
+            position: relative;
+            border-right: 0.1rem solid ${colors.grey1};
           }
           & > main {
             flex: 66.66%;
