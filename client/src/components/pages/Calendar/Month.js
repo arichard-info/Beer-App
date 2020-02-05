@@ -47,7 +47,7 @@ export default styled(Month)(
     width: 100%;
     padding: 1rem 2rem;
     scroll-snap-align: center;
-    transition: padding 0.2s ease;
+    transition: padding 0.4s ease;
 
     &.current {
       padding: 0;

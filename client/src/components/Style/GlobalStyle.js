@@ -10,6 +10,9 @@ const GlobalStyle = createGlobalStyle`
         font-family: ${props => props.theme.fonts.sansSerif};
         font-size: 1.6rem;
         color: ${props => props.theme.colors.text};
+        overscroll-behavior-y: none;
+        overflow-y: scroll;
+        height: 100%;
         *{
             box-sizing: border-box;
         }
