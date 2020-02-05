@@ -5,7 +5,7 @@ import { useCalendar } from "./../../../state/calendar";
 import { getFullDate } from "../../../utils/date";
 
 const Month = ({ className, days, month, year }) => {
-  const [{ today, highlight }] = useCalendar();
+  const [{ today, highlight }, dispatch] = useCalendar();
   const offset = days[0].getDay() - 1;
   const offsetArray = Array(offset >= 0 ? offset : 6).fill(null);
 
@@ -28,7 +28,7 @@ const Month = ({ className, days, month, year }) => {
               <button
                 className="daybox__inner"
                 title={getFullDate(day)}
-                onClick={() => console.log(day)}
+                onClick={() => dispatch({ type: "SELECT_DAY", value: day })}
               >
                 {day.getDate()}
               </button>

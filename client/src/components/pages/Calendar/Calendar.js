@@ -7,16 +7,14 @@ import Month from "./Month";
 
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
-  const [{ months, today }, dispatch] = useCalendar();
+  const [{ months }, dispatch] = useCalendar();
 
   useEffect(() => {
-    const container = scrollContainer.current;
-    dispatch({ type: "INIT", value: container });
-
+    dispatch({ type: "INIT", value: scrollContainer.current });
     const handleScroll = debounce(() => {
       let newIndex = false;
       const scrollTop = window.scrollY;
-      const monthsEls = container.childNodes;
+      const monthsEls = scrollContainer.current.childNodes;
       let closestOffset = 100000;
       monthsEls.forEach((el, index) => {
         const offset = el.offsetTop - scrollTop;
@@ -27,12 +25,11 @@ const Calendar = ({ className }) => {
       });
       dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: newIndex });
     }, 15);
-    window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [today, months, dispatch]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [dispatch]);
+
   return (
     <div className={className} ref={scrollContainer}>
       {months.map((month, key) => (
