@@ -9,7 +9,7 @@ const StateContext = createContext();
 const reducer = (state, action) => {
   const { today, months } = state;
   switch (action.type) {
-    case "INIT":
+    case "INIT": {
       const container = action.value;
       if (months && today) {
         const index = getMonthElIndex(months, today);
@@ -18,8 +18,9 @@ const reducer = (state, action) => {
         window.scroll(0, scrollPosition);
       }
       return { ...state, scrollContainer: container };
+    }
 
-    case "UPDATE_HIGHLIGHT_MONTH":
+    case "UPDATE_HIGHLIGHT_MONTH": {
       const highlightMonth = state.months[action.value];
       if (highlightMonth) {
         return {
@@ -33,6 +34,15 @@ const reducer = (state, action) => {
       }
 
       return state;
+    }
+
+    case "SELECT_DAY": {
+      return { ...state, selected: action.value };
+    }
+
+    case "UNSELECT_DAY": {
+      return { ...state, selected: false };
+    }
 
     default:
       return state;
@@ -44,7 +54,8 @@ const getInitialState = () => {
   const todayDate = new Date();
   return {
     months: getInitialMonths(todayDate.getMonth(), todayDate.getFullYear(), 12),
-    today: todayDate
+    today: todayDate,
+    selected: false
   };
 };
 
