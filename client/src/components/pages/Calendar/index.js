@@ -14,7 +14,7 @@ const CalendarPage = ({ className }) => {
     <div className={className}>
       <Header />
       <Calendar />
-      {selected && <AddBeer day={selected} />}
+      <AddBeer day={selected} />
     </div>
   );
 };
