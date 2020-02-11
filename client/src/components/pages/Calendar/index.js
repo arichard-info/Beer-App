@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { CalendarProvider, useCalendar } from "./../../../state/calendar";
+import { useCalendar } from "./../../../state/calendar";
 
 import Header from "./Header";
 import Calendar from "./Calendar";
@@ -32,8 +32,4 @@ const StyledCalendarPage = styled(CalendarPage)(
   `
 );
 
-export default () => (
-  <CalendarProvider>
-    <StyledCalendarPage />
-  </CalendarProvider>
-);
+export default () => <StyledCalendarPage />;
