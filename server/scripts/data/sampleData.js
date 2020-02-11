@@ -44,8 +44,24 @@ async function loadData() {
     process.exit();
   }
 }
+
+async function replaceData() {
+  try {
+    await deleteData();
+    await loadData();
+  } catch (e) {
+    console.log(
+      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n"
+    );
+    console.log(e);
+    process.exit();
+  }
+}
+
 if (process.argv.includes("--delete")) {
   deleteData();
+} else if (process.argv.includes("--replace")) {
+  replaceData();
 } else {
   loadData();
 }

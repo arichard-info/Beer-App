@@ -6,7 +6,8 @@
     "start": "node scripts/start.js",
     "dev": "supervisor -w routes, models, controllers -e ejs,js,json, scripts/start.js",
     "sample": "node ./scripts/data/sampleData.js",
-    "blowitallaway": "node ./scripts/data/sampleData.js --delete"
+    "blowitallaway": "node ./scripts/data/sampleData.js --delete",
+    "bowitandsample": "node ./scripts/data/sampleData.js --replace"
   },
   "dependencies": {
     "axios": "^0.19.1",
