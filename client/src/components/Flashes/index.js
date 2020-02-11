@@ -53,6 +53,7 @@ export default styled(Flashes)(
   () => css`
     padding: 2rem;
     position: fixed;
+    z-index: 1;
     top: 0;
     right: 0;
     left: 0;
