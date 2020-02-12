@@ -1,6 +1,3 @@
-import React from "react";
-
-import { CalendarProvider } from "./../state/calendar";
 import Calendar from "./pages/Calendar";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
@@ -38,13 +35,8 @@ export default [
   },
   {
     path: "/home",
-    exact: true,
     rights: "private",
-    render: () => (
-      <CalendarProvider>
-        <Calendar />
-      </CalendarProvider>
-    )
+    component: Calendar
   },
   {
     path: "/profile",

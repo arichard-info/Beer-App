@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { debounce } from "./../../../utils";
-import { useCalendar } from "./../../../state/calendar";
+import { debounce } from "./../../../../utils";
+import { useCalendar } from "./../../../../state/calendar";
+
+import Header from "./Header";
+import AddBeer from "./AddBeer";
 import Month from "./Month";
 
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
-  const [{ months }, dispatch] = useCalendar();
+  const [{ months, selected }, dispatch] = useCalendar();
 
   useEffect(() => {
     dispatch({ type: "INIT", value: scrollContainer.current });
@@ -31,22 +34,36 @@ const Calendar = ({ className }) => {
   }, [dispatch]);
 
   return (
-    <div className={className} ref={scrollContainer}>
-      {months.map((month, key) => (
-        <Month
-          month={month.month}
-          year={month.year}
-          key={key}
-          days={month.days}
-        />
-      ))}
+    <div className={className}>
+      <Header />
+      <div className="scroll-container" ref={scrollContainer}>
+        {months.map((month, key) => (
+          <Month
+            month={month.month}
+            year={month.year}
+            key={key}
+            days={month.days}
+          />
+        ))}
+      </div>
+      <AddBeer day={selected} />
     </div>
   );
 };
 
 export default styled(Calendar)(
-  () => css`
-    padding: 0 1.5rem;
+  ({ theme: { device } }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    z-index: 0;
+    @media ${device.gtMobile} {
+      padding: 0 0 0 4rem;
+    }
+    .scroll-container {
+      padding: 0 1.5rem;
+      position: relative;
+    }
   `
 );

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter } from "react-router-dom";
 
-import Layout from "./Layout";
-import Emitter from "./Flashes/Emitter";
-import SwitchRoutes from "./SwitchRoutes";
 import { UserProvider, useUser } from "./../state/authentication";
 import GlobalStyle from "./Style/GlobalStyle";
 import ThemeProvider from "./Style/ThemeProvider";
+
 import Loading from "./pages/Loading";
+import Layout from "./Layout";
+import Emitter from "./Flashes/Emitter";
+
+import SwitchRoutes from "./SwitchRoutes";
 import routes from "./App.routes";
 
 window.flash = flash => Emitter.emit("flash", flash);
