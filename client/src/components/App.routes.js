@@ -6,6 +6,7 @@ import Forgot from "./pages/Login/Forgot";
 import Reset from "./pages/Login/Reset";
 import Signup from "./pages/Signup";
 import CompleteProfile from "./pages/Signup/CompleteProfile";
+import AddDrink from "./pages/AddDrink";
 
 export default [
   { path: "/", exact: true, rights: "loggedOut", component: Login },
@@ -35,8 +36,15 @@ export default [
   },
   {
     path: "/home",
+    exact: true,
     rights: "private",
     component: Calendar
+  },
+  {
+    path: "/add-drink",
+    exact: true,
+    rights: "private",
+    component: AddDrink
   },
   {
     path: "/profile",

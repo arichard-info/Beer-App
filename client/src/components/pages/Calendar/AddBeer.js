@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-import { getMonthName } from "./../../../../utils/date";
-import { useCalendar } from "./../../../../state/calendar";
+import { getMonthName } from "./../../../utils/date";
+import { useCalendar } from "./../../../state/calendar";
 const AddBeer = ({ className, day }) => {
   const [, dispatch] = useCalendar();
 
@@ -35,7 +35,10 @@ const AddBeer = ({ className, day }) => {
             </button>
           </div>
 
-          <Link className="cta" to="/home/add-beer">
+          <Link
+            className="cta"
+            to={{ pathname: "/add-drink", state: { selectedDay: day } }}
+          >
             Ajouter une bière
           </Link>
         </animated.div>

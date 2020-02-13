@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import classNames from "classnames";
-import { useCalendar } from "./../../../../state/calendar";
-import { getFullDate } from "../../../../utils/date";
+import { useCalendar } from "./../../../state/calendar";
+import { getFullDate } from "../../../utils/date";
 
 const Month = ({ className, days, month, year }) => {
   const [{ today, highlight }, dispatch] = useCalendar();
