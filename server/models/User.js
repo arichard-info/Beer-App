@@ -33,6 +33,21 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: Date
 });
 
+userSchema.virtual("drinks", {
+  ref: "Drink",
+  localField: "_id",
+  foreignField: "user"
+});
+
+function autopopulate(next) {
+  this.populate("drinks");
+  next();
+}
+
+userSchema.pre("find", autopopulate);
+userSchema.pre("findOne", autopopulate);
+userSchema.pre("findById", autopopulate);
+
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 userSchema.plugin(mongodbErrorHandler);
 

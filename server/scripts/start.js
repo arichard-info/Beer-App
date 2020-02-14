@@ -17,15 +17,15 @@ mongoose.connection.on("error", err => {
 });
 
 require("./../models/Beer");
-require("./../models/Drink");
 require("./../models/User");
+require("./../models/Drink");
 
 /**
  * Module dependencies.
  */
 
 var app = require("./../app");
-var debug = require("debug")("rungis-express:server");
+var debug = require("debug")("beer-app:server");
 var http = require("http");
 
 /**

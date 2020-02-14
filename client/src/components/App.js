@@ -31,7 +31,7 @@ const App = () => {
           if (status === 200 && data && data.user) {
             dispatch({
               type: "INIT",
-              value: { user: data.user }
+              value: data.user
             });
           } else throw new Error("Error when checking token");
         } catch (err) {

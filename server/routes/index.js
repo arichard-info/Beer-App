@@ -7,6 +7,7 @@ const { verifyJWT } = require("./../handlers/jwt");
 const beerController = require("./../controllers/beerController");
 const authController = require("./../controllers/authController");
 const userController = require("./../controllers/userController");
+const drinkController = require("./../controllers/drinkController");
 
 /**
  * Authentication Routes
@@ -54,14 +55,34 @@ router.post(
  */
 
 router.post(
-  "/api/profile",
+  "/api/user",
   authController.authJWT,
   catchErrors(userController.updateAccount)
 );
 
+router.get(
+  "/api/user/drinks",
+  authController.authJWT,
+  catchErrors(drinkController.allDrinks)
+);
+
+router.get(
+  "/api/user/fav-drinks",
+  authController.authJWT,
+  catchErrors(drinkController.favDrinks)
+);
+/*
+router.get(
+  "/api/user/best-drinks",
+  authController.authJWT,
+  catchErrors(userController.bestDrinks)
+);
+*/
+
 /**
  * Beers routes
  */
+
 router.get("/api/beers", catchErrors(beerController.getBeers));
 router.get("/api/beers/:slug", catchErrors(beerController.getBeerFromSlug));
 
