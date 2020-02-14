@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import { debounce } from "./../../../utils";
 import { useCalendar, CalendarProvider } from "./../../../state/calendar";
 
+import Shortcut from "./Shortcut";
 import Header from "./Header";
 import AddBeer from "./AddBeer";
 import Month from "./Month";
@@ -46,13 +47,14 @@ const Calendar = ({ className }) => {
           />
         ))}
       </div>
+      {!selected && <Shortcut />}
       <AddBeer day={selected} />
     </div>
   );
 };
 
 const StyledCalendar = styled(Calendar)(
-  ({ theme: { device } }) => css`
+  ({ theme: { device, colors } }) => css`
     width: 100%;
     display: flex;
     flex-direction: column;
