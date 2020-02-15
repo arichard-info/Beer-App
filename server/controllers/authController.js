@@ -180,10 +180,3 @@ exports.authJWT = (req, res, next) => {
     });
   });
 };
-
-/*
-exports.bestDrinks = async (req, res, next) => {
-  const drinks = await 
-  return res.json(drinks)
-}
-*/
