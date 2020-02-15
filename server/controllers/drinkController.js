@@ -9,13 +9,12 @@ exports.allDrinks = async (req, res, next) => {
 
 exports.favDrinks = async (req, res, next) => {
   const user = req.user;
-  const test = await Drink.aggregate([
+  const favDrinks = await Drink.aggregate([
     {
       $match: {
         user: user._id
       }
     },
-
     {
       $group: {
         _id: "$beer",
@@ -23,6 +22,7 @@ exports.favDrinks = async (req, res, next) => {
         times: { $sum: 1 }
       }
     },
+    { $sort: { times: -1, quantity: -1 } },
     {
       $lookup: {
         from: "beers",
@@ -33,7 +33,8 @@ exports.favDrinks = async (req, res, next) => {
     },
     {
       $unwind: "$beer"
-    }
+    },
+    { $limit: 4 }
   ]);
-  res.json(test);
+  return res.json(favDrinks);
 };
