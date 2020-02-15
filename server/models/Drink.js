@@ -1,27 +1,32 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const drinkSchema = new mongoose.Schema({
-  drinker: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: "You must supply a user"
+const drinkSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: "You must supply a user"
+    },
+    beer: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Beer",
+      required: "You must supply a beer"
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+      required: "You must supply a date"
+    },
+    quantity: {
+      type: Number,
+      min: 0
+    }
   },
-  beer: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Beer",
-    required: "You must supply a beer"
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-    required: "You must supply a date"
-  },
-  quantity: {
-    type: Number,
-    min: 0
+  {
+    toJSON: { virtuals: true }
   }
-});
+);
 
 function autopopulate(next) {
   this.populate("beer");
