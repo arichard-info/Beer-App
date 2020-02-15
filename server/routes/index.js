@@ -83,13 +83,6 @@ router.get(
   authController.authJWT,
   catchErrors(drinkController.countDrinks)
 );
-/*
-router.get(
-  "/api/user/best-drinks",
-  authController.authJWT,
-  catchErrors(userController.bestDrinks)
-);
-*/
 
 /**
  * Beers routes
