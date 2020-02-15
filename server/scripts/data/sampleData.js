@@ -26,7 +26,6 @@ async function deleteData() {
   console.log(
     "Data Deleted. To load sample data, run\n\n\t npm run sample\n\n"
   );
-  process.exit();
 }
 
 async function loadData() {
@@ -41,27 +40,16 @@ async function loadData() {
       "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n"
     );
     console.log(e);
-    process.exit();
   }
 }
 
-async function replaceData() {
-  try {
+async function handleSampleData() {
+  if (process.argv.includes("--delete")) await deleteData();
+  else if (process.argv.includes("--replace")) {
     await deleteData();
     await loadData();
-  } catch (e) {
-    console.log(
-      "\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n"
-    );
-    console.log(e);
-    process.exit();
-  }
+  } else await loadData();
+  process.exit();
 }
 
-if (process.argv.includes("--delete")) {
-  deleteData();
-} else if (process.argv.includes("--replace")) {
-  replaceData();
-} else {
-  loadData();
-}
+handleSampleData();
