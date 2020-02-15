@@ -38,3 +38,36 @@ exports.favDrinks = async (req, res, next) => {
   ]);
   return res.json(favDrinks);
 };
+
+exports.dayDrinks = async (req, res, next) => {
+  const user = req.user;
+  const day = req.query.date ? new Date(req.query.date) : new Date();
+  const start = new Date(day.setHours(00, 00, 00));
+  const end = new Date(day.setHours(23, 59, 59));
+  const dayDrinks = await Drink.find({
+    $and: [{ user: user._id }, { date: { $gt: start, $lt: end } }]
+  });
+  return res.json(dayDrinks);
+};
+
+exports.countDrinks = async (req, res, next) => {
+  const user = req.user;
+  const countDrinks = await Drink.aggregate([
+    { $match: { user: user._id } },
+    {
+      $addFields: {
+        stringDate: {
+          $dateToString: { format: "%Y-%m-%d", date: "$date" }
+        }
+      }
+    },
+    {
+      $group: {
+        _id: "$stringDate",
+        quantity: { $sum: "$quantity" },
+        count: { $sum: 1 }
+      }
+    }
+  ]);
+  return res.json(countDrinks);
+};

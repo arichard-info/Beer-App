@@ -67,9 +67,21 @@ router.get(
 );
 
 router.get(
-  "/api/user/fav-drinks",
+  "/api/user/drinks/day",
+  authController.authJWT,
+  catchErrors(drinkController.dayDrinks)
+);
+
+router.get(
+  "/api/user/drinks/fav",
   authController.authJWT,
   catchErrors(drinkController.favDrinks)
+);
+
+router.get(
+  "/api/user/drinks/count",
+  authController.authJWT,
+  catchErrors(drinkController.countDrinks)
 );
 /*
 router.get(
