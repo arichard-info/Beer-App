@@ -40,6 +40,7 @@ exports.favDrinks = async (req, res, next) => {
 };
 
 exports.dayDrinks = async (req, res, next) => {
+  console.log(req.query.date);
   const user = req.user;
   const day = req.query.date ? new Date(req.query.date) : new Date();
   const start = new Date(day.setHours(00, 00, 00));
