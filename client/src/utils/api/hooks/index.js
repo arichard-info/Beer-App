@@ -5,12 +5,12 @@ export const useGetRequest = url => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchUrl = async () => {
-    const { data = {} } = await authGetRequest(url);
-    setData(data);
-    setLoading(false);
-  };
   useEffect(() => {
+    const fetchUrl = async () => {
+      const { data = {} } = await authGetRequest(url);
+      setData(data);
+      setLoading(false);
+    };
     fetchUrl();
   }, [url]);
   return [data, loading];

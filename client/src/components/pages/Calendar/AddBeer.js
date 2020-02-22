@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { useTransition, animated } from "react-spring";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faDeaf } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 import { getMonthName } from "./../../../utils/date";

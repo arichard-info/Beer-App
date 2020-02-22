@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 
 import { debounce } from "./../../../utils";
 import { useCalendar, CalendarProvider } from "./../../../state/calendar";
+import { getUserDrinks } from "./../../../utils/api/drinks";
 
 import Shortcut from "./Shortcut";
 import Header from "./Header";
@@ -14,11 +15,13 @@ const Calendar = ({ className }) => {
   const [{ months, selected }, dispatch] = useCalendar();
 
   useEffect(() => {
-    dispatch({ type: "INIT", value: scrollContainer.current });
     const handleScroll = debounce(() => {
       let newIndex = false;
       const scrollTop = window.scrollY;
-      const monthsEls = scrollContainer.current.childNodes;
+      const monthsEls =
+        scrollContainer && scrollContainer.current
+          ? scrollContainer.current.childNodes
+          : [];
       let closestOffset = 100000;
       monthsEls.forEach((el, index) => {
         const offset = el.offsetTop - scrollTop;
@@ -34,17 +37,21 @@ const Calendar = ({ className }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [dispatch]);
 
+  useEffect(() => {
+    async function fillDrinks() {
+      const drinks = await getUserDrinks();
+      dispatch({ type: "FILL_DRINKS", value: drinks });
+    }
+    dispatch({ type: "INIT", value: scrollContainer.current });
+    fillDrinks();
+  }, [dispatch]);
+
   return (
     <div className={className}>
       <Header />
       <div className="scroll-container" ref={scrollContainer}>
         {months.map((month, key) => (
-          <Month
-            month={month.month}
-            year={month.year}
-            key={key}
-            days={month.days}
-          />
+          <Month key={key} days={month} />
         ))}
       </div>
       {!selected && <Shortcut />}
