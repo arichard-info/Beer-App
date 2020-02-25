@@ -9,6 +9,7 @@ import { getMonthName } from "./../../../utils/date";
 import { useCalendar } from "./../../../state/calendar";
 import { useGetRequest } from "./../../../utils/api/hooks";
 import BeerItem from "./../../BeerItem";
+import BeerItemPlaceholder from "./../../BeerItem/BeerItemPlaceholder";
 
 const AddBeer = ({ day }) => {
   const [, dispatch] = useCalendar();
@@ -17,21 +18,29 @@ const AddBeer = ({ day }) => {
     dispatch({ type: "UNSELECT_DAY" });
   };
 
-  const [drinks, loading] = useGetRequest(`/api/user/drinks/day?date=${day}`);
+  const [drinks, loading] = useGetRequest(
+    `/api/user/drinks/day?date=${day.date}`
+  );
 
   return (
     <>
       <div className="header">
         <p>
-          {day.getDate()} {getMonthName(day)}
-          <small> {day.getFullYear()}</small>
+          {day.date.getDate()} {getMonthName(day.date)}
+          <small> {day.date.getFullYear()}</small>
         </p>
         <button className="close" onClick={handleClose}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
-
-      {drinks && (
+      {loading && day.count > 0 && (
+        <div className="drinks">
+          {[...Array(day.count).keys()].map((el, key) => (
+            <BeerItemPlaceholder key={key} />
+          ))}
+        </div>
+      )}
+      {!loading && drinks.length > 0 && (
         <div className="drinks">
           {drinks.map((drink, key) => (
             <BeerItem key={key} beer={drink.beer} quantity={drink.quantity} />

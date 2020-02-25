@@ -33,9 +33,7 @@ const Month = ({ className, days }) => {
               <button
                 className="daybox__inner"
                 title={getFullDate(day.date)}
-                onClick={() =>
-                  dispatch({ type: "SELECT_DAY", value: day.date })
-                }
+                onClick={() => dispatch({ type: "SELECT_DAY", value: day })}
               >
                 {day.date.getDate()}
               </button>

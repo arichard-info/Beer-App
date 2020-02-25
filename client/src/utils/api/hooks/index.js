@@ -7,6 +7,7 @@ export const useGetRequest = url => {
 
   useEffect(() => {
     const fetchUrl = async () => {
+      setLoading(true);
       const { data = {} } = await authGetRequest(url);
       setData(data);
       setLoading(false);
