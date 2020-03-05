@@ -5,9 +5,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "dev": "supervisor -w routes, models, controllers -e ejs,js,json, scripts/start.js",
-    "sample": "node --no-deprecation ./scripts/data/sampleData.js",
-    "blowitallaway": "node --no-deprecation ./scripts/data/sampleData.js --delete",
-    "blowitandsample": "node --no-deprecation ./scripts/data/sampleData.js --replace"
+    "mongo:sample": "node --no-deprecation ./scripts/data/sampleData.js",
+    "mongo:remove": "node --no-deprecation ./scripts/data/sampleData.js --delete",
+    "mongo:replace": "node --no-deprecation ./scripts/data/sampleData.js --replace"
   },
   "dependencies": {
     "axios": "^0.19.1",
