@@ -15,9 +15,7 @@ export default styled(BeerItem)(
     display: flex;
     align-items: space-between;
     position: relative;
-    &:not(:last-of-type) {
-      margin-bottom: 2rem;
-    }
+    padding: 1rem;
     .photo {
       height: 6rem;
       width: 6rem;

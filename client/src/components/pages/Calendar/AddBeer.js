@@ -113,6 +113,8 @@ export default styled(AnimationWrapper)(
 
     .drinks {
       margin-bottom: 2rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
     }
   `
 );

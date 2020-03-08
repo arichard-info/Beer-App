@@ -15,7 +15,7 @@ const Search = ({ className }) => {
         <Input />
       </div>
 
-      <List beers={beers} />
+      <List beers={beers} loading={loading} />
     </div>
   );
 };
