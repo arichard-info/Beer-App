@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { getInitialMonths } from "./../../utils/date";
-import { getMonthElIndex } from "./utils";
+import { getMonthElIndex, getInitialMonths } from "./utils";
 
 //Context
 const StateContext = createContext();
@@ -11,7 +10,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "INIT": {
       const container = action.value;
-      if (months && today) {
+      if (months && today && container) {
         const index = getMonthElIndex(months, today);
         const currentEl = container.childNodes[index];
         const scrollPosition = currentEl.offsetTop;
@@ -20,16 +19,37 @@ const reducer = (state, action) => {
       return { ...state, scrollContainer: container };
     }
 
+    case "FILL_DRINKS": {
+      const drinks = action.value;
+      const monthsArray = [...months];
+      drinks.forEach(drink => {
+        const date = new Date(drink._id);
+        const monthId = months.findIndex(
+          month =>
+            month[0].date.getMonth() === date.getMonth() &&
+            month[0].date.getFullYear() === date.getFullYear()
+        );
+        if (monthId !== -1) {
+          const dayId = months[monthId].findIndex(
+            day => day.date.getDate() === date.getDate()
+          );
+          if (dayId)
+            monthsArray[monthId][dayId] = {
+              ...monthsArray[monthId][dayId],
+              count: drink.count,
+              quantity: drink.quantity
+            };
+        }
+      });
+      return { ...state, drinks, months: monthsArray };
+    }
+
     case "UPDATE_HIGHLIGHT_MONTH": {
       const highlightMonth = state.months[action.value];
       if (highlightMonth) {
         return {
           ...state,
-          highlight: {
-            month: highlightMonth.month,
-            year: highlightMonth.year,
-            date: highlightMonth.date
-          }
+          highlight: highlightMonth[0].date
         };
       }
 

@@ -17,19 +17,6 @@ export function getDaysInMonth(m, y) {
   return days;
 }
 
-export function getInitialMonths(month, year, length) {
-  let months = [];
-
-  for (let m = month - length; m <= month + 1; m++) {
-    const date = new Date(Date.UTC(year, m, 1));
-    const monthNumber = date.getMonth();
-    const yearNumber = date.getFullYear();
-    const days = getDaysInMonth(date);
-    months.push({ days, month: monthNumber, year: yearNumber, date: days[0] });
-  }
-  return months;
-}
-
 export function getMonthName(date) {
   const monthNames = [
     "Janvier",
@@ -53,4 +40,8 @@ export function getMonthName(date) {
 
 export function getFullDate(date) {
   return `${date.getDate()} ${getMonthName(date)} ${date.getFullYear()}`;
+}
+
+export function getUniqueDayString(date) {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 }

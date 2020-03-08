@@ -7,8 +7,8 @@ const Header = ({ className }) => {
   const [{ highlight }] = useCalendar();
   const date = highlight
     ? {
-        month: getMonthName(highlight.month),
-        year: highlight.year
+        month: getMonthName(highlight.getMonth()),
+        year: highlight.getFullYear()
       }
     : { month: "", year: "" };
 

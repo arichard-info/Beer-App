@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
+import Step from "./steps";
 
-const AddDrink = () => {
+const AddDrink = ({ className }) => {
+  const [step, setStep] = useState(0);
   const { state = {} } = useLocation();
   const selectedDay = state.selectedDay || new Date();
   return (
-    <div>
-      <h1>Add Beer</h1>
+    <div className={className}>
+      <Step step={step} />
     </div>
   );
 };
 
-export default AddDrink;
+export default styled(AddDrink)(
+  ({ theme: { device } }) => css`
+    @media ${device.gtMobile} {
+      padding: 0 0 0 4rem;
+    }
+  `
+);

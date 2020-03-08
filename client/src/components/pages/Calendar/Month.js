@@ -4,33 +4,38 @@ import classNames from "classnames";
 import { useCalendar } from "./../../../state/calendar";
 import { getFullDate } from "../../../utils/date";
 
-const Month = ({ className, days, month, year }) => {
+const Month = ({ className, days }) => {
   const [{ today, highlight }, dispatch] = useCalendar();
-  const offset = days[0].getDay() - 1;
+  const offset =
+    days && days[0] && days[0].date ? days[0].date.getDay() - 1 : 0;
   const offsetArray = Array(offset >= 0 ? offset : 6).fill(null);
 
   const monthClassNames = classNames(className, {
-    current: highlight && month === highlight.month && year === highlight.year
+    current:
+      highlight &&
+      days[0].date.getMonth() === highlight.getMonth() &&
+      days[0].date.getFullYear() === highlight.getFullYear()
   });
 
   return (
     <div className={monthClassNames}>
       {[...offsetArray, ...days].map((day, key) => {
-        if (day === null) return <div key={key} className="offset" />;
+        if (day === null || !day.date)
+          return <div key={key} className="offset" />;
 
         const dayClassNames = classNames("daybox", {
-          disabled: day.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0),
-          today: day.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
+          disabled: day.date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0),
+          today: day.date.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
         });
         return (
           <div key={key} className={dayClassNames}>
             <div className="daybox__wrapper">
               <button
                 className="daybox__inner"
-                title={getFullDate(day)}
+                title={getFullDate(day.date)}
                 onClick={() => dispatch({ type: "SELECT_DAY", value: day })}
               >
-                {day.getDate()}
+                {day.date.getDate()}
               </button>
             </div>
           </div>

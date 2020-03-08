@@ -7,13 +7,57 @@ import { Link } from "react-router-dom";
 
 import { getMonthName } from "./../../../utils/date";
 import { useCalendar } from "./../../../state/calendar";
-const AddBeer = ({ className, day }) => {
+import { useGetRequest } from "./../../../utils/api/hooks";
+import BeerItem from "./../../BeerItem";
+import BeerItemPlaceholder from "./../../BeerItem/BeerItemPlaceholder";
+
+const AddBeer = ({ day }) => {
   const [, dispatch] = useCalendar();
 
   const handleClose = () => {
     dispatch({ type: "UNSELECT_DAY" });
   };
 
+  const [drinks, loading] = useGetRequest(
+    `/api/user/drinks/day?date=${day.date}`
+  );
+
+  return (
+    <>
+      <div className="header">
+        <p>
+          {day.date.getDate()} {getMonthName(day.date)}
+          <small> {day.date.getFullYear()}</small>
+        </p>
+        <button className="close" onClick={handleClose}>
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+      </div>
+      {loading && day.count > 0 && (
+        <div className="drinks">
+          {[...Array(day.count).keys()].map((el, key) => (
+            <BeerItemPlaceholder key={key} />
+          ))}
+        </div>
+      )}
+      {!loading && drinks.length > 0 && (
+        <div className="drinks">
+          {drinks.map((drink, key) => (
+            <BeerItem key={key} beer={drink.beer} quantity={drink.quantity} />
+          ))}
+        </div>
+      )}
+      <Link
+        className="cta"
+        to={{ pathname: "/add-drink", state: { selectedDay: day } }}
+      >
+        Ajouter une bière
+      </Link>
+    </>
+  );
+};
+
+const AnimationWrapper = ({ className, day }) => {
   const transitions = useTransition(day, day => day !== false, {
     from: { transform: "translate3d(0,100%,0)" },
     enter: { transform: "translate3d(0,0,0)" },
@@ -25,28 +69,13 @@ const AddBeer = ({ className, day }) => {
     ({ item, key, props }) =>
       item && (
         <animated.div className={className} key={key} style={props}>
-          <div className="header">
-            <p>
-              {item.getDate()} {getMonthName(item)}
-              <small> {item.getFullYear()}</small>
-            </p>
-            <button className="close" onClick={handleClose}>
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          </div>
-
-          <Link
-            className="cta"
-            to={{ pathname: "/add-drink", state: { selectedDay: day } }}
-          >
-            Ajouter une bière
-          </Link>
+          <AddBeer day={item} />
         </animated.div>
       )
   );
 };
 
-export default styled(AddBeer)(
+export default styled(AnimationWrapper)(
   ({ theme: { colors, fw } }) => css`
     position: sticky;
     z-index: 2;
@@ -80,6 +109,12 @@ export default styled(AddBeer)(
           font-weight: ${fw.semibold};
         }
       }
+    }
+
+    .drinks {
+      margin-bottom: 2rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
     }
   `
 );
