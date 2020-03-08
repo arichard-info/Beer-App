@@ -17,7 +17,7 @@ const AddDrink = ({ className }) => {
 export default styled(AddDrink)(
   ({ theme: { device } }) => css`
     @media ${device.gtMobile} {
-      padding: 3rem 0 0 4rem;
+      padding: 0 0 0 4rem;
     }
   `
 );

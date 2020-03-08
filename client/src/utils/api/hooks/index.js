@@ -16,3 +16,7 @@ export const useGetRequest = url => {
   }, [url]);
   return [data, loading];
 };
+
+export const useBeers = (search = "", filters = {}) => {
+  return useGetRequest("/api/beers");
+};
