@@ -139,16 +139,23 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 Sample datas are ready to be injected into the database to test or develop the application more easily. To load or delete this data, these npm scripts are available :
 
-#### `npm run sample`
+#### `npm run mongo:sample`
 
 Load sample data in the database (in the server/ folder).
 
 If you're using docker, you will need to run this script inside the container :
-`docker exec -it [my_container_id] npm run sample`
+`docker exec -it [my_container_id] npm run mongo:sample`
 
-#### `npm run blowitallaway`
+#### `npm run mongo:remove`
 
 Clear the database.
 
 To run this script inside the container :
-`docker exec -it [my_container_id] npm run blowitallaway`
+`docker exec -it [my_container_id] npm run mongo:remove`
+
+#### `npm run mongo:replace`
+
+Replace the database (combinaison of the two previous commands).
+
+To run this script inside the container :
+`docker exec -it [my_container_id] npm run mongo:replace`
