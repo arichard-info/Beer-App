@@ -15,11 +15,8 @@ export const scrollTo = (
   };
 
   const position = () => ({ left: element.scrollLeft, top: element.scrollTop });
-
   duration = typeof duration === "number" ? duration : 500;
-
   const increment = 1000 / 60;
-
   const animationFrameReqFunc =
     window.requestAnimationFrame ||
     function(callback) {
@@ -33,16 +30,12 @@ export const scrollTo = (
 
   const anim = () => {
     currentTime += increment;
-
     element.style.scrollSnapType = "none";
-
     const left = Math.round(
       ease(currentTime, start.left, change.left, duration)
     );
     const top = Math.round(ease(currentTime, start.top, change.top, duration));
-
     move(left, top);
-
     if (currentTime < duration) animationFrame = animationFrameReqFunc(anim);
     else {
       cancelAnimationFrame(animationFrame);

@@ -2,13 +2,12 @@ import React from "react";
 import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
+import { useUser } from "@/state/authentication";
+import { login } from "@/utils/api/authentication";
+import Form from "@/components/Form";
 import OAuth from "./OAuth";
-import { useUser } from "./../../../state/authentication";
-import { login } from "./../../../utils/api/authentication";
-import Form from "./../../Form";
 
 const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];

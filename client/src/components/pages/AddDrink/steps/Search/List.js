@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import BeerItem from "./../../../../BeerItem";
-import BeerItemPlaceholder from "./../../../../BeerItem/BeerItemPlaceholder";
+
+import BeerItem from "@/components/BeerItem";
+import BeerItemPlaceholder from "@/components/BeerItem/BeerItemPlaceholder";
 
 const Input = ({ className, beers, loading }) => {
   if (loading) {

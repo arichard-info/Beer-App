@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { debounce } from "./../../../utils";
-import { useCalendar, CalendarProvider } from "./../../../state/calendar";
-import { getUserDrinks } from "./../../../utils/api/drinks";
+import { debounce } from "@/utils";
+import { getUserDrinks } from "@/utils/api/drinks";
+import { useCalendar, CalendarProvider } from "@/state/calendar";
 
 import Shortcut from "./Shortcut";
 import Header from "./Header";

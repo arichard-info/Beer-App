@@ -1,9 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import BackButton from "./../../../../BackButton";
+
+import { useBeers } from "@/utils/api/hooks";
+import BackButton from "@/components/BackButton";
+
 import Input from "./Input";
 import List from "./List";
-import { useBeers } from "./../../../../../utils/api/hooks";
 
 const Search = ({ className }) => {
   const [beers, loading] = useBeers();

@@ -2,9 +2,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { resetPassword } from "./../../../utils/api/authentication";
-import { useUser } from "./../../../state/authentication";
-import Form from "./../../Form";
+import { resetPassword } from "@/utils/api/authentication";
+import { useUser } from "@/state/authentication";
+import Form from "@/components/Form";
 
 const Forgot = ({ className }) => {
   const [, dispatch] = useUser();

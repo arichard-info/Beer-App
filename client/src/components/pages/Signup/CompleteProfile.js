@@ -2,9 +2,9 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 
-import { completeProfile } from "./../../../utils/api/authentication";
-import { useUser } from "./../../../state/authentication";
-import Form from "./../../Form";
+import { completeProfile } from "@/utils/api/authentication";
+import { useUser } from "@/state/authentication";
+import Form from "@/components/Form";
 
 const CompleteProfile = ({ className }) => {
   const [user, authDispatch] = useUser();

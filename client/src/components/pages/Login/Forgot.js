@@ -1,8 +1,9 @@
 import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { forgot } from "./../../../utils/api/authentication";
-import Form from "./../../Form";
+
+import { forgot } from "@/utils/api/authentication";
+import Form from "@/components/Form";
 
 const Forgot = ({ className }) => {
   let history = useHistory();

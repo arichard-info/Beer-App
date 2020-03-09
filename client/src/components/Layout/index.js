@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import Flashes from "./../Flashes";
-import Nav from "./Nav";
+import Flashes from "@/components/Flashes";
+import Nav from "@/components/Layout/Nav";
 
 const Layout = ({ className, loggedIn, children }) => {
   return (

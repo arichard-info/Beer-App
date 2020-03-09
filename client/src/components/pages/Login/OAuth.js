@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useUser } from "./../../../state/authentication";
+import { useUser } from "@/state/authentication";
 
 const OAuth = ({ socket, provider }) => {
   const [, dispatch] = useUser();
