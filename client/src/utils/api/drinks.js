@@ -1,4 +1,4 @@
-import { authGetRequest } from "./index";
+import { authGetRequest } from "@/utils/api";
 
 /**
  * Get user drinks

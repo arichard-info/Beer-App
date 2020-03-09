@@ -1,4 +1,4 @@
-import { postRequest, authPostRequest } from "./index";
+import { postRequest, authPostRequest } from "@/utils/api";
 
 /**
  * log user in with email and password

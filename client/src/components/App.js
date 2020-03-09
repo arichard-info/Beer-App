@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
 
-import { UserProvider, useUser } from "./../state/authentication";
-import GlobalStyle from "./Style/GlobalStyle";
-import ThemeProvider from "./Style/ThemeProvider";
+import { UserProvider, useUser } from "@/state/authentication";
+import GlobalStyle from "@/components/Style/GlobalStyle";
+import ThemeProvider from "@/components/Style/ThemeProvider";
 
-import Loading from "./pages/Loading";
-import Layout from "./Layout";
-import Emitter from "./Flashes/Emitter";
+import Loading from "@/components/pages/Loading";
+import Layout from "@/components/Layout";
+import Emitter from "@/components/Flashes/Emitter";
 
-import SwitchRoutes from "./SwitchRoutes";
-import routes from "./App.routes";
+import SwitchRoutes from "@/components/SwitchRoutes";
+import routes from "@/components/App.routes";
 
 window.flash = flash => Emitter.emit("flash", flash);
 

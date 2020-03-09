@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-import { getMonthName } from "./../../../utils/date";
-import { useCalendar } from "./../../../state/calendar";
-import { useGetRequest } from "./../../../utils/api/hooks";
-import BeerItem from "./../../BeerItem";
-import BeerItemPlaceholder from "./../../BeerItem/BeerItemPlaceholder";
+import { getMonthName } from "@/utils/date";
+import { useCalendar } from "@/state/calendar";
+import { useGetRequest } from "@/utils/api/hooks";
+import BeerItem from "@/components/BeerItem";
+import BeerItemPlaceholder from "@/components/BeerItem/BeerItemPlaceholder";
 
 const AddBeer = ({ day }) => {
   const [, dispatch] = useCalendar();

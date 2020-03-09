@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { authGetRequest } from "./../index";
+import { authGetRequest } from "@/utils/api";
 
 export const useGetRequest = url => {
   const [data, setData] = useState([]);

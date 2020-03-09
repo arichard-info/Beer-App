@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Redirect, Route } from "react-router-dom";
-import { useUser } from "./../../state/authentication";
+
+import { useUser } from "@/state/authentication";
 
 const Router = ({ routes }) => {
   const [user] = useUser();

@@ -118,12 +118,12 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => !ext.includes("ts")),
       alias: {
-        // Allows for better profiling with ReactDevTools
         ...(isProdProfile && {
           "react-dom$": "react-dom/profiling",
           "scheduler/tracing": "scheduler/tracing-profiling"
         }),
-        ...(modules.webpackAliases || {})
+        ...(modules.webpackAliases || {}),
+        "@": paths.appSrc
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

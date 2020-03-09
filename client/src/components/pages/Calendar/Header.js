@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { useCalendar } from "./../../../state/calendar";
-import { getMonthName } from "./../../../utils/date";
+
+import { useCalendar } from "@/state/calendar";
+import { getMonthName } from "@/utils/date";
 
 const Header = ({ className }) => {
   const [{ highlight }] = useCalendar();
