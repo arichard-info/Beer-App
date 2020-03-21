@@ -21,8 +21,6 @@ const reducer = (state, action) => {
     }
     case "LOG_IN": {
       const user = action.value;
-      if (user.toComplete)
-        window.localStorage.setItem("complete_token", user.toComplete);
       return user;
     }
     default:
