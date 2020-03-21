@@ -1,9 +1,7 @@
 const passport = require("passport");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const mail = require("./../handlers/mail");
-const { signToken } = require("./../handlers/jwt");
 const User = mongoose.model("User");
 
 /**
@@ -20,11 +18,11 @@ exports.localAuth = (req, res, next) => {
         message: info && info.message ? info.message : ""
       });
     }
-
+    res.cookie("auth", user._id, { httpOnly: true, signed: true });
     return res.json({
       error: false,
       message: "User logged in!",
-      user: { ...user.toObject(), token: signToken(user._id) }
+      user: user.toObject()
     });
   })(req, res, next);
 };
@@ -97,21 +95,18 @@ exports.googleAuth = (req, res, next) => {
       scope: ["profile", "email", "openid"]
     },
     (err, user, info) => {
-      const io = req.app.get("io");
-      let data = { error: false };
-      if (err || !user || !user.authProviderId) {
-        data.error = true;
-      } else {
-        data.user = {
-          ...user,
-          toComplete: !user._id,
-          token: user._id
-            ? signToken(user._id)
-            : signToken(user.authProviderId, "1h")
-        };
+      if (user && user.toComplete) {
+        res.cookie("usr_complete", user.authProviderId, {
+          httpOnly: true,
+          signed: true
+        });
+        res.redirect(
+          `http://localhost:3000/complete-profile?name=${user.name}&email=${user.email}`
+        );
+      } else if (user) {
+        res.cookie("auth", user._id, { httpOnly: true, signed: true });
+        res.redirect("http://localhost:3000");
       }
-
-      io.in(req.session.socketId).emit("google", data);
     }
   )(req, res, next);
 };
@@ -124,59 +119,55 @@ exports.addSocketIdtoSession = (req, res, next) => {
 
 // confirm provider auth
 exports.confirmProviderAuth = async (req, res, next) => {
+  console.log(req.signedCookies);
+  if (!req.signedCookies || !req.signedCookies["usr_complete"]) {
+    return res.status(401).end();
+  }
+  const providerId = req.signedCookies["usr_complete"];
   const user = new User({
     email: req.body.email,
     name: req.body.name,
-    authProviderId: req.body.authProviderId,
-    authProvider: req.body.authProvider,
-    picture: req.body.picture ? req.body.picture : ""
+    authProviderId: providerId
   });
 
   await user.save();
-  return res.json({ user: { ...user.toObject(), token: signToken(user._id) } });
+
+  res.clearCookie("usr_complete");
+  res.cookie("auth", user._id, { httpOnly: true, signed: true });
+  return res.json({ user: user.toObject() });
 };
 
 /**
- * JWT strategy
+ * Cookie authentication strategy
  */
 
-// return user from request
-exports.getUserByToken = (req, res) => {
+exports.authCookie = async (req, res, next) => {
+  if (!req.signedCookies || !req.signedCookies.auth) {
+    return res.status(401).end();
+  }
+  const userId = req.signedCookies.auth;
+
+  return User.findById(userId, (userErr, user) => {
+    if (userErr || !user) {
+      return res.status(401).end();
+    }
+    // pass user details onto next middleware
+    req.user = user;
+    return next();
+  });
+};
+
+exports.returnReqUser = (req, res, next) => {
   if (!req.user) {
     res.status(401).end();
   }
   return res.json({
     error: false,
-    message: "Valid Token",
+    message: "Valid cookie",
     user: { ...req.user.toObject() }
   });
 };
 
-// auth user with token
-exports.authJWT = (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(401).end();
-  }
-  // get the last part from a authorization header string like "bearer token-value"
-  const token = req.headers.authorization.split(" ")[1];
-
-  // decode the token using a secret key-phrase
-  return jwt.verify(token, process.env.SECRET_JWT, (err, decoded) => {
-    // the 401 code is for unauthorized status
-    if (err || !decoded.sub) {
-      return res.status(401).end();
-    }
-
-    const userId = decoded.sub;
-
-    // check if a user exists
-    return User.findById(userId, (userErr, user) => {
-      if (userErr || !user) {
-        return res.status(401).end();
-      }
-      // pass user details onto next route
-      req.user = user;
-      return next();
-    });
-  });
+exports.logout = (req, res, next) => {
+  res.clearCookie("auth").end();
 };

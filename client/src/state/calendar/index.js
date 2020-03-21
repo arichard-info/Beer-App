@@ -22,25 +22,27 @@ const reducer = (state, action) => {
     case "FILL_DRINKS": {
       const drinks = action.value;
       const monthsArray = [...months];
-      drinks.forEach(drink => {
-        const date = new Date(drink._id);
-        const monthId = months.findIndex(
-          month =>
-            month[0].date.getMonth() === date.getMonth() &&
-            month[0].date.getFullYear() === date.getFullYear()
-        );
-        if (monthId !== -1) {
-          const dayId = months[monthId].findIndex(
-            day => day.date.getDate() === date.getDate()
+      if (drinks && drinks.length) {
+        drinks.forEach(drink => {
+          const date = new Date(drink._id);
+          const monthId = months.findIndex(
+            month =>
+              month[0].date.getMonth() === date.getMonth() &&
+              month[0].date.getFullYear() === date.getFullYear()
           );
-          if (dayId)
-            monthsArray[monthId][dayId] = {
-              ...monthsArray[monthId][dayId],
-              count: drink.count,
-              quantity: drink.quantity
-            };
-        }
-      });
+          if (monthId !== -1) {
+            const dayId = months[monthId].findIndex(
+              day => day.date.getDate() === date.getDate()
+            );
+            if (dayId)
+              monthsArray[monthId][dayId] = {
+                ...monthsArray[monthId][dayId],
+                count: drink.count,
+                quantity: drink.quantity
+              };
+          }
+        });
+      }
       return { ...state, drinks, months: monthsArray };
     }
 

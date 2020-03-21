@@ -10,24 +10,19 @@ const Router = ({ routes }) => {
       {routes.map((route, key) => {
         const { rights, ...rest } = route;
 
-        if (user && user.toComplete && rights !== "toComplete")
-          return (
-            <Route key={key} {...rest}>
-              <Redirect to="to-complete" />
-            </Route>
-          );
         if (user && rights !== "private")
           return (
-            <Route key={key} {...rest}>
+            <Route key={key} path={route.path} exact={route.exact}>
               <Redirect to="/home" />
             </Route>
           );
         if (!user && rights !== "loggedOut")
           return (
-            <Route key={key} {...rest}>
+            <Route key={key} path={route.path} exact={route.exact}>
               <Redirect to="/" />
             </Route>
           );
+
         return <Route key={key} {...rest} />;
       })}
     </Switch>

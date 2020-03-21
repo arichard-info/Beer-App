@@ -12,19 +12,17 @@ const reducer = (state, action) => {
     }
     case "UPDATE": {
       const user = action.value;
-      if (user.token) window.localStorage.setItem("auth_token", user.token);
       return { ...state, ...user };
     }
     case "REMOVE":
-      window.localStorage.removeItem("auth_token");
       return null;
     case "LOG_OUT": {
-      window.localStorage.removeItem("auth_token");
       return null;
     }
     case "LOG_IN": {
       const user = action.value;
-      window.localStorage.setItem("auth_token", user.token);
+      if (user.toComplete)
+        window.localStorage.setItem("complete_token", user.toComplete);
       return user;
     }
     default:

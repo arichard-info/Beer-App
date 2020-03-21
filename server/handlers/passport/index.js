@@ -14,7 +14,7 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
       : "";
 
   let user = await User.findOne({
-    $and: [{ authProvider: "google" }, { authProviderId: profile.id }]
+    $and: [{ authProviderId: profile.id }]
   });
 
   if (!user) {

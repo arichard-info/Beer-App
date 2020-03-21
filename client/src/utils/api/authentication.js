@@ -1,4 +1,4 @@
-import { postRequest, authPostRequest } from "@/utils/api";
+import { postRequest } from "@/utils/api";
 
 /**
  * log user in with email and password
@@ -91,10 +91,12 @@ export const signup = async ({ name, email, password, passwordConfirm }) => {
  * @param {object} userObject completed user object
  */
 export const completeProfile = async userObject => {
+  const authToken = window.localStorage.getItem("complete_token");
   try {
-    const response = await authPostRequest(
+    const response = await postRequest(
       `/api/auth/complete-profile`,
-      userObject
+      userObject,
+      { Authorization: `Bearer ${authToken}` }
     );
     const { data: user } = response;
     if (!user) throw new Error("Error while trying to signup");

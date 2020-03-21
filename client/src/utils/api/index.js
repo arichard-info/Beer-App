@@ -41,23 +41,3 @@ export const getRequest = async (route, params = {}, headers = {}) => {
     };
   }
 };
-
-/**
- * Simple authenticated post request utility function (gets authToken from localStorage)
- * @param {string} route
- * @param {string} body
- */
-export const authPostRequest = async (route, body) => {
-  const authToken = window.localStorage.getItem("auth_token");
-  return postRequest(route, body, { Authorization: `Bearer ${authToken}` });
-};
-
-/**
- * Simple authenticated get request utility function (gets authToken from localStorage)
- * @param {string} route
- * @param {string} body
- */
-export const authGetRequest = async (route, params) => {
-  const authToken = window.localStorage.getItem("auth_token");
-  return getRequest(route, params, { Authorization: `Bearer ${authToken}` });
-};
