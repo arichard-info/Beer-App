@@ -20,24 +20,17 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function checkAuth() {
-      const authToken = window.localStorage.getItem("auth_token");
-      if (authToken) {
-        try {
-          const { status, data } = await axios.post(
-            `/api/auth/verify-token`,
-            {},
-            { headers: { Authorization: `Bearer ${authToken}` } }
-          );
-          if (status === 200 && data && data.user) {
-            dispatch({
-              type: "INIT",
-              value: data.user
-            });
-          } else throw new Error("Error when checking token");
-        } catch (err) {
-          dispatch({ type: "REMOVE" });
-          console.error("Invalid user token");
-        }
+      try {
+        const { status, data } = await axios.get(`/api/auth/auth-cookie`);
+        if (status === 200 && data && data.user) {
+          dispatch({
+            type: "INIT",
+            value: data.user
+          });
+        } else throw new Error("Error while authenticating with cookie");
+      } catch (err) {
+        dispatch({ type: "REMOVE" });
+        console.error("Invalid user token");
       }
 
       setLoading(false);

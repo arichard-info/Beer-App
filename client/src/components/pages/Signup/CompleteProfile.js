@@ -1,14 +1,17 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
-
-import { completeProfile } from "@/utils/api/authentication";
+import { useLocation, useHistory } from "react-router-dom";
 import { useUser } from "@/state/authentication";
+import { completeProfile } from "@/utils/api/authentication";
 import Form from "@/components/Form";
 
 const CompleteProfile = ({ className }) => {
-  const [user, authDispatch] = useUser();
+  const [, authDispatch] = useUser();
+  let location = useLocation();
   const history = useHistory();
+  const params = new URLSearchParams(location.search);
+  const name = params.get("name") || "";
+  const email = params.get("email") || "";
 
   const fields = {
     name: {
@@ -17,7 +20,7 @@ const CompleteProfile = ({ className }) => {
       placeholder: "Nom / Prénom",
       label: "Nom / Prénom",
       required: true,
-      value: user.name
+      value: name
     },
     email: {
       field: "textField",
@@ -25,20 +28,18 @@ const CompleteProfile = ({ className }) => {
       placeholder: "Adresse email",
       label: "Adresse email",
       required: true,
-      value: user.email
+      value: email
     }
   };
 
   const submitForm = async ({ email, name }) => {
     const finalUser = await completeProfile({
-      ...user,
       email: email.value,
       name: name.value
     });
 
     if (finalUser && !finalUser.error) {
       authDispatch({ type: "LOG_IN", value: finalUser });
-      history.push("/home");
     } else {
       authDispatch({ type: "REMOVE" });
       history.push("/");

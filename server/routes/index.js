@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 
 const { catchErrors } = require("./../handlers/errorHandlers");
-const { verifyJWT } = require("./../handlers/jwt");
 
 const beerController = require("./../controllers/beerController");
 const authController = require("./../controllers/authController");
@@ -38,17 +37,18 @@ router.get(
 router.get("/api/auth/google/callback", authController.googleAuth);
 router.post(
   "/api/auth/complete-profile",
-  verifyJWT,
   userController.validateRegister,
   catchErrors(authController.confirmProviderAuth)
 );
 
-// Token verification
-router.post(
-  "/api/auth/verify-token",
-  authController.authJWT,
-  authController.getUserByToken
+// Cookie verification
+router.get(
+  "/api/auth/auth-cookie",
+  authController.authCookie,
+  authController.returnReqUser
 );
+
+router.get("/api/auth/logout", authController.logout);
 
 /**
  * User profile Routes
@@ -56,31 +56,31 @@ router.post(
 
 router.post(
   "/api/user",
-  authController.authJWT,
+  authController.authCookie,
   catchErrors(userController.updateAccount)
 );
 
 router.get(
   "/api/user/drinks",
-  authController.authJWT,
+  authController.authCookie,
   catchErrors(drinkController.allDrinks)
 );
 
 router.get(
   "/api/user/drinks/day",
-  authController.authJWT,
+  authController.authCookie,
   catchErrors(drinkController.dayDrinks)
 );
 
 router.get(
   "/api/user/drinks/fav",
-  authController.authJWT,
+  authController.authCookie,
   catchErrors(drinkController.favDrinks)
 );
 
 router.get(
   "/api/user/drinks/count",
-  authController.authJWT,
+  authController.authCookie,
   catchErrors(drinkController.countDrinks)
 );
 

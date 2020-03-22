@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 const LoadingPage = ({ className }) => {
   return (
     <div className={className}>
-      <div class="loader" />
+      <div className="loader" />
     </div>
   );
 };

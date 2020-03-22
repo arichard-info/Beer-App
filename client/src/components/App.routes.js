@@ -28,12 +28,7 @@ export default [
     rights: "loggedOut",
     component: Forgot
   },
-  {
-    path: "/complete-profile",
-    exact: true,
-    rights: "toComplete",
-    component: CompleteProfile
-  },
+
   {
     path: "/home",
     exact: true,
@@ -57,5 +52,11 @@ export default [
     exact: true,
     rights: "private",
     component: Settings
+  },
+  {
+    path: "/complete-profile",
+    exact: true,
+    rights: "loggedOut",
+    component: CompleteProfile
   }
 ];

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { authGetRequest } from "@/utils/api";
+import { getRequest } from "@/utils/api";
 
 export const useGetRequest = url => {
   const [data, setData] = useState([]);
@@ -8,7 +8,7 @@ export const useGetRequest = url => {
   useEffect(() => {
     const fetchUrl = async () => {
       setLoading(true);
-      const { data = {} } = await authGetRequest(url);
+      const { data = {} } = await getRequest(url);
       setData(data);
       setLoading(false);
     };
