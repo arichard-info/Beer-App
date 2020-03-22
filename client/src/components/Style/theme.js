@@ -13,6 +13,17 @@ const mainColors = {
   grey9: "#222222"
 };
 
+const levelShades = [
+  mainColors.pastelAmber,
+  "#FFD65C",
+  mainColors.amber,
+  "#FFA41D",
+  "#F77F5A",
+  "#F75A5A",
+  "#D32626",
+  "#731E1E"
+];
+
 const colors = {
   ...mainColors,
   primary: mainColors.amber,
@@ -26,7 +37,8 @@ const colors = {
   flashSuccess: "#5cb85c",
   flashDanger: "#fe7c8d",
   flashWarning: "#f0ad4e",
-  flashInfo: "#5bc0de"
+  flashInfo: "#5bc0de",
+  levelShades
 };
 
 const fw = {
