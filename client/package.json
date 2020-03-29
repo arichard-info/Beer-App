@@ -57,7 +57,7 @@
     "http-proxy-middleware": "^0.20.0",
     "babel-jest": "^25.2.3",
     "cypress": "^3.8.2",
-    "jest": "24.9.0",
+    "jest": "25.2.4",
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2"
