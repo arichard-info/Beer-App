@@ -4,18 +4,27 @@ import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH, faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const Input = ({ className }) => (
-  <div className={className}>
-    <span className="search">
-      <FontAwesomeIcon icon={faSearch} />
-    </span>
-    <input type="text" placeholder="Brasserie, couleur ou type..." />
+import { debounce } from "@/utils";
 
-    <button className="filters">
-      <FontAwesomeIcon icon={faSlidersH} />
-    </button>
-  </div>
-);
+const Input = ({ className, onSearch }) => {
+  const handleType = debounce(value => onSearch(value), 750);
+  return (
+    <div className={className}>
+      <span className="search">
+        <FontAwesomeIcon icon={faSearch} />
+      </span>
+      <input
+        type="text"
+        placeholder="Brasserie, couleur ou type..."
+        onChange={e => handleType(e.target.value)}
+      />
+
+      <button className="filters">
+        <FontAwesomeIcon icon={faSlidersH} />
+      </button>
+    </div>
+  );
+};
 
 export default styled(Input)(
   ({ theme: { colors } }) => css`
