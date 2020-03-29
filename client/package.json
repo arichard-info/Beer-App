@@ -60,7 +60,7 @@
     "jest": "24.9.0",
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
-    "jest-watch-typeahead": "0.4.0"
+    "jest-watch-typeahead": "0.4.2"
   },
   "scripts": {
     "start": "node scripts/start.js",
