@@ -55,6 +55,7 @@ const LoginPage = ({ className }) => {
         onValidSubmit={handleSubmit}
         fields={fields}
         submitLabel="Connexion"
+        data-nrt="login-form"
       />
 
       <div className="sep">
@@ -62,7 +63,7 @@ const LoginPage = ({ className }) => {
       </div>
 
       <div className="others">
-        <Link to="/signup" className="cta bg-grey">
+        <Link to="/signup" className="cta bg-grey" data-nrt="signup-cta">
           Créer un compte
         </Link>
         {providers.map(provider => (

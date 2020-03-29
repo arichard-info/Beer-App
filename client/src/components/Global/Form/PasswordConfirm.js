@@ -21,7 +21,8 @@ const PasswordConfirm = ({
   confirmPlaceholder,
   onChange,
   errors,
-  validation
+  validation,
+  dataNrt = ""
 }) => {
   const changePassword = field =>
     onChange({
@@ -34,6 +35,7 @@ const PasswordConfirm = ({
   return (
     <div
       className={`${className} ${validation && errors.length > 0 && "error"}`}
+      dataNrt={dataNrt}
     >
       <div className="form-row">
         <TextField

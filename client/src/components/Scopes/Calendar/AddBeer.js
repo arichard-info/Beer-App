@@ -68,7 +68,12 @@ const AnimationWrapper = ({ className, day }) => {
   return transitions.map(
     ({ item, key, props }) =>
       item && (
-        <animated.div className={className} key={key} style={props}>
+        <animated.div
+          className={className}
+          key={key}
+          style={props}
+          data-nrt="add-drink-popin"
+        >
           <AddBeer day={item} />
         </animated.div>
       )

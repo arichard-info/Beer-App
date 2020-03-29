@@ -17,7 +17,8 @@ const TextField = ({
   validation = false,
   onChange,
   onFocusOut,
-  togglePassword = false
+  togglePassword = false,
+  dataNrt = ""
 }) => {
   const [revealed, setRevealed] = useState(false);
   const togglable = type === "password" && togglePassword;
@@ -26,6 +27,7 @@ const TextField = ({
       className={`${className} ${
         validation && errors.length > 0 ? "error" : ""
       }`}
+      data-nrt={`field-${name}`}
     >
       <div className="label-wrapper">
         {label && <label htmlFor={name}>{label}</label>}
