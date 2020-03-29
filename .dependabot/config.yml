@@ -1,0 +1,16 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/client"
+    update_schedule: "live"
+    default_reviewers:
+      - "arichard-info"
+    default_assignees:
+      - "arichard-info"
+  - package_manager: "javascript"
+    directory: "/server"
+    update_schedule: "live"
+    default_reviewers:
+      - "arichard-info"
+    default_assignees:
+      - "arichard-info"
