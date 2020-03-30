@@ -20,10 +20,10 @@ export const login = () => {
     cy.getNrt(loginForm).within(() => {
       cy.getNrt(loginFieldEmail)
         .find("input")
-        .type(this.user.username);
+        .type(user.username);
       cy.getNrt(loginFieldPassword)
         .find("input")
-        .type(`${this.user.password}{enter}`);
+        .type(`${user.password}{enter}`);
     });
     cy.wait("@loginRequest");
   });
