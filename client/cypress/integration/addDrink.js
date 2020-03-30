@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import { loginForm } from "./authentication";
+
 const searchStep = "add-drink-search";
 const popin = "add-drink-popin";
 const directCTA = "add-drink-direct";
@@ -26,14 +28,14 @@ context("Add Drink", () => {
     cy.getNrt(searchStep).should("be.visible");
   });
 
-  it("Click on day case", () => {
-    cy.getNrt(monthCases)
-      .first()
-      .find("button")
-      .first()
-      .click();
-    cy.getNrtt(searchStep).should("be.visible");
-  });
+  // it("Click on day case", () => {
+  //   cy.getNrt(month)
+  //     .first()
+  //     .find("button")
+  //     .first()
+  //     .click();
+  //   cy.getNrt(searchStep).should("be.visible");
+  // });
 
   context("Search", () => {
     it("Has default results", () => {});

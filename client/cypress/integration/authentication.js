@@ -1,16 +1,16 @@
 /// <reference types="Cypress" />
 import { v4 } from "uuid";
 
-const loginForm = "login-form";
-const loginFieldEmail = "field-email";
-const loginFieldPassword = "field-password";
+export const loginForm = "login-form";
+export const loginFieldEmail = "field-email";
+export const loginFieldPassword = "field-password";
 
-const signupCta = "signup-cta";
-const signupForm = "signup-form";
-const signupFieldName = "field-name";
-const signupFieldEmail = "field-email";
-const signupFieldPassword = "field-password";
-const signupFieldPasswordConfirm = "field-confirm";
+export const signupCta = "signup-cta";
+export const signupForm = "signup-form";
+export const signupFieldName = "field-name";
+export const signupFieldEmail = "field-email";
+export const signupFieldPassword = "field-password";
+export const signupFieldPasswordConfirm = "field-confirm";
 
 context("Authentication", () => {
   beforeEach(function() {
