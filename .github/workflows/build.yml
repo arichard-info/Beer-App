@@ -17,8 +17,10 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build and start docker containers
         run: docker-compose -f docker-compose.yml up -d
-      - name: "Inject mock data"
-        run: docker exec -it prod_server npm run mongo:sample
+      - name: Docker ps
+        run: docker ps
+      - name: Inject mock data
+        run: docker exec prod_server npm run mongo:sample
       - name: Install test dependencies
         run: cd client && npm install cypress
       - name: Run cypress tests
