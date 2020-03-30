@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import { loginForm } from "./authentication";
+import * as auth from "./authentication";
 
 const searchStep = "add-drink-search";
 const popin = "add-drink-popin";
@@ -9,18 +9,7 @@ const month = "month-cases";
 
 context("Add Drink", () => {
   beforeEach(() => {
-    cy.server();
-    cy.route("POST", "/api/auth/login").as("loginRequest");
-    cy.visit("/");
-    cy.getNrt(loginForm).within(() => {
-      cy.getNrt(loginFieldEmail)
-        .find("input")
-        .type(this.user.username);
-      cy.getNrt(loginFieldPassword)
-        .find("input")
-        .type(`${this.user.password}{enter}`);
-    });
-    cy.wait("@loginRequest");
+    auth.login();
   });
 
   it("Click on direct CTA", () => {

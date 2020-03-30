@@ -12,6 +12,23 @@ export const signupFieldEmail = "field-email";
 export const signupFieldPassword = "field-password";
 export const signupFieldPasswordConfirm = "field-confirm";
 
+export const login = () => {
+  cy.visit("/");
+  cy.fixture("authentication/user").then(user => {
+    cy.server();
+    cy.route("POST", "/api/auth/login").as("loginRequest");
+    cy.getNrt(loginForm).within(() => {
+      cy.getNrt(loginFieldEmail)
+        .find("input")
+        .type(this.user.username);
+      cy.getNrt(loginFieldPassword)
+        .find("input")
+        .type(`${this.user.password}{enter}`);
+    });
+    cy.wait("@loginRequest");
+  });
+};
+
 context("Authentication", () => {
   beforeEach(function() {
     cy.visit("/");
