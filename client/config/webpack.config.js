@@ -292,7 +292,7 @@ module.exports = function(webpackEnv) {
           exclude: [/\.map$/, /asset-manifest\.json$/],
           importWorkboxFrom: "cdn",
           navigateFallback: publicUrl + "/index.html",
-          navigateFallbackBlacklist: [
+          navigateFallbackDenylist: [
             new RegExp("^/_"),
             new RegExp("/[^/?]+\\.[^/]+$")
           ]
