@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "http-proxy-middleware": "^0.20.0",
-    "babel-jest": "^25.2.4",
+    "babel-jest": "^25.2.6",
     "cypress": "^4.3.0",
     "jest": "25.2.4",
     "jest-environment-jsdom-fourteen": "0.1.0",
