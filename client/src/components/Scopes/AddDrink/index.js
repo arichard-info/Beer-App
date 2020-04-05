@@ -7,15 +7,16 @@ import CustomBeer from "./steps/CustomBeer";
 import FillBeer from "./steps/FillBeer";
 
 const SwitchSteps = {
-  0: (rest) => <Search {...rest} />,
-  1: (rest) => <CustomBeer {...rest} />,
-  3: (rest) => <FillBeer {...rest} />,
+  0: rest => <Search {...rest} />,
+  1: rest => <CustomBeer {...rest} />,
+  3: rest => <FillBeer {...rest} />
 };
 
 const AddDrink = ({ className }) => {
+  const { state = {} } = useLocation();
   const selectedDay = state.selectedDay || new Date();
   const [step, setStep] = useState({ index: 0, selectedDay });
-  const { state = {} } = useLocation();
+
   return (
     <div className={className}>
       {SwitchSteps[step.index]({ step, setStep })}
