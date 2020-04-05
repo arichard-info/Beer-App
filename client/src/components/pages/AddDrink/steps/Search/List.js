@@ -17,6 +17,10 @@ const List = ({
     setStep({ index: 1 });
   };
 
+  const handleAddBeer = (beer) => {
+    setStep((state) => ({ index: 3, beer, ...state }));
+  };
+
   if (!beers.length && !loading)
     return <NoResult onClick={handleNoResultClick} />;
 
@@ -35,7 +39,7 @@ const List = ({
     <>
       <div className={className}>
         {beers.map((beer, key) => (
-          <BeerItem beer={beer} key={key} onClick={() => console.log(beer)} />
+          <BeerItem beer={beer} key={key} onClick={() => handleAddBeer(beer)} />
         ))}
         {showMoreCta && (
           <button className="cta" onClick={onViewMore}>
