@@ -3,8 +3,23 @@ import styled, { css } from "styled-components";
 
 import BeerItem from "@/components/BeerItem";
 import BeerItemPlaceholder from "@/components/BeerItem/BeerItemPlaceholder";
+import NoResult from "./NoResult";
 
-const Input = ({ className, beers, loading, onViewMore, totalCount = 0 }) => {
+const List = ({
+  className,
+  beers,
+  loading,
+  onViewMore,
+  totalCount = 0,
+  setStep,
+}) => {
+  const handleNoResultClick = () => {
+    setStep({ index: 1 });
+  };
+
+  if (!beers.length && !loading)
+    return <NoResult onClick={handleNoResultClick} />;
+
   if (!beers.length && loading) {
     return (
       <div className={className}>
@@ -32,7 +47,7 @@ const Input = ({ className, beers, loading, onViewMore, totalCount = 0 }) => {
   );
 };
 
-export default styled(Input)(
+export default styled(List)(
   () =>
     css`
       margin-top: 2rem;

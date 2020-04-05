@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { getRequest } from "@/utils/api";
-import BackButton from "@/components/BackButton";
+import Header from "@/components/pages/AddDrink/steps/Header";
 
 import Input from "./Input";
 import List from "./List";
 
-const Search = ({ className }) => {
+const Search = ({ className, setStep }) => {
   const [totalCount, setTotalCount] = useState(false);
   const [beers, setBeers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const Search = ({ className }) => {
       const newBeers = await getRequest(url);
       if (newBeers.data && newBeers.data.beers) {
         if (params.page > 0)
-          setBeers(beers => [...beers, ...newBeers.data.beers]);
+          setBeers((beers) => [...beers, ...newBeers.data.beers]);
         else setBeers(newBeers.data.beers);
         setTotalCount(newBeers.data.totalCount || 0);
       }
@@ -35,20 +35,19 @@ const Search = ({ className }) => {
 
   return (
     <div className={className}>
-      <div className="header">
-        <BackButton />
-        <h1>Ajoute ta bière</h1>
+      <Header title="Ajoute ta bière">
         <Input
-          onSearch={newSearch => {
+          onSearch={(newSearch) => {
             setParams({ search: newSearch, page: 0 });
           }}
         />
-      </div>
+      </Header>
 
       <List
         beers={beers}
         loading={loading}
         totalCount={totalCount}
+        setStep={setStep}
         onViewMore={() => {
           setParams({ ...params, page: params.page + 1 });
         }}
@@ -57,14 +56,4 @@ const Search = ({ className }) => {
   );
 };
 
-export default styled(Search)(
-  ({ theme: { colors } }) => css`
-    .header {
-      padding-top: 4rem;
-      padding-bottom: 2rem;
-      background-color: ${colors.white};
-      position: sticky;
-      top: 0;
-    }
-  `
-);
+export default styled(Search)(({ theme: { colors } }) => css``);

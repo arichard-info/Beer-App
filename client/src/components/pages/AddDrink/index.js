@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
-import Step from "./steps";
+
+import Search from "./steps/Search";
+import CustomBeer from "./steps/CustomBeer";
+
+const SwitchSteps = {
+  0: (rest) => <Search {...rest} />,
+  1: (rest) => <CustomBeer {...rest} />,
+};
 
 const AddDrink = ({ className }) => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState({ index: 0 });
   const { state = {} } = useLocation();
   const selectedDay = state.selectedDay || new Date();
   return (
     <div className={className}>
-      <Step step={step} />
+      {SwitchSteps[step.index]({ step, setStep })}
     </div>
   );
 };
