@@ -3,14 +3,14 @@ import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
 import { UserProvider, useUser } from "@/state/authentication";
-import GlobalStyle from "@/components/Style/GlobalStyle";
-import ThemeProvider from "@/components/Style/ThemeProvider";
+import GlobalStyle from "@/components/Layout/Style/GlobalStyle";
+import ThemeProvider from "@/components/Layout/Style/ThemeProvider";
 
-import Loading from "@/components/pages/Loading";
+import Loading from "@/components/Scopes/Loading";
 import Layout from "@/components/Layout";
-import Emitter from "@/components/Flashes/Emitter";
+import Emitter from "@/components/Layout/Flashes/Emitter";
 
-import SwitchRoutes from "@/components/SwitchRoutes";
+import SwitchRoutes from "@/components/Global/SwitchRoutes";
 import routes from "@/components/App.routes";
 
 window.flash = flash => Emitter.emit("flash", flash);

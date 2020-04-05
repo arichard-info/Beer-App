@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import Flashes from "@/components/Flashes";
+import Flashes from "@/components/Layout/Flashes";
 import Nav from "@/components/Layout/Nav";
 
 const Layout = ({ className, loggedIn, children }) => {

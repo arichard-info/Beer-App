@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { getMonthName } from "@/utils/date";
 import { useCalendar } from "@/state/calendar";
 import { useGetRequest } from "@/utils/api/hooks";
-import BeerItem from "@/components/BeerItem";
-import BeerItemPlaceholder from "@/components/BeerItem/BeerItemPlaceholder";
+import BeerItem from "@/components/Global/BeerItem";
+import BeerItemPlaceholder from "@/components/Global/BeerItem/BeerItemPlaceholder";
 
 const AddBeer = ({ day }) => {
   const [, dispatch] = useCalendar();

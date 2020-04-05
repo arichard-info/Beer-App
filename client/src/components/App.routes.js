@@ -1,12 +1,12 @@
-import CompleteProfile from "@/components/pages/Signup/CompleteProfile";
-import Forgot from "@/components/pages/Login/Forgot";
-import AddDrink from "@/components/pages/AddDrink";
-import Reset from "@/components/pages/Login/Reset";
-import Calendar from "@/components/pages/Calendar";
-import Settings from "@/components/pages/Settings";
-import Profile from "@/components/pages/Profile";
-import Signup from "@/components/pages/Signup";
-import Login from "@/components/pages/Login";
+import CompleteProfile from "@/components/Scopes/Signup/CompleteProfile";
+import Forgot from "@/components/Scopes/Login/Forgot";
+import AddDrink from "@/components/Scopes/AddDrink";
+import Reset from "@/components/Scopes/Login/Reset";
+import Calendar from "@/components/Scopes/Calendar";
+import Settings from "@/components/Scopes/Settings";
+import Profile from "@/components/Scopes/Profile";
+import Signup from "@/components/Scopes/Signup";
+import Login from "@/components/Scopes/Login";
 
 export default [
   { path: "/", exact: true, rights: "loggedOut", component: Login },

@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { useUser } from "@/state/authentication";
 import { completeProfile } from "@/utils/api/authentication";
-import Form from "@/components/Form";
+import Form from "@/components/Global/Form";
 
 const CompleteProfile = ({ className }) => {
   const [, authDispatch] = useUser();

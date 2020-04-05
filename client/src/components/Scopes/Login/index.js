@@ -6,7 +6,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 import { useUser } from "@/state/authentication";
 import { login } from "@/utils/api/authentication";
-import Form from "@/components/Form";
+import Form from "@/components/Global/Form";
 import OAuth from "./OAuth";
 
 const LoginPage = ({ className }) => {
