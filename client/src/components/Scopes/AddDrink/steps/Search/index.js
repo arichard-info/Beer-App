@@ -34,7 +34,7 @@ const Search = ({ className, setStep }) => {
   }, [params]);
 
   return (
-    <div className={className}>
+    <div className={className} data-nrt="add-drink-search">
       <Header title="Ajoute ta bière">
         <Input
           onSearch={newSearch => {

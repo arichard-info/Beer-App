@@ -151,3 +151,11 @@ Replace the database (combinaison of the two previous commands).
 
 To run this script inside the container :
 `docker exec -it [my_container_id] npm run mongo:replace`
+
+This will populate beers, drinks, and users. The logins for users are as follow :
+
+| Name          | Email (login)      | Password |
+| ------------- | ------------------ | -------- |
+| John Doe      | john@example.com   | wes      |
+| Debbie Downer | debbie@example.com | debbie   |
+| Beau          | gounet80@gmail.com | beau     |

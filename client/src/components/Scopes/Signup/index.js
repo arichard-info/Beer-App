@@ -49,7 +49,7 @@ const Forgot = ({ className }) => {
     <div className={className}>
       <Link to="/">Retour</Link>
       <h1>Créer un compte</h1>
-      <Form onValidSubmit={submitForm} fields={fields} />
+      <Form onValidSubmit={submitForm} fields={fields} data-nrt="signup-form" />
     </div>
   );
 };

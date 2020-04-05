@@ -19,7 +19,7 @@ const Month = ({ className, days }) => {
   });
 
   return (
-    <div className={monthClassNames}>
+    <div className={monthClassNames} data-nrt="month-cases">
       {[...offsetArray, ...days].map((day, key) => {
         if (day === null || !day.date)
           return <div key={key} className="offset" />;

@@ -1,49 +1,104 @@
 /// <reference types="Cypress" />
+import { v4 } from "uuid";
+
+export const loginForm = "login-form";
+export const loginFieldEmail = "field-email";
+export const loginFieldPassword = "field-password";
+
+export const signupCta = "signup-cta";
+export const signupForm = "signup-form";
+export const signupFieldName = "field-name";
+export const signupFieldEmail = "field-email";
+export const signupFieldPassword = "field-password";
+export const signupFieldPasswordConfirm = "field-confirm";
+
+export const login = () => {
+  cy.visit("/");
+  cy.fixture("authentication/user").then(user => {
+    cy.server();
+    cy.route("POST", "/api/auth/login").as("loginRequest");
+    cy.getNrt(loginForm).within(() => {
+      cy.getNrt(loginFieldEmail)
+        .find("input")
+        .type(user.username);
+      cy.getNrt(loginFieldPassword)
+        .find("input")
+        .type(`${user.password}{enter}`);
+    });
+    cy.wait("@loginRequest");
+  });
+};
 
 context("Authentication", () => {
-  beforeEach(() => {
+  beforeEach(function() {
     cy.visit("/");
-  });
-
-  it("Login", () => {
-    cy.server();
-    cy.route("POST", "/api/auth/login", "fixture:authentication/login.json").as(
-      "loginRequest"
-    );
-    cy.get('input[name="email"]').type("test@email.com");
-    cy.get('input[name="password"]').type("testpassword{enter}");
-    cy.wait("@loginRequest").then(xhrs => {});
-  });
-
-  it("Login with wrong credentials", () => {
-    cy.server();
-    cy.route(
-      "POST",
-      "/api/auth/login",
-      "fixture:authentication/login-error.json"
-    ).as("loginRequest");
-    cy.get('input[name="email"]').type("test@email.com");
-    cy.get('input[name="password"]').type("testpassword{enter}");
-    cy.wait("@loginRequest").then(xhrs => {
-      cy.get('input[name="email"]').should("exist");
-      cy.get('input[name="password"]').should("exist");
+    cy.fixture("authentication/user").then(user => {
+      this.user = user;
     });
   });
 
-  it("Signup", () => {
+  it("Login", function() {
     cy.server();
-    cy.route(
-      "POST",
-      "/api/auth/register",
-      "fixture:authentication/register.json"
-    ).as("registerRequest");
+    cy.route("POST", "/api/auth/login").as("loginRequest");
+    cy.getNrt(loginForm).within(() => {
+      cy.getNrt(loginFieldEmail)
+        .find("input")
+        .type(this.user.username);
+      cy.getNrt(loginFieldPassword)
+        .find("input")
+        .type(`${this.user.password}{enter}`);
+    });
+    cy.wait("@loginRequest").then(xhrs => {
+      cy.getCookie("auth").should("exist");
+    });
+  });
 
-    cy.get('[href="/signup"]').click();
-    cy.get('input[name="name"]').type("Test User");
-    cy.get('input[name="email"]').type("test@email.com");
-    cy.get('input[name="password"]').type("Testpasswo55!");
-    cy.get('input[name="confirm"]').type("Testpasswo55!{enter}");
-    cy.wait("@registerRequest").then(() => {});
+  it("Login with wrong credentials", function() {
+    const checkNotLoggued = () => {
+      cy.getNrt(loginFieldEmail).should("be.visible");
+      cy.getNrt(loginFieldPassword).should("be.visible");
+      cy.getCookie("auth").should("not.exist");
+    };
+
+    cy.server();
+    cy.route("POST", "/api/auth/login").as("loginRequest");
+    cy.getNrt(loginForm).within(() => {
+      cy.getNrt(loginFieldEmail)
+        .find("input")
+        .type("test@email.com");
+      cy.getNrt(loginFieldPassword)
+        .find("input")
+        .type("testpassword{enter}");
+      cy.wait("@loginRequest").then(xhrs => {
+        cy.getNrt(loginFieldEmail).should("be.visible");
+        cy.getNrt(loginFieldPassword).should("be.visible");
+        cy.getCookie("auth").should("not.exist");
+      });
+    });
+  });
+
+  it("Signup", function() {
+    const randomUsr = v4();
+    cy.server();
+    cy.route("POST", "/api/auth/register").as("registerRequest");
+    cy.getNrt(signupCta).click();
+    cy.getNrt(signupForm).within(() => {
+      cy.getNrt(signupFieldName)
+        .find("input")
+        .type(randomUsr);
+      cy.getNrt(signupFieldEmail)
+        .find("input")
+        .type(`${randomUsr}-test@email.com`);
+      cy.getNrt(signupFieldPassword)
+        .find("input")
+        .type("Testpasswo55!");
+      cy.getNrt(signupFieldPasswordConfirm)
+        .find("input")
+        .type("Testpasswo55!{enter}");
+      cy.wait("@registerRequest").then(() => {
+        cy.getCookie("auth").should("exist");
+      });
+    });
   });
 
   /*

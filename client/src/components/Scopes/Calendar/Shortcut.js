@@ -6,7 +6,7 @@ import { faBeer } from "@fortawesome/free-solid-svg-icons";
 
 const Shortcut = ({ className }) => {
   return (
-    <Link className={className} to="/add-drink">
+    <Link className={className} to="/add-drink" data-nrt="add-drink-direct">
       <FontAwesomeIcon icon={faBeer} />
     </Link>
   );
