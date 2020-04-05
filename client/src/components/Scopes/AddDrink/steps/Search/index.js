@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { getRequest } from "@/utils/api";
-import Header from "@/components/pages/AddDrink/steps/Header";
+import Header from "@/components/Scopes/AddDrink/steps/Header";
 
 import Input from "./Input";
 import List from "./List";
@@ -22,7 +22,7 @@ const Search = ({ className, setStep }) => {
       const newBeers = await getRequest(url);
       if (newBeers.data && newBeers.data.beers) {
         if (params.page > 0)
-          setBeers((beers) => [...beers, ...newBeers.data.beers]);
+          setBeers(beers => [...beers, ...newBeers.data.beers]);
         else setBeers(newBeers.data.beers);
         setTotalCount(newBeers.data.totalCount || 0);
       }
@@ -37,7 +37,7 @@ const Search = ({ className, setStep }) => {
     <div className={className}>
       <Header title="Ajoute ta bière">
         <Input
-          onSearch={(newSearch) => {
+          onSearch={newSearch => {
             setParams({ search: newSearch, page: 0 });
           }}
         />

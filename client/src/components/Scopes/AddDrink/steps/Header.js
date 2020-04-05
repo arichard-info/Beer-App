@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/Global/BackButton";
 
 const Header = ({ className, title, children }) => {
   return (

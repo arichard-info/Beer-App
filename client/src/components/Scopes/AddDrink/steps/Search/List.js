@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import BeerItem from "@/components/BeerItem";
-import BeerItemPlaceholder from "@/components/BeerItem/BeerItemPlaceholder";
+import BeerItem from "@/components/Global/BeerItem";
+import BeerItemPlaceholder from "@/components/Global/BeerItem/BeerItemPlaceholder";
 import NoResult from "./NoResult";
 
 const List = ({
@@ -11,14 +11,14 @@ const List = ({
   loading,
   onViewMore,
   totalCount = 0,
-  setStep,
+  setStep
 }) => {
   const handleNoResultClick = () => {
     setStep({ index: 1 });
   };
 
-  const handleAddBeer = (beer) => {
-    setStep((state) => ({ index: 3, beer, ...state }));
+  const handleAddBeer = beer => {
+    setStep(state => ({ index: 3, beer, ...state }));
   };
 
   if (!beers.length && !loading)

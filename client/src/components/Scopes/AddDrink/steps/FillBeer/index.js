@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import Header from "@/components/pages/AddDrink/steps/Header";
+import Header from "@/components/Scopes/AddDrink/steps/Header";
 
 const FillBeer = ({ className }) => {
   return (

@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { useUser } from "./../../../state/authentication";
-import { signup } from "../../../utils/api/authentication";
-import Form from "./../../Form";
+import { useUser } from "@/state/authentication";
+import { signup } from "@/utils/api/authentication";
+import Form from "@/components/Global/Form";
 
 const Forgot = ({ className }) => {
   const [, authDispatch] = useUser();
