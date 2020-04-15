@@ -16,6 +16,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    proxy: {
+      "/api": process.env.REACT_APP_PROXY || "http://localhost:5000",
+    },
   },
   module: {
     rules: [

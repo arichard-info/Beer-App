@@ -1,5 +1,4 @@
 import React from "react";
-import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -13,10 +12,6 @@ const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];
   const [, dispatch] = useUser();
 
-  const socket = io(
-    process.env.REACT_APP_SERVER_URL || "http://localhost:5000"
-  );
-
   const handleSubmit = async ({ email, password }) => {
     const user = await login(email.value, password.value);
     if (user && !user.error) {
@@ -26,7 +21,7 @@ const LoginPage = ({ className }) => {
       window.flash({
         message: "Erreur lors de la connexion :/",
         type: "danger",
-        timeout: 5000
+        timeout: 5000,
       });
   };
 
@@ -36,7 +31,7 @@ const LoginPage = ({ className }) => {
       type: "email",
       placeholder: "Adresse email",
       label: "Adresse email",
-      required: true
+      required: true,
     },
     password: {
       field: "textField",
@@ -44,8 +39,8 @@ const LoginPage = ({ className }) => {
       placeholder: "Mot de passe",
       label: "Mot de passe",
       infos: <Link to="/login/forgot">Mot de passe oublié ?</Link>,
-      required: true
-    }
+      required: true,
+    },
   };
 
   return (
@@ -66,8 +61,8 @@ const LoginPage = ({ className }) => {
         <Link to="/signup" className="cta bg-grey" data-nrt="signup-cta">
           Créer un compte
         </Link>
-        {providers.map(provider => (
-          <OAuth provider={provider} key={provider} socket={socket} />
+        {providers.map((provider) => (
+          <OAuth provider={provider} key={provider} />
         ))}
       </div>
     </div>
