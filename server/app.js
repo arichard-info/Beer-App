@@ -26,7 +26,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: "http://localhost:3000"
+    origin: "http://localhost:3000",
   })
 );
 
@@ -34,17 +34,17 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
 app.use("/", routes);
 
 if (process.env.NODE_ENV === "production") {
-  const CLIENT_BUILD_PATH = path.join(__dirname, "../client/build");
+  const CLIENT_BUILD_PATH = path.join(__dirname, "../client/dist");
   app.use(express.static(CLIENT_BUILD_PATH));
   // All remaining requests return the React app, so it can handle routing.
-  app.get("*", function(request, response) {
+  app.get("*", function (request, response) {
     response.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
   });
 }
