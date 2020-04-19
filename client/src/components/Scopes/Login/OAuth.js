@@ -1,12 +1,12 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const OAuth = ({ socket, provider }) => {
+const OAuth = ({ provider }) => {
   const openProvider = () => {
-    window.location = `/api/auth/${provider.id}?socketId=${socket.id}`;
+    window.location = `/api/auth/${provider.id}`;
   };
 
-  const startAuth = e => {
+  const startAuth = (e) => {
     openProvider();
   };
 
