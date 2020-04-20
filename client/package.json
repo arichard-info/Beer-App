@@ -24,7 +24,7 @@
     "@babel/polyfill": "^7.8.7",
     "babel-loader": "^8.1.0",
     "babel-preset-react-app": "^9.1.2",
-    "cypress": "^4.3.0",
+    "cypress": "^4.4.1",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "dotenv-webpack": "^1.7.0",
