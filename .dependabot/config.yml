@@ -7,6 +7,9 @@ update_configs:
       - "arichard-info"
     default_assignees:
       - "arichard-info"
+    commit_message:
+      prefix: "chore"
+      include_scope: true
   - package_manager: "javascript"
     directory: "/server"
     update_schedule: "live"
@@ -14,3 +17,6 @@ update_configs:
       - "arichard-info"
     default_assignees:
       - "arichard-info"
+    commit_message:
+      prefix: "chore"
+      include_scope: true
