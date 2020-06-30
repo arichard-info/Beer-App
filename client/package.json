@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.10.4",
-    "@babel/polyfill": "^7.10.1",
+    "@babel/polyfill": "^7.10.4",
     "babel-loader": "^8.1.0",
     "babel-preset-react-app": "^9.1.2",
     "cypress": "^4.9.0",
