@@ -7,9 +7,9 @@ import CustomBeer from "./steps/CustomBeer";
 import FillBeer from "./steps/FillBeer";
 
 const SwitchSteps = {
-  0: rest => <Search {...rest} />,
-  1: rest => <CustomBeer {...rest} />,
-  3: rest => <FillBeer {...rest} />
+  0: (rest) => <Search {...rest} />,
+  1: (rest) => <CustomBeer {...rest} />,
+  3: (rest) => <FillBeer {...rest} />,
 };
 
 const AddDrink = ({ className }) => {
@@ -24,10 +24,4 @@ const AddDrink = ({ className }) => {
   );
 };
 
-export default styled(AddDrink)(
-  ({ theme: { device } }) => css`
-    @media ${device.gtMobile} {
-      padding: 0 0 0 4rem;
-    }
-  `
-);
+export default styled(AddDrink)(({ theme: { device } }) => css``);

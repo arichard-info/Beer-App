@@ -2,15 +2,16 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 const BeerItem = ({
+  customClass,
   className,
   beer = {},
   quantity = false,
-  onClick = false
+  onClick = false,
 }) => {
   const clickable = typeof onClick === "function";
   return (
     <div
-      className={`${className}${clickable ? " clickable" : ""}`}
+      className={`${className}${clickable ? " clickable" : ""} ${customClass}`}
       onClick={onClick}
     >
       <div

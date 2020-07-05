@@ -14,8 +14,11 @@ const Header = ({ className, title, children }) => {
 
 export default styled(Header)(
   ({ theme: { colors } }) => css`
+    margin-right: -1rem;
+    padding-right: 1rem;
     padding-top: 4rem;
     padding-bottom: 2rem;
+    padding-left: 4rem;
     background-color: ${colors.white};
     position: sticky;
     top: 0;
