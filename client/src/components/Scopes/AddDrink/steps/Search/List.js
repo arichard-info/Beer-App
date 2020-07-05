@@ -11,14 +11,14 @@ const List = ({
   loading,
   onViewMore,
   totalCount = 0,
-  setStep
+  setStep,
 }) => {
   const handleNoResultClick = () => {
     setStep({ index: 1 });
   };
 
-  const handleAddBeer = beer => {
-    setStep(state => ({ index: 3, beer, ...state }));
+  const handleAddBeer = (beer) => {
+    setStep((state) => ({ index: 3, beer, ...state }));
   };
 
   if (!beers.length && !loading)
@@ -39,7 +39,12 @@ const List = ({
     <>
       <div className={className}>
         {beers.map((beer, key) => (
-          <BeerItem beer={beer} key={key} onClick={() => handleAddBeer(beer)} />
+          <BeerItem
+            customClass="beer-item"
+            beer={beer}
+            key={key}
+            onClick={() => handleAddBeer(beer)}
+          />
         ))}
         {showMoreCta && (
           <button className="cta" onClick={onViewMore}>
@@ -54,13 +59,17 @@ const List = ({
 export default styled(List)(
   () =>
     css`
+      padding-left: 4rem;
       margin-top: 2rem;
       margin-bottom: 2rem;
-      margin-left: -1rem;
-      margin-right: -1rem;
+
+      .beer-item {
+        margin-left: -1rem;
+        margin-right: -1rem;
+      }
 
       button {
-        margin: 1.5rem 1rem;
+        margin: 1.5rem 0;
       }
     `
 );

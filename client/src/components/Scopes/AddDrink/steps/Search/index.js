@@ -22,7 +22,7 @@ const Search = ({ className, setStep }) => {
       const newBeers = await getRequest(url);
       if (newBeers.data && newBeers.data.beers) {
         if (params.page > 0)
-          setBeers(beers => [...beers, ...newBeers.data.beers]);
+          setBeers((beers) => [...beers, ...newBeers.data.beers]);
         else setBeers(newBeers.data.beers);
         setTotalCount(newBeers.data.totalCount || 0);
       }
@@ -37,7 +37,7 @@ const Search = ({ className, setStep }) => {
     <div className={className} data-nrt="add-drink-search">
       <Header title="Ajoute ta bière">
         <Input
-          onSearch={newSearch => {
+          onSearch={(newSearch) => {
             setParams({ search: newSearch, page: 0 });
           }}
         />

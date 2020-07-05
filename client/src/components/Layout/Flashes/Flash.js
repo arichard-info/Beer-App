@@ -82,19 +82,6 @@ export default styled(Flash)(
       animation: fadeIn 0.6s ${timings.bounce};
     }
 
-    ${() => {
-      switch (type) {
-        case "success":
-          return `background-color: ${colors.flashSuccess}`;
-        case "danger":
-          return `background-color: ${colors.flashDanger}`;
-        case "warning":
-          return `background-color: ${colors.warning}`;
-        default:
-          return `background-color: ${colors.flashInfo}`;
-      }
-    }}
-
     button {
       margin-left: 1rem;
       cursor: pointer;
@@ -107,5 +94,18 @@ export default styled(Flash)(
     p {
       margin: 0;
     }
+
+    ${() => {
+      switch (type) {
+        case "success":
+          return `background-color: ${colors.flashSuccess}`;
+        case "danger":
+          return `background-color: ${colors.flashDanger}`;
+        case "warning":
+          return `background-color: ${colors.warning}`;
+        default:
+          return `background-color: ${colors.flashInfo}`;
+      }
+    }}
   `
 );
