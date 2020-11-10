@@ -4,7 +4,7 @@ FROM node:alpine as client
 
 WORKDIR /usr/app/client/
 COPY ./client/package*.json ./
-RUN npm install --no-optional
+RUN npm ci --no-optional
 COPY ./client/ ./
 RUN npm run build
 
@@ -18,7 +18,7 @@ COPY --from=client /usr/app/client/dist/ ./client/dist/
 
 WORKDIR /usr/app/server/
 COPY ./server/package*.json ./
-RUN npm install --only=prod
+RUN npm ci --no-optional
 COPY ./server/ ./
 
 EXPOSE 5000

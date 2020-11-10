@@ -1,9 +1,10 @@
-name: Build full
+name: Pipeline
 
 on: [pull_request]
 
 jobs:
   build:
+    name: Build and test PR
     runs-on: ubuntu-latest
     env:
       MAIL_USER: ${{ secrets.MAIL_USER }}
@@ -13,15 +14,22 @@ jobs:
       SECRET_JWT: CQqMO4SNlgGHbHiovAqK
       SESSION_SECRET: Bf6Y0ZQBHwZb1DK2MbBq
       CYPRESS_baseUrl: http://localhost:5000
+      NODE_ENV: production
     steps:
       - uses: actions/checkout@v1
       - name: Build and start docker containers
         run: docker-compose -f docker-compose.yml up -d
       - name: Docker ps
         run: docker ps
-      - name: Inject mock data
+      - name: Inject sample data
         run: docker exec prod_server npm run mongo:sample
-      - name: Install test dependencies
-        run: cd client && npm install cypress
-      - name: Run cypress tests
-        run: cd client && node_modules/cypress/bin/cypress run
+      - name: Cypress integration tests
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: client
+      - name: Save Cypress videos
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: client/cypress/videos
