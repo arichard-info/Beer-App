@@ -26,3 +26,9 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: client
+      - name: Save Cypress videos
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
