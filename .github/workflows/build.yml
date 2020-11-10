@@ -14,6 +14,7 @@ jobs:
       SECRET_JWT: CQqMO4SNlgGHbHiovAqK
       SESSION_SECRET: Bf6Y0ZQBHwZb1DK2MbBq
       CYPRESS_baseUrl: http://localhost:5000
+      NODE_ENV: production
     steps:
       - uses: actions/checkout@v1
       - name: Build and start docker containers
