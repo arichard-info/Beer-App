@@ -1,9 +1,10 @@
-name: Build full
+name: Pipeline
 
 on: [pull_request]
 
 jobs:
   build:
+    name: Build and test PR
     runs-on: ubuntu-latest
     env:
       MAIL_USER: ${{ secrets.MAIL_USER }}
@@ -19,9 +20,9 @@ jobs:
         run: docker-compose -f docker-compose.yml up -d
       - name: Docker ps
         run: docker ps
-      - name: Inject mock data
+      - name: Inject sample data
         run: docker exec prod_server npm run mongo:sample
-      - name: Cypress run
+      - name: Cypress integration tests
         uses: cypress-io/github-action@v2
         with:
-          project: ./client/
+          working-directory: client
