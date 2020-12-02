@@ -13,14 +13,27 @@ const Header = ({ className, title, children }) => {
 };
 
 export default styled(Header)(
-  ({ theme: { colors } }) => css`
-    margin-right: -1rem;
-    padding-right: 1rem;
+  ({ theme: { colors, device } }) => css`
+    max-width: 50rem;
+    margin: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     padding-top: 4rem;
     padding-bottom: 2rem;
-    padding-left: 4rem;
     background-color: ${colors.white};
     position: sticky;
     top: 0;
+
+    @media ${device.gtMobile} {
+      max-width: none;
+      margin: 0;
+      padding-left: 4rem;
+      padding-right: 0;
+      padding-right: 1rem;
+      margin-right: -1rem;
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
   `
 );

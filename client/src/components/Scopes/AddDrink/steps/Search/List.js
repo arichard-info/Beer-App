@@ -22,11 +22,17 @@ const List = ({
   };
 
   if (!beers.length && !loading)
-    return <NoResult onClick={handleNoResultClick} />;
+    return (
+      <div className={className}>
+        <h2>Aucune bière trouvée</h2>
+        <NoResult onClick={handleNoResultClick} />
+      </div>
+    );
 
   if (!beers.length && loading) {
     return (
       <div className={className}>
+        <h2>Chargement...</h2>
         {[...Array(10).keys()].map((el, key) => (
           <BeerItemPlaceholder key={key} />
         ))}
@@ -38,6 +44,7 @@ const List = ({
   return (
     <>
       <div className={className}>
+        <h2>{totalCount} bière(s) trouvée(s)</h2>
         {beers.map((beer, key) => (
           <BeerItem
             customClass="beer-item"
@@ -48,7 +55,7 @@ const List = ({
         ))}
         {showMoreCta && (
           <button className="cta" onClick={onViewMore}>
-            Charger plus ...
+            Plus de bières
           </button>
         )}
       </div>
@@ -57,11 +64,19 @@ const List = ({
 };
 
 export default styled(List)(
-  () =>
+  ({ theme: { device } }) =>
     css`
-      padding-left: 4rem;
+      max-width: 50rem;
+      margin: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
       margin-top: 2rem;
       margin-bottom: 2rem;
+
+      h2 {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
 
       .beer-item {
         margin-left: -1rem;
@@ -70,6 +85,16 @@ export default styled(List)(
 
       button {
         margin: 1.5rem 0;
+      }
+
+      @media ${device.gtMobile} {
+        max-width: none;
+        margin: 0;
+        padding-left: 4rem;
+        padding-right: 0;
+        h2 {
+          font-size: 1.4rem;
+        }
       }
     `
 );

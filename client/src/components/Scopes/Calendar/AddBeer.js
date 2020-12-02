@@ -58,11 +58,11 @@ const AddBeer = ({ day }) => {
 };
 
 const AnimationWrapper = ({ className, day }) => {
-  const transitions = useTransition(day, day => day !== false, {
+  const transitions = useTransition(day, (day) => day !== false, {
     from: { transform: "translate3d(0,100%,0)" },
     enter: { transform: "translate3d(0,0,0)" },
     leave: { transform: "translate3d(0,100%,0)" },
-    config: { duration: 300 }
+    config: { duration: 300 },
   });
 
   return transitions.map(
@@ -81,15 +81,15 @@ const AnimationWrapper = ({ className, day }) => {
 };
 
 export default styled(AnimationWrapper)(
-  ({ theme: { colors, fw } }) => css`
+  ({ theme: { colors, fw, device } }) => css`
     position: sticky;
     z-index: 2;
     bottom: 0;
-
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
     background-color: ${colors.white};
     border-radius: 1.4rem 1.4rem 0 0;
     padding: 3rem;
+    padding-bottom: 7.1rem;
     .header {
       display: flex;
       align-items: center;
@@ -120,6 +120,10 @@ export default styled(AnimationWrapper)(
       margin-bottom: 2rem;
       margin-left: -1rem;
       margin-right: -1rem;
+    }
+
+    @media ${device.gtMobile} {
+      padding-bottom: 3rem;
     }
   `
 );
