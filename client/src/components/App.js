@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ import Emitter from "@/components/Layout/Flashes/Emitter";
 import SwitchRoutes from "@/components/Global/SwitchRoutes";
 import routes from "@/components/App.routes";
 
-window.flash = flash => Emitter.emit("flash", flash);
+window.flash = (flash) => Emitter.emit("flash", flash);
 
 const App = () => {
   const [user, dispatch] = useUser();
@@ -25,7 +25,7 @@ const App = () => {
         if (status === 200 && data && data.user) {
           dispatch({
             type: "INIT",
-            value: data.user
+            value: data.user,
           });
         } else throw new Error("Error while authenticating with cookie");
       } catch (err) {
@@ -46,7 +46,9 @@ const App = () => {
       ) : (
         <BrowserRouter>
           <Layout loggedIn={user && !user.toComplete}>
-            <SwitchRoutes routes={routes} />
+            <Suspense fallback={<Loading />}>
+              <SwitchRoutes routes={routes} />
+            </Suspense>
           </Layout>
         </BrowserRouter>
       )}

@@ -1,12 +1,15 @@
-import CompleteProfile from "@/components/Scopes/Signup/CompleteProfile";
-import Forgot from "@/components/Scopes/Login/Forgot";
-import AddDrink from "@/components/Scopes/AddDrink";
-import Reset from "@/components/Scopes/Login/Reset";
-import Calendar from "@/components/Scopes/Calendar";
-import Settings from "@/components/Scopes/Settings";
-import Profile from "@/components/Scopes/Profile";
-import Signup from "@/components/Scopes/Signup";
-import Login from "@/components/Scopes/Login";
+import { lazy } from "react";
+
+// prettier-ignore
+const CompleteProfile = lazy(() => import('@/components/Scopes/Signup/CompleteProfile'));
+const Forgot = lazy(() => import("@/components/Scopes/Login/Forgot"));
+const AddDrink = lazy(() => import("@/components/Scopes/AddDrink"));
+const Reset = lazy(() => import("@/components/Scopes/Login/Reset"));
+const Calendar = lazy(() => import("@/components/Scopes/Calendar"));
+const Settings = lazy(() => import("@/components/Scopes/Settings"));
+const Profile = lazy(() => import("@/components/Scopes/Profile"));
+const Signup = lazy(() => import("@/components/Scopes/Signup"));
+const Login = lazy(() => import("@/components/Scopes/Login"));
 
 export default [
   { path: "/", exact: true, rights: "loggedOut", component: Login },
@@ -14,49 +17,49 @@ export default [
     path: "/signup",
     exact: true,
     rights: "loggedOut",
-    component: Signup
+    component: Signup,
   },
   {
     path: "/login/reset/:token",
     exact: false,
     rights: "loggedOut",
-    component: Reset
+    component: Reset,
   },
   {
     path: "/login/forgot",
     exact: true,
     rights: "loggedOut",
-    component: Forgot
+    component: Forgot,
   },
 
   {
     path: "/home",
     exact: true,
     rights: "private",
-    component: Calendar
+    component: Calendar,
   },
   {
     path: "/add-drink",
     exact: true,
     rights: "private",
-    component: AddDrink
+    component: AddDrink,
   },
   {
     path: "/profile",
     exact: true,
     rights: "private",
-    component: Profile
+    component: Profile,
   },
   {
     path: "/settings",
     exact: true,
     rights: "private",
-    component: Settings
+    component: Settings,
   },
   {
     path: "/complete-profile",
     exact: true,
     rights: "loggedOut",
-    component: CompleteProfile
-  }
+    component: CompleteProfile,
+  },
 ];
