@@ -2,7 +2,7 @@
   "name": "beer-app",
   "version": "0.1.0",
   "dependencies": {
-    "@babel/core": "7.12.3",
+    "@babel/core": "7.12.10",
     "@babel/polyfill": "^7.12.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
