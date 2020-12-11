@@ -4,7 +4,7 @@ FROM node:alpine as client
 
 WORKDIR /usr/app/client/
 COPY ./client/package*.json ./
-RUN npm ci
+RUN npm install --no-optional
 COPY ./client/ ./
 RUN npm run build
 
