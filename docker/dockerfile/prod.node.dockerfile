@@ -1,6 +1,6 @@
 # Setup and build the client
 
-FROM node:alpine as client
+FROM node:alpine
 
 WORKDIR /usr/app/client/
 COPY ./client/package*.json ./
