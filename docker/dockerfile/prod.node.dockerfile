@@ -6,7 +6,6 @@ WORKDIR /usr/app/client/
 COPY ./client/package*.json ./
 RUN npm ci
 COPY ./client/ ./
-RUN ls -l node_modules
 RUN npm run build
 
 
