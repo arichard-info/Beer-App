@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "env NODE_ENV=development webpack serve --host localhost --open 'Google Chrome'",
-    "build": "env NODE_ENV=production webpack --mode production",
+    "build": "env NODE_ENV=production node_modules/.bin/webpack --mode production",
     "cy:verify": "cypress verify",
     "cy:version": "cypress version",
     "cy:run": "cypress run",
