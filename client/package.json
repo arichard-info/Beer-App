@@ -2,7 +2,7 @@
   "name": "beer-app",
   "version": "0.1.0",
   "dependencies": {
-    "@babel/core": "7.12.3",
+    "@babel/core": "7.12.10",
     "@babel/polyfill": "^7.12.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
@@ -23,6 +23,7 @@
     "http-proxy-middleware": "^1.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-is": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-spring": "^8.0.27",
     "styled-components": "^5.2.1",
@@ -39,7 +40,7 @@
   },
   "scripts": {
     "start": "env NODE_ENV=development webpack serve --host localhost --open 'Google Chrome'",
-    "build": "env NODE_ENV=production webpack --mode production",
+    "build": "env NODE_ENV=production node_modules/.bin/webpack --mode production",
     "cy:verify": "cypress verify",
     "cy:version": "cypress version",
     "cy:run": "cypress run",
