@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "eslint": "^7.16.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.1"
   },
   "optionalDependencies": {
     "cypress": "^6.2.0"
