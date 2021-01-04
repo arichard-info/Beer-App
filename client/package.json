@@ -13,7 +13,7 @@
     "babel-loader": "^8.1.0",
     "babel-preset-react-app": "^10.0.0",
     "classnames": "^2.2.6",
-    "cypress": "^6.2.0",
+    "cypress": "^6.2.1",
     "dotenv": "8.2.0",
     "dotenv-webpack": "^6.0.0",
     "events": "^3.2.0",
@@ -36,7 +36,7 @@
     "webpack-dev-server": "^3.11.1"
   },
   "optionalDependencies": {
-    "cypress": "^6.2.0"
+    "cypress": "^6.2.1"
   },
   "scripts": {
     "start": "env NODE_ENV=development webpack serve --host localhost --open 'Google Chrome'",
