@@ -1,18 +1,24 @@
 const express = require("express");
-const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
+const http = require("http");
+const dotenv = require("dotenv");
+const socketio = require("socket.io");
+const { onError, normalizePort } = require("./utils/expressServer");
 
-require("./handlers/passport");
+dotenv.config();
 
-const routes = require("./routes/index");
+require("./utils/mongoose/init");
+require("./utils/passport/init");
 
-var app = express();
+const app = express();
+const server = http.createServer(app);
 
+app.set("io", socketio(server));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,15 +44,13 @@ app.use(
   })
 );
 
-app.use("/", routes);
+app.use(require("./router"));
 
-if (process.env.NODE_ENV === "production") {
-  const CLIENT_BUILD_PATH = path.join(__dirname, "../client/dist");
-  app.use(express.static(CLIENT_BUILD_PATH));
-  // All remaining requests return the React app, so it can handle routing.
-  app.get("*", function (request, response) {
-    response.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
-  });
-}
+/**
+ * Create HTTP server.
+ */
 
-module.exports = app;
+const port = normalizePort("5000");
+app.set("port", port);
+server.listen(port);
+server.on("error", onError);

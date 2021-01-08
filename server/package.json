@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node scripts/start.js",
-    "dev": "supervisor -w routes, models, controllers -e ejs,js,json, scripts/start.js",
+    "start": "node app.js",
+    "dev": "supervisor -w router, models, controllers -e ejs,js,json, app.js",
     "mongo:sample": "node --no-deprecation ./scripts/data/sampleData.js",
     "mongo:remove": "node --no-deprecation ./scripts/data/sampleData.js --delete",
     "mongo:replace": "node --no-deprecation ./scripts/data/sampleData.js --replace"

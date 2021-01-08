@@ -1,7 +1,7 @@
 const passport = require("passport");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
-const mail = require("./../handlers/mail");
+const mail = require("./../utils/mail");
 const User = mongoose.model("User");
 
 /**
@@ -10,21 +10,25 @@ const User = mongoose.model("User");
 
 // authentication
 exports.localAuth = (req, res, next) => {
-  passport.authenticate("local", { session: false }, function(err, user, info) {
-    if (err) return next(err);
-    if (!user) {
+  passport.authenticate(
+    "local",
+    { session: false },
+    function (err, user, info) {
+      if (err) return next(err);
+      if (!user) {
+        return res.json({
+          error: true,
+          message: info && info.message ? info.message : "",
+        });
+      }
+      res.cookie("auth", user._id, { httpOnly: true, signed: true });
       return res.json({
-        error: true,
-        message: info && info.message ? info.message : ""
+        error: false,
+        message: "User logged in!",
+        user: user.toObject(),
       });
     }
-    res.cookie("auth", user._id, { httpOnly: true, signed: true });
-    return res.json({
-      error: false,
-      message: "User logged in!",
-      user: user.toObject()
-    });
-  })(req, res, next);
+  )(req, res, next);
 };
 
 // forgot password
@@ -33,7 +37,7 @@ exports.forgot = async (req, res) => {
   if (!user) {
     return res.json({
       error: true,
-      message: "No account with that email exists"
+      message: "No account with that email exists",
     });
   }
   user.resetPasswordToken = crypto.randomBytes(20).toString("hex");
@@ -45,12 +49,12 @@ exports.forgot = async (req, res) => {
   await mail.send({
     to: user.email,
     subject: "Password Reset",
-    html: resetUrl
+    html: resetUrl,
   });
 
   return res.json({
     error: false,
-    message: "You have been emailed a password reset link."
+    message: "You have been emailed a password reset link.",
   });
 };
 
@@ -67,12 +71,12 @@ exports.confirmedPasswords = (req, res, next) => {
 exports.updatePassword = async (req, res, next) => {
   const user = await User.findOne({
     resetPasswordToken: req.params.token,
-    resetPasswordExpires: { $gt: Date.now() }
+    resetPasswordExpires: { $gt: Date.now() },
   });
   if (!user) {
     return res.json({
       error: true,
-      message: "Password reset is invalid or has expired"
+      message: "Password reset is invalid or has expired",
     });
   }
   await user.setPassword(req.body.password);
@@ -92,13 +96,13 @@ exports.googleAuth = (req, res, next) => {
   passport.authenticate(
     "google",
     {
-      scope: ["profile", "email", "openid"]
+      scope: ["profile", "email", "openid"],
     },
     (err, user, info) => {
       if (user && user.toComplete) {
         res.cookie("usr_complete", user.authProviderId, {
           httpOnly: true,
-          signed: true
+          signed: true,
         });
         res.redirect(
           `http://localhost:3000/complete-profile?name=${user.name}&email=${user.email}`
@@ -119,7 +123,6 @@ exports.addSocketIdtoSession = (req, res, next) => {
 
 // confirm provider auth
 exports.confirmProviderAuth = async (req, res, next) => {
-  console.log(req.signedCookies);
   if (!req.signedCookies || !req.signedCookies["usr_complete"]) {
     return res.status(401).end();
   }
@@ -127,7 +130,7 @@ exports.confirmProviderAuth = async (req, res, next) => {
   const user = new User({
     email: req.body.email,
     name: req.body.name,
-    authProviderId: providerId
+    authProviderId: providerId,
   });
 
   await user.save();
@@ -164,7 +167,7 @@ exports.returnReqUser = (req, res, next) => {
   return res.json({
     error: false,
     message: "Valid cookie",
-    user: { ...req.user.toObject() }
+    user: { ...req.user.toObject() },
   });
 };
 
