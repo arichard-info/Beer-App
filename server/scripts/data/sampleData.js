@@ -6,7 +6,7 @@ dotenv.config({ path: __dirname + "/../../.env" });
 
 mongoose.connect(process.env.DATABASE || "27107", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 mongoose.Promise = global.Promise;
 

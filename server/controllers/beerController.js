@@ -6,7 +6,7 @@ exports.getBeers = async (req, res, next) => {
 
   // Pagination options
   const {
-    query: { perPage = 10, page = 0, search = "" }
+    query: { perPage = 10, page = 0, search = "" },
   } = req;
   const options = { skip: perPage * page, limit: perPage };
 
@@ -15,8 +15,6 @@ exports.getBeers = async (req, res, next) => {
 
   const beers = await Beer.find(query, {}, options);
   const totalCount = await Beer.count(query);
-
-  console.log(totalCount);
 
   res.json({ beers, totalCount });
 };
