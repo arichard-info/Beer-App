@@ -11,11 +11,11 @@ const Month = ({ className, days }) => {
     days && days[0] && days[0].date ? days[0].date.getDay() - 1 : 0;
   const offsetArray = Array(offset >= 0 ? offset : 6).fill(null);
 
-  const monthClassNames = classNames(className, {
+  const monthClassNames = classNames(className, "month-group", {
     current:
       highlight &&
       days[0].date.getMonth() === highlight.getMonth() &&
-      days[0].date.getFullYear() === highlight.getFullYear()
+      days[0].date.getFullYear() === highlight.getFullYear(),
   });
 
   return (
@@ -26,7 +26,7 @@ const Month = ({ className, days }) => {
 
         const dayClassNames = classNames("daybox", {
           disabled: day.date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0),
-          today: day.date.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)
+          today: day.date.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0),
         });
 
         return (
@@ -43,17 +43,14 @@ const Month = ({ className, days }) => {
 };
 
 export default styled(Month)(
-  ({ theme: { device } }) => css`
+  ({ theme: { device, colors } }) => css`
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem;
     scroll-snap-align: center;
-    transition: padding 0.4s ease;
-
-    &.current {
-      padding: 0;
-    }
+    border: 0.3rem solid transparent;
+    border-radius: 10px;
 
     .offset {
       flex: 14.286%;
@@ -74,10 +71,7 @@ export default styled(Month)(
 
     @media ${device.gtMobile} {
       max-width: none;
-      padding: 1rem 2.5rem;
-      &.current {
-        padding: 0;
-      }
+      padding: 1rem;
     }
   `
 );

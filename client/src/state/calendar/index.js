@@ -14,7 +14,7 @@ const reducer = (state, action) => {
         const index = getMonthElIndex(months, today);
         const currentEl = container.childNodes[index];
         const scrollPosition = currentEl.offsetTop;
-        window.scroll(0, scrollPosition);
+        // window.scroll(0, scrollPosition);
       }
       return { ...state, scrollContainer: container };
     }
@@ -23,22 +23,22 @@ const reducer = (state, action) => {
       const drinks = action.value;
       const monthsArray = [...months];
       if (drinks && drinks.length) {
-        drinks.forEach(drink => {
+        drinks.forEach((drink) => {
           const date = new Date(drink._id);
           const monthId = months.findIndex(
-            month =>
+            (month) =>
               month[0].date.getMonth() === date.getMonth() &&
               month[0].date.getFullYear() === date.getFullYear()
           );
           if (monthId !== -1) {
             const dayId = months[monthId].findIndex(
-              day => day.date.getDate() === date.getDate()
+              (day) => day.date.getDate() === date.getDate()
             );
             if (dayId)
               monthsArray[monthId][dayId] = {
                 ...monthsArray[monthId][dayId],
                 count: drink.count,
-                quantity: drink.quantity
+                quantity: drink.quantity,
               };
           }
         });
@@ -51,7 +51,7 @@ const reducer = (state, action) => {
       if (highlightMonth) {
         return {
           ...state,
-          highlight: highlightMonth[0].date
+          highlight: highlightMonth[0].date,
         };
       }
 
@@ -77,7 +77,7 @@ const getInitialState = () => {
   return {
     months: getInitialMonths(todayDate.getMonth(), todayDate.getFullYear(), 12),
     today: todayDate,
-    selected: false
+    selected: false,
   };
 };
 
