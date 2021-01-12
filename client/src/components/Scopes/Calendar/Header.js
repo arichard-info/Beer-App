@@ -9,7 +9,7 @@ const Header = ({ className }) => {
   const date = highlight
     ? {
         month: getMonthName(highlight.getMonth()),
-        year: highlight.getFullYear()
+        year: highlight.getFullYear(),
       }
     : { month: "", year: "" };
 
@@ -77,7 +77,7 @@ export default styled(Header)(
     @media ${device.gtMobile} {
       max-width: none;
       width: 100%;
-      padding: 3rem 1.5rem 2rem;
+      padding: 3rem 1.5rem 2rem 5.5rem;
       h1 {
         margin-bottom: 3rem;
       }
