@@ -15,11 +15,12 @@ const SwitchSteps = {
 const AddDrink = ({ className }) => {
   const { state = {} } = useLocation();
   const selectedDay = state.selectedDay || new Date();
-  const [step, setStep] = useState({ index: 0, selectedDay });
+  const [step, setStep] = useState({ index: 0 });
+  const [form, setForm] = useState({ selectedDay, beer: "", quantity: 0 });
 
   return (
     <div className={className}>
-      {SwitchSteps[step.index]({ step, setStep })}
+      {SwitchSteps[step.index]({ step, setStep, form, setForm })}
     </div>
   );
 };

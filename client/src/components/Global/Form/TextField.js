@@ -18,7 +18,8 @@ const TextField = ({
   onChange,
   onFocusOut,
   togglePassword = false,
-  dataNrt = ""
+  inline = false,
+  suffix = false,
 }) => {
   const [revealed, setRevealed] = useState(false);
   const togglable = type === "password" && togglePassword;
@@ -29,52 +30,55 @@ const TextField = ({
       }`}
       data-nrt={`field-${name}`}
     >
-      <div className="label-wrapper">
-        {label && <label htmlFor={name}>{label}</label>}
-        <div className="validation-wrapper">
-          {validation &&
-            errors.length > 0 &&
-            errors.map((el, key) => (
-              <p className="error-message" key={key}>
-                {el}
-              </p>
-            ))}
+      <div className={`field-wrapper ${inline ? "inline" : ""}`}>
+        <div className="label-wrapper">
+          {label && <label htmlFor={name}>{label}</label>}
+          <div className="validation-wrapper">
+            {validation &&
+              errors.length > 0 &&
+              errors.map((el, key) => (
+                <p className="error-message" key={key}>
+                  {el}
+                </p>
+              ))}
+          </div>
         </div>
-      </div>
 
-      <div className="input-wrapper">
-        <input
-          className={`${togglable ? "togglable" : ""}`}
-          name={name}
-          id={name}
-          type={togglable && revealed ? "text" : type}
-          required={required}
-          value={value}
-          placeholder={placeholder}
-          onBlur={e => {
-            if (typeof onFocusOut === "function") {
-              onFocusOut({ name, value: e.target.value });
-            }
-          }}
-          onChange={e => {
-            if (typeof onChange === "function") {
-              onChange({ name, value: e.target.value });
-            }
-          }}
-        />
-        {togglable && (
-          <button
-            className="reveal-button"
-            type="button"
-            onClick={() => setRevealed(!revealed)}
-          >
-            {revealed ? (
-              <FontAwesomeIcon icon={faEye} />
-            ) : (
-              <FontAwesomeIcon icon={faEyeSlash} />
-            )}
-          </button>
-        )}
+        <div className="input-wrapper">
+          <input
+            className={`${togglable ? "togglable" : ""}`}
+            name={name}
+            id={name}
+            type={togglable && revealed ? "text" : type}
+            required={required}
+            value={value}
+            placeholder={placeholder}
+            onBlur={(e) => {
+              if (typeof onFocusOut === "function") {
+                onFocusOut({ name, value: e.target.value });
+              }
+            }}
+            onChange={(e) => {
+              if (typeof onChange === "function") {
+                onChange({ name, value: e.target.value });
+              }
+            }}
+          />
+          {suffix && <span className="suffix">{suffix}</span>}
+          {togglable && (
+            <button
+              className="reveal-button"
+              type="button"
+              onClick={() => setRevealed(!revealed)}
+            >
+              {revealed ? (
+                <FontAwesomeIcon icon={faEye} />
+              ) : (
+                <FontAwesomeIcon icon={faEyeSlash} />
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
       {infos}
@@ -84,6 +88,7 @@ const TextField = ({
 
 export default styled(TextField)(
   ({ theme: { colors, fw } }) => css`
+    width: 100%;
     .label-wrapper {
       display: flex;
       align-items: flex-end;
@@ -141,6 +146,7 @@ export default styled(TextField)(
 
     .input-wrapper {
       position: relative;
+      width: 100%;
     }
 
     .reveal-button {
@@ -155,6 +161,24 @@ export default styled(TextField)(
       font-size: 1.6rem;
       color: ${colors.linkSecond};
       margin-right: 1rem;
+    }
+
+    .suffix {
+      position: absolute;
+      right: 4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: ${colors.linkSecond};
+    }
+
+    .field-wrapper.inline {
+      display: flex;
+      .label-wrapper {
+        min-width: 17.5rem;
+        width: 17.5rem;
+      }
     }
   `
 );

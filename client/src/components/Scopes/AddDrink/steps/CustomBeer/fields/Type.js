@@ -27,23 +27,26 @@ const types = [
     value: "stout",
     color: "#392813",
   },
+  {
+    label: "Aromatisée",
+    value: "atomate",
+    color: "#FFEBBC",
+  },
 ];
 
-const Type = ({ className }) => {
-  const [active, setActive] = useState(null);
-
+const Type = ({ className, value, onChange }) => {
   const handleChange = (e) => {
-    setActive(e.target.value);
+    onChange(e.target.value);
   };
 
   return (
     <div className={className}>
-      <span>Type de bière</span>
+      <span className="title">Type de bière</span>
       <div className="slider">
         <div className="slides">
           {types.map((type, index) => {
             const id = `beer-type-${type.value}`;
-            const isActive = active === type.value;
+            const isActive = value === type.value;
             return (
               <div
                 className={`slide ${isActive ? "active" : ""}`}
@@ -73,6 +76,13 @@ const Type = ({ className }) => {
 
 export default styled(Type)(
   ({ theme: { colors, device } }) => css`
+    margin-top: 2rem;
+    .title {
+      color: ${colors.formLabel};
+      font-weight: 700;
+      font-size: 1.6rem;
+      display: block;
+    }
     .slider {
       overflow-y: hidden;
       overflow-x: auto;
@@ -90,7 +100,6 @@ export default styled(Type)(
     }
     label {
       position: relative;
-
       width: 8rem;
       height: 8rem;
       min-width: 8rem;
