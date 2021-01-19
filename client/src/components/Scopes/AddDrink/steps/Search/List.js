@@ -11,14 +11,10 @@ const List = ({
   loading,
   onViewMore,
   totalCount = 0,
-  setStep,
+  onChoose,
 }) => {
   const handleNoResultClick = () => {
-    setStep({ index: 1 });
-  };
-
-  const handleAddBeer = (beer) => {
-    setStep((state) => ({ index: 3, beer, ...state }));
+    onChoose();
   };
 
   if (!beers.length && !loading)
@@ -50,7 +46,7 @@ const List = ({
             customClass="beer-item"
             beer={beer}
             key={key}
-            onClick={() => handleAddBeer(beer)}
+            onClick={() => onChoose(beer)}
           />
         ))}
         {showMoreCta && (
@@ -72,6 +68,7 @@ export default styled(List)(
       padding-right: 1.5rem;
       margin-top: 2rem;
       margin-bottom: 2rem;
+      padding-bottom: 2rem;
 
       h2 {
         font-size: 1.1rem;

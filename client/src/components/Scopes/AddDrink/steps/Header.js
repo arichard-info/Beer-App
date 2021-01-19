@@ -2,10 +2,10 @@ import React from "react";
 import styled, { css } from "styled-components";
 import BackButton from "@/components/Global/BackButton";
 
-const Header = ({ className, title, children }) => {
+const Header = ({ className, title, children, onBack = undefined }) => {
   return (
     <div className={className}>
-      <BackButton />
+      <BackButton onClick={onBack} />
       <h1>{title}</h1>
       {children}
     </div>
