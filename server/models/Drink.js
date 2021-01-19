@@ -6,25 +6,27 @@ const drinkSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: "You must supply a user"
+      required: "You must supply a user",
     },
     beer: {
       type: mongoose.Schema.ObjectId,
       ref: "Beer",
-      required: "You must supply a beer"
+    },
+    customBeer: {
+      type: Object,
     },
     date: {
       type: Date,
       default: Date.now,
-      required: "You must supply a date"
+      required: "You must supply a date",
     },
     quantity: {
       type: Number,
-      min: 0
-    }
+      min: 0,
+    },
   },
   {
-    toJSON: { virtuals: true }
+    toJSON: { virtuals: true },
   }
 );
 
