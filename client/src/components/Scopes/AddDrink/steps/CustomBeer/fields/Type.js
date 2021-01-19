@@ -34,7 +34,7 @@ const types = [
   },
 ];
 
-const Type = ({ className, value, onChange }) => {
+const Type = ({ className, field, onChange, showError }) => {
   const handleChange = (e) => {
     onChange(e.target.value);
   };
@@ -46,7 +46,7 @@ const Type = ({ className, value, onChange }) => {
         <div className="slides">
           {types.map((type, index) => {
             const id = `beer-type-${type.value}`;
-            const isActive = value === type.value;
+            const isActive = field.value === type.value;
             return (
               <div
                 className={`slide ${isActive ? "active" : ""}`}
@@ -55,12 +55,18 @@ const Type = ({ className, value, onChange }) => {
                 <input
                   type="radio"
                   name="beer-type"
+                  required
                   id={id}
                   value={type.value}
                   checked={isActive}
                   onChange={handleChange}
                 />
-                <label htmlFor={id} className={`${isActive ? "active" : ""}`}>
+                <label
+                  htmlFor={id}
+                  className={`${isActive ? "active" : ""} ${
+                    field.error && showError ? "error" : ""
+                  }`}
+                >
                   <FontAwesomeIcon className="check" icon={faCheckCircle} />
                   <BeerIcon color={type.color} />
                   <span>{type.label}</span>
@@ -70,12 +76,17 @@ const Type = ({ className, value, onChange }) => {
           })}
         </div>
       </div>
+      {field.error && showError && (
+        <div>
+          <p className="error-message">{field.error}</p>
+        </div>
+      )}
     </div>
   );
 };
 
 export default styled(Type)(
-  ({ theme: { colors, device } }) => css`
+  ({ theme: { colors, device, fw } }) => css`
     margin-top: 2rem;
     .title {
       color: ${colors.formLabel};
@@ -83,12 +94,28 @@ export default styled(Type)(
       font-size: 1.6rem;
       display: block;
     }
+    .error-message {
+      font-size: 1.1rem;
+      font-weight: ${fw.semibold};
+      color: ${colors.formError};
+      margin: 0;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
     .slider {
       overflow-y: hidden;
       overflow-x: auto;
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
     .slides {
       display: flex;
+      margin-left: -1rem;
     }
     .check {
       position: absolute;
@@ -115,6 +142,10 @@ export default styled(Type)(
       align-items: center;
       transition: all 0.2s ease;
       cursor: pointer;
+
+      &.error {
+        border-color: ${colors.formError};
+      }
 
       &:hover {
         background-color: #ffebbc;

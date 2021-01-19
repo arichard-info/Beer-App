@@ -6,7 +6,7 @@ const BeerItem = ({
   className,
   beer = {},
   quantity = false,
-  onClick = false,
+  onClick = () => {},
 }) => {
   const clickable = typeof onClick === "function";
   return (
@@ -20,7 +20,9 @@ const BeerItem = ({
       />
       <div className="beer-info">
         <span className="name">{beer.name}</span>
-        <p className="tags">{beer.tags.join(" - ")}</p>
+        {!!(beer.tags && beer.tags.length) && (
+          <p className="tags">{beer.tags.join(" - ")}</p>
+        )}
       </div>
 
       {quantity && (

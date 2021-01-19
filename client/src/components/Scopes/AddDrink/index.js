@@ -16,7 +16,12 @@ const AddDrink = ({ className }) => {
   const { state = {} } = useLocation();
   const selectedDay = state.selectedDay || new Date();
   const [step, setStep] = useState({ index: 0 });
-  const [form, setForm] = useState({ selectedDay, beer: "", quantity: 0 });
+  const [form, setForm] = useState({
+    selectedDay,
+    beer: false,
+    customBeer: false,
+    quantity: 0,
+  });
 
   return (
     <div className={className}>

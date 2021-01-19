@@ -26,57 +26,74 @@ const TextField = ({
   return (
     <div
       className={`${className} ${
-        validation && errors.length > 0 ? "error" : ""
+        validation && errors && errors.length > 0 ? "error" : ""
       }`}
       data-nrt={`field-${name}`}
     >
       <div className={`field-wrapper ${inline ? "inline" : ""}`}>
         <div className="label-wrapper">
           {label && <label htmlFor={name}>{label}</label>}
-          <div className="validation-wrapper">
-            {validation &&
-              errors.length > 0 &&
-              errors.map((el, key) => (
-                <p className="error-message" key={key}>
-                  {el}
-                </p>
-              ))}
-          </div>
+          {!inline && (
+            <div className="validation-wrapper">
+              {validation &&
+                errors &&
+                errors.length > 0 &&
+                errors.map((el, key) => (
+                  <p className="error-message" key={key}>
+                    {el}
+                  </p>
+                ))}
+            </div>
+          )}
         </div>
 
         <div className="input-wrapper">
-          <input
-            className={`${togglable ? "togglable" : ""}`}
-            name={name}
-            id={name}
-            type={togglable && revealed ? "text" : type}
-            required={required}
-            value={value}
-            placeholder={placeholder}
-            onBlur={(e) => {
-              if (typeof onFocusOut === "function") {
-                onFocusOut({ name, value: e.target.value });
-              }
-            }}
-            onChange={(e) => {
-              if (typeof onChange === "function") {
-                onChange({ name, value: e.target.value });
-              }
-            }}
-          />
-          {suffix && <span className="suffix">{suffix}</span>}
-          {togglable && (
-            <button
-              className="reveal-button"
-              type="button"
-              onClick={() => setRevealed(!revealed)}
-            >
-              {revealed ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+          <div className="input-container">
+            <input
+              className={`${togglable ? "togglable" : ""}`}
+              name={name}
+              id={name}
+              type={togglable && revealed ? "text" : type}
+              required={required}
+              value={value}
+              placeholder={placeholder}
+              onBlur={(e) => {
+                if (typeof onFocusOut === "function") {
+                  onFocusOut({ name, value: e.target.value });
+                }
+              }}
+              onChange={(e) => {
+                if (typeof onChange === "function") {
+                  onChange({ name, value: e.target.value });
+                }
+              }}
+            />
+            {suffix && <span className="suffix">{suffix}</span>}
+            {togglable && (
+              <button
+                className="reveal-button"
+                type="button"
+                onClick={() => setRevealed(!revealed)}
+              >
+                {revealed ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
+              </button>
+            )}
+          </div>
+          {inline && (
+            <div className="validation-wrapper">
+              {validation &&
+                errors &&
+                errors.length > 0 &&
+                errors.map((el, key) => (
+                  <p className="error-message" key={key}>
+                    {el}
+                  </p>
+                ))}
+            </div>
           )}
         </div>
       </div>
@@ -102,13 +119,15 @@ export default styled(TextField)(
       .validation-wrapper {
         margin-left: 1.5rem;
       }
-      .error-message {
-        font-size: 1.1rem;
-        font-weight: ${fw.semibold};
-        color: ${colors.formError};
-        margin: 0;
-        line-height: 1.5;
-      }
+    }
+
+    .error-message {
+      font-size: 1.1rem;
+      font-weight: ${fw.semibold};
+      color: ${colors.formError};
+      margin: 0;
+      margin-top: 0.5rem;
+      line-height: 1.5;
     }
     input {
       color: ${colors.formLabel};
@@ -144,7 +163,8 @@ export default styled(TextField)(
       }
     }
 
-    .input-wrapper {
+    .input-wrapper,
+    .input-container {
       position: relative;
       width: 100%;
     }
@@ -178,6 +198,8 @@ export default styled(TextField)(
       .label-wrapper {
         min-width: 17.5rem;
         width: 17.5rem;
+        align-items: flex-start;
+        padding-top: 1rem;
       }
     }
   `

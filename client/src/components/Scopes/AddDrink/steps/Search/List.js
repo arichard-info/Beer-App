@@ -11,14 +11,10 @@ const List = ({
   loading,
   onViewMore,
   totalCount = 0,
-  setStep,
+  onChoose,
 }) => {
   const handleNoResultClick = () => {
-    setStep({ index: 1 });
-  };
-
-  const handleAddBeer = (beer) => {
-    setStep((state) => ({ index: 3, beer, ...state }));
+    onChoose();
   };
 
   if (!beers.length && !loading)
@@ -50,7 +46,7 @@ const List = ({
             customClass="beer-item"
             beer={beer}
             key={key}
-            onClick={() => handleAddBeer(beer)}
+            onClick={() => onChoose(beer)}
           />
         ))}
         {showMoreCta && (

@@ -8,33 +8,74 @@ import Type from "./fields/Type";
 import Name from "./fields/Name";
 import AlcoholLevel from "./fields/AlcoholLevel";
 
-const Form = ({ className }) => {
+const Form = ({ className, onSubmitBeer, beer = {} }) => {
   const [fields, setFields] = useState({
-    type: "",
-    name: "",
-    alcohol: null,
+    type: {
+      value: beer.type || "",
+      error: !beer.type && "Ce champs est requis",
+    },
+    name: {
+      value: beer.name || "",
+      error: !beer.name && "Ce champs est requis",
+    },
+    alcohol: {
+      value: beer.alcohol || "",
+      error: !beer.alcohol && "Ce champs est requis",
+    },
   });
 
+  const [trySubmit, setTrySubmit] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTrySubmit(true);
+
+    if (!fields.type.error && !fields.name.error && !fields.alcohol.error) {
+      onSubmitBeer({
+        type: fields.type.value,
+        name: fields.name.value,
+        alcohol: fields.alcohol.value,
+      });
+    } else {
+      window.flash({
+        message: "Un des champs est incorrect",
+        timeout: 5000,
+        type: "danger",
+      });
+    }
+  };
+
   const updateField = (field, value) => {
-    setFields((fields) => ({ ...fields, [field]: value }));
+    let error = false;
+    if (!value) error = "Ce champs est requis";
+    setFields((fields) => ({
+      ...fields,
+      [field]: {
+        value,
+        error,
+      },
+    }));
   };
   return (
-    <form className={className}>
+    <form className={className} onSubmit={handleSubmit} noValidate>
       <p>
         Ajoutes les caractéristiques de ta bière pour un historique plus
         détaillé
       </p>
       <Type
-        value={fields.type}
+        field={fields.type}
         onChange={(value) => updateField("type", value)}
+        showError={trySubmit}
       />
       <AlcoholLevel
-        value={fields.alcohol}
+        field={fields.alcohol}
         onChange={(value) => updateField("alcohol", value)}
+        showError={trySubmit}
       />
       <Name
-        value={fields.name}
+        field={fields.name}
         onChange={(value) => updateField("name", value)}
+        showError={trySubmit}
       />
       <div className="button-wrapper">
         <button type="submit" className="cta">
