@@ -9,7 +9,7 @@ const checkTags = {
   too_short: "6 caractères min",
   not_uppercase: "1 majuscule",
   not_lowercase: "1 minuscule",
-  not_confirmed: "Confirmation"
+  not_confirmed: "Confirmation",
 };
 
 const PasswordConfirm = ({
@@ -22,12 +22,12 @@ const PasswordConfirm = ({
   onChange,
   errors,
   validation,
-  dataNrt = ""
+  dataNrt = "",
 }) => {
-  const changePassword = field =>
+  const changePassword = (field) =>
     onChange({
       name: "password",
-      value: { ...value, ...{ [field.name]: field.value } }
+      value: { ...value, ...{ [field.name]: field.value } },
     });
 
   const { password = "", confirm = "" } = value;
@@ -60,7 +60,7 @@ const PasswordConfirm = ({
       </div>
 
       <div className="form-row">
-        {Object.keys(checkTags).map(el => (
+        {Object.keys(checkTags).map((el) => (
           <span
             key={el}
             className={`check-tag ${!errors.includes(el) ? "valid" : "error"}`}
