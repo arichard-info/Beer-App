@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import TextInput from "./TextInput";
-import FieldWrapper from "./FieldWrapper";
-import { useForm } from "./utils";
+import TextInput from "@/components/Global/NewForm/Fields/TextInput";
+import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
+import { useForm } from "@/components/Global/NewForm/utils";
+
+import CheckTag from "./CheckTag";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const PasswordInput = ({
   className,
@@ -14,7 +16,7 @@ const PasswordInput = ({
   value,
 }) => {
   const { password = "", confirm = "" } = value;
-  const { fields = {}, validateField, removeField } = useForm();
+  const { fields = {}, validateField, removeField, showErrors } = useForm();
   const [visible, setVisible] = useState(false);
 
   let errors = fields?.passwordConfirm?.error;
@@ -64,6 +66,7 @@ const PasswordInput = ({
             name="password"
             onChange={handleChange("password")}
             type={visible ? "text" : "password"}
+            error={showErrors && errors && !!errors.length}
           />
           {togglable && (
             <button
@@ -88,24 +91,18 @@ const PasswordInput = ({
             value={confirm}
             type="password"
             onChange={handleChange("confirm")}
+            error={showErrors && errors && !!errors.length}
           />
         </div>
       </FieldWrapper>
       <div>
         {Object.entries(checkTags).map(([key, label]) => (
-          <span
+          <CheckTag
             key={key}
-            className={`check-tag ${
-              !(errors && !!errors.length && errors.includes(key))
-                ? "valid"
-                : "error"
-            }`}
-          >
-            {!(errors && !!errors.length && errors.includes(key)) && (
-              <FontAwesomeIcon icon={faCheck} />
-            )}
-            {label}
-          </span>
+            error={errors && !!errors.length && errors.includes(key)}
+            showError={showErrors}
+            label={label}
+          />
         ))}
       </div>
     </div>
@@ -115,6 +112,7 @@ const PasswordInput = ({
 export default styled(PasswordInput)(
   ({ theme: { colors, fw } }) => css`
     position: relative;
+    margin-bottom: 1.6rem;
     .confirmation,
     .password {
       position: relative;
@@ -131,24 +129,6 @@ export default styled(PasswordInput)(
       font-size: 1.6rem;
       color: ${colors.linkSecond};
       margin-right: 1rem;
-    }
-    .check-tag {
-      display: inline-block;
-      background-color: #f3f5f7;
-      color: ${colors.linkSecond};
-      font-weight: ${fw.medium};
-      font-size: 1.2rem;
-      padding: 0.5rem 1.5rem;
-      margin: 0 1rem 1rem 0;
-      border-radius: 50rem;
-      transition: all 0.2s ease;
-      svg {
-        margin-right: 0.5rem;
-      }
-      &.valid {
-        background-color: #cff7ec;
-        color: #129272;
-      }
     }
   `
 );

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { FormContext, validation } from "./utils";
 
 const Form = ({ children, onSubmit = () => {} }) => {
   const [fields, setFields] = useState({});
   const [valid, setValid] = useState(null);
+  const [submitAttempts, setSubmitAttempts] = useState(0);
+  const showErrors = useMemo(() => !!submitAttempts, [submitAttempts]);
 
   useEffect(() => {
     setValid(!Object.values(fields).some((f) => f.error));
@@ -43,12 +45,21 @@ const Form = ({ children, onSubmit = () => {} }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitAttempts((s) => s + 1);
     onSubmit(e, { valid, fields });
   };
 
   return (
     <FormContext.Provider
-      value={{ fields, valid, validateField, removeField, triggerValidation }}
+      value={{
+        fields,
+        valid,
+        validateField,
+        removeField,
+        triggerValidation,
+        showErrors,
+        submitAttempts,
+      }}
     >
       <form noValidate onSubmit={handleSubmit}>
         {children}

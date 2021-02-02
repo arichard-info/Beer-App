@@ -6,8 +6,8 @@ import { useUser } from "@/state/authentication";
 import { signup } from "@/utils/api/authentication";
 import Form from "@/components/Global/NewForm";
 import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
-import TextInput from "@/components/Global/NewForm/TextInput";
-import PasswordConfirm from "@/components/Global/NewForm/PasswordConfirm";
+import TextInput from "@/components/Global/NewForm/Fields/TextInput";
+import PasswordConfirm from "@/components/Global/NewForm/Fields/PasswordConfirm";
 
 const Forgot = ({ className }) => {
   const [, authDispatch] = useUser();
@@ -51,11 +51,7 @@ const Forgot = ({ className }) => {
       <Link to="/">Retour</Link>
       <h1>Créer un compte</h1>
       <Form onSubmit={submitForm}>
-        <FieldWrapper
-          fieldName="name"
-          label="Nom / Prénom"
-          showError={formSubmitted}
-        >
+        <FieldWrapper fieldName="name" label="Nom / Prénom">
           <TextInput
             name="name"
             type="text"
@@ -65,11 +61,7 @@ const Forgot = ({ className }) => {
             onChange={handleChange("name")}
           />
         </FieldWrapper>
-        <FieldWrapper
-          fieldName="email"
-          label="Adresse email"
-          showError={formSubmitted}
-        >
+        <FieldWrapper fieldName="email" label="Adresse email">
           <TextInput
             name="email"
             type="text"

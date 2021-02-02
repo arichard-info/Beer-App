@@ -2,7 +2,7 @@
  * Event listener for HTTP server "error" event.
  */
 
-exports.onError = (error) => {
+exports.onError = (port) => (error) => {
   if (error.syscall !== "listen") {
     throw error;
   }

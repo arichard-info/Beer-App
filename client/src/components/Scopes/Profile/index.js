@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 import Form from "@/components/Global/NewForm";
-import TextInput from "@/components/Global/NewForm/TextInput";
+import TextInput from "@/components/Global/NewForm/Fields/TextInput";
 
 const ProfilePage = ({ className }) => {
   return (
