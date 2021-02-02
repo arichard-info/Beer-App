@@ -5,15 +5,22 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 import { useUser } from "@/state/authentication";
 import { login } from "@/utils/api/authentication";
-import Form from "@/components/Global/Form";
 import OAuth from "./OAuth";
+
+import Form from "@/components/Global/NewForm";
+import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
+import TextInput from "@/components/Global/NewForm/Fields/TextInput";
+import { useFields } from "@/components/Global/NewForm/utils";
 
 const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];
+  const { fields, handleEventChange } = useFields({ email: "", password: "" });
   const [, dispatch] = useUser();
 
-  const handleSubmit = async ({ email, password }) => {
-    const user = await login(email.value, password.value);
+  const handleSubmit = async (e, { valid }) => {
+    e.preventDefault();
+    if (!valid) return;
+    const user = await login(fields.email, fields.password);
     if (user && !user.error) {
       dispatch({ type: "LOG_IN", value: user });
       window.flash({ message: "Tu es maintenant connecté !", timeout: 3000 });
@@ -25,33 +32,39 @@ const LoginPage = ({ className }) => {
       });
   };
 
-  const fields = {
-    email: {
-      field: "textField",
-      type: "email",
-      placeholder: "Adresse email",
-      label: "Adresse email",
-      required: true,
-    },
-    password: {
-      field: "textField",
-      type: "password",
-      placeholder: "Mot de passe",
-      label: "Mot de passe",
-      infos: <Link to="/login/forgot">Mot de passe oublié ?</Link>,
-      required: true,
-    },
-  };
-
   return (
     <div className={className}>
       <h1>Connexion</h1>
-      <Form
-        onValidSubmit={handleSubmit}
-        fields={fields}
-        submitLabel="Connexion"
-        data-nrt="login-form"
-      />
+      <Form onSubmit={handleSubmit}>
+        <FieldWrapper fieldName="email" label="Adresse email">
+          <TextInput
+            name="email"
+            type="email"
+            rules={{ required: true, pattern: "email" }}
+            placeholder="Adresse email"
+            value={fields.email}
+            onChange={handleEventChange("email")}
+          />
+        </FieldWrapper>
+        <FieldWrapper fieldName="password" label="Mot de passe">
+          <TextInput
+            name="password"
+            type="password"
+            rules={{ required: true }}
+            placeholder="Mot de passe"
+            value={fields.password}
+            onChange={handleEventChange("password")}
+          />
+        </FieldWrapper>
+
+        <Link className="forgot" to="/login/forgot">
+          Mot de passe oublié ?
+        </Link>
+
+        <button type="submit" className="cta">
+          Connexion
+        </button>
+      </Form>
 
       <div className="sep">
         <span>ou</span>
@@ -75,6 +88,13 @@ export default styled(LoginPage)(
       .cta {
         margin: 1.5rem 0;
       }
+    }
+    .forgot {
+      font-size: 1.4rem;
+      color: ${colors.linkSecond};
+      margin-top: 0.75rem;
+      display: block;
+      margin-bottom: 1.6rem;
     }
     .sep {
       display: flex;

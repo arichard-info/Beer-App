@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -8,11 +8,11 @@ import Form from "@/components/Global/NewForm";
 import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
 import TextInput from "@/components/Global/NewForm/Fields/TextInput";
 import PasswordConfirm from "@/components/Global/NewForm/Fields/PasswordConfirm";
+import { useFields } from "@/components/Global/NewForm/utils";
 
-const Forgot = ({ className }) => {
+const Signup = ({ className }) => {
   const [, authDispatch] = useUser();
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [fields, setFields] = useState({
+  const { fields, handleChange, handleEventChange } = useFields({
     name: "",
     email: "",
     password: {
@@ -23,7 +23,6 @@ const Forgot = ({ className }) => {
 
   const submitForm = async (e, { valid }) => {
     e.preventDefault();
-    setFormSubmitted(true);
     if (valid) {
       const user = await signup({
         name: fields.name,
@@ -38,14 +37,6 @@ const Forgot = ({ className }) => {
     }
   };
 
-  const handleChange = (field) => (e) => {
-    setFields((fields) => ({ ...fields, [field]: e.target.value }));
-  };
-
-  const handlePasswordChange = (value) => {
-    setFields((fields) => ({ ...fields, password: value }));
-  };
-
   return (
     <div className={className}>
       <Link to="/">Retour</Link>
@@ -58,7 +49,7 @@ const Forgot = ({ className }) => {
             rules={{ required: true }}
             placeholder="Nom / Prénom"
             value={fields.name}
-            onChange={handleChange("name")}
+            onChange={handleEventChange("name")}
           />
         </FieldWrapper>
         <FieldWrapper fieldName="email" label="Adresse email">
@@ -68,12 +59,12 @@ const Forgot = ({ className }) => {
             rules={{ required: true, pattern: "email" }}
             placeholder="Adresse email"
             value={fields.email}
-            onChange={handleChange("email")}
+            onChange={handleEventChange("email")}
           />
         </FieldWrapper>
         <PasswordConfirm
           value={fields.password}
-          onChange={handlePasswordChange}
+          onChange={(v) => handleChange("password", v)}
         />
         <button type="submit" className="cta">
           Confirmer
@@ -83,4 +74,4 @@ const Forgot = ({ className }) => {
   );
 };
 
-export default styled(Forgot)(() => css``);
+export default styled(Signup)(() => css``);

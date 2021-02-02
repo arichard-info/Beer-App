@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const FormContext = createContext({});
 
@@ -49,4 +49,18 @@ const checkPattern = (value, rule) => {
   const str = String(value).toLowerCase();
 
   if (!conf.regex.test(str)) return conf.message;
+};
+
+export const useFields = (initialFields) => {
+  const [fields, setFields] = useState(initialFields);
+
+  const handleEventChange = (field) => (e) => {
+    setFields((fields) => ({ ...fields, [field]: e.target.value }));
+  };
+
+  const handleChange = (field, value) => {
+    setFields((fields) => ({ ...fields, [field]: value }));
+  };
+
+  return { fields, handleEventChange, handleChange };
 };

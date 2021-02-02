@@ -1,4 +1,4 @@
-const verifyField = fieldObject => {
+const verifyField = (fieldObject) => {
   const { field } = fieldObject;
   let errors = [];
   switch (field) {
@@ -53,12 +53,12 @@ const verifyTextField = ({ type = "text", value = "", required = false }) => {
   return [];
 };
 
-const validateEmail = email => {
+const validateEmail = (email) => {
   var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };
 
-const validateTel = tel => {
+const validateTel = (tel) => {
   var re = /^((\+)33|0|0033)[1-9](\d{2}){4}$/g;
   return re.test(String(tel).toLowerCase());
 };
