@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import * as auth from "./authentication";
+import * as auth from "./authentication.utils";
 
 const searchStep = "add-drink-search";
 const popin = "add-drink-popin";

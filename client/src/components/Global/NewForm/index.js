@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FormContext, validation } from "./utils";
 
-const Form = ({ children, onSubmit = () => {} }) => {
+const Form = ({ children, dataNrt = "", onSubmit = () => {} }) => {
   const [fields, setFields] = useState({});
   const [valid, setValid] = useState(null);
   const [submitAttempts, setSubmitAttempts] = useState(0);
@@ -61,7 +61,7 @@ const Form = ({ children, onSubmit = () => {} }) => {
         submitAttempts,
       }}
     >
-      <form noValidate onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit} data-nrt={dataNrt}>
         {children}
       </form>
     </FormContext.Provider>

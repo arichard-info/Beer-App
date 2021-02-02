@@ -45,7 +45,7 @@
     "cy:version": "cypress version",
     "cy:run": "cypress run",
     "cy:run:record": "cypress run --record",
-    "cy:open": "cypress open"
+    "cy:open": "NODE_ENV=development cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"

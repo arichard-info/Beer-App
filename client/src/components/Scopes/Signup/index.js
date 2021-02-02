@@ -41,7 +41,7 @@ const Signup = ({ className }) => {
     <div className={className}>
       <Link to="/">Retour</Link>
       <h1>Créer un compte</h1>
-      <Form onSubmit={submitForm}>
+      <Form onSubmit={submitForm} dataNrt="signup-form">
         <FieldWrapper fieldName="name" label="Nom / Prénom">
           <TextInput
             name="name"

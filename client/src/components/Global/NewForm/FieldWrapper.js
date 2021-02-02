@@ -32,7 +32,7 @@ const FieldWrapper = ({
 }) => {
   const { fields, showErrors } = useForm();
   return (
-    <FormRow>
+    <FormRow data-nrt={`field-${fieldName || htmlFor}`}>
       <Label htmlFor={htmlFor || fieldName}>{label}</Label>
       <div>{children}</div>
       {showErrors && !!fields[fieldName] && fields[fieldName].error && (

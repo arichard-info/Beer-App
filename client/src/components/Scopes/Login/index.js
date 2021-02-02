@@ -35,7 +35,7 @@ const LoginPage = ({ className }) => {
   return (
     <div className={className}>
       <h1>Connexion</h1>
-      <Form onSubmit={handleSubmit}>
+      <Form dataNrt="login-form" onSubmit={handleSubmit}>
         <FieldWrapper fieldName="email" label="Adresse email">
           <TextInput
             name="email"
