@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useForm } from "./utils";
 
 export const Label = styled.label`
@@ -7,7 +7,6 @@ export const Label = styled.label`
   font-weight: ${(props) => props.theme.fw.bold};
   font-size: 1.6rem;
   display: block;
-  margin-bottom: 1rem;
 `;
 
 export const ValidationMessage = styled.p`
@@ -15,12 +14,48 @@ export const ValidationMessage = styled.p`
   font-weight: ${(props) => props.theme.fw.semibold};
   color: ${(props) => props.theme.colors.formError};
   margin: 0;
-  margin-top: 0.5rem;
   line-height: 1.5;
 `;
 
 export const FormRow = styled.div`
   margin-bottom: 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1rem;
+  align-items: center;
+  label {
+    grid-column: 1 / 2;
+    grid-row: 1;
+  }
+
+  div {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+
+  p {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+
+  ${(props) =>
+    props.inline &&
+    css`
+      label {
+        grid-column: 1 / 2;
+        grid-row: 1;
+      }
+
+      div {
+        grid-column: 2 / 3;
+        grid-row: 1;
+      }
+
+      p {
+        grid-column: 2 / 3;
+        grid-row: 2;
+      }
+    `}
 `;
 
 const FieldWrapper = ({
@@ -32,7 +67,7 @@ const FieldWrapper = ({
 }) => {
   const { fields, showErrors } = useForm();
   return (
-    <FormRow data-nrt={`field-${fieldName || htmlFor}`}>
+    <FormRow data-nrt={`field-${fieldName || htmlFor}`} inline={inline}>
       <Label htmlFor={htmlFor || fieldName}>{label}</Label>
       <div>{children}</div>
       {showErrors && !!fields[fieldName] && fields[fieldName].error && (

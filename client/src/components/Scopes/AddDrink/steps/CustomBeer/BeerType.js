@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import BeerIcon from "@/components/Global/BeerIcon";
+import { useForm } from "@/components/Global/NewForm/utils";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
@@ -34,19 +35,30 @@ const types = [
   },
 ];
 
-const Type = ({ className, field, onChange, showError }) => {
+const Type = ({ className, value, onChange, rules, name }) => {
+  const { validateField, removeField, showErrors, fields } = useForm();
+
+  useEffect(() => {
+    if (rules && name) {
+      validateField(name, value || "", rules);
+      return () => removeField(name);
+    }
+  }, []);
+
   const handleChange = (e) => {
+    if (name && rules) {
+      validateField(name, e.target.value, rules);
+    }
     onChange(e.target.value);
   };
 
   return (
     <div className={className}>
-      <span className="title">Type de bière</span>
       <div className="slider">
         <div className="slides">
-          {types.map((type, index) => {
+          {types.map((type) => {
             const id = `beer-type-${type.value}`;
-            const isActive = field.value === type.value;
+            const isActive = value === type.value;
             return (
               <div
                 className={`slide ${isActive ? "active" : ""}`}
@@ -64,7 +76,9 @@ const Type = ({ className, field, onChange, showError }) => {
                 <label
                   htmlFor={id}
                   className={`${isActive ? "active" : ""} ${
-                    field.error && showError ? "error" : ""
+                    fields && fields[name] && fields[name].error && showErrors
+                      ? "error"
+                      : ""
                   }`}
                 >
                   <FontAwesomeIcon className="check" icon={faCheckCircle} />
@@ -76,32 +90,12 @@ const Type = ({ className, field, onChange, showError }) => {
           })}
         </div>
       </div>
-      {field.error && showError && (
-        <div>
-          <p className="error-message">{field.error}</p>
-        </div>
-      )}
     </div>
   );
 };
 
 export default styled(Type)(
   ({ theme: { colors, device, fw } }) => css`
-    margin-top: 2rem;
-    .title {
-      color: ${colors.formLabel};
-      font-weight: 700;
-      font-size: 1.6rem;
-      display: block;
-    }
-    .error-message {
-      font-size: 1.1rem;
-      font-weight: ${fw.semibold};
-      color: ${colors.formError};
-      margin: 0;
-      margin-top: 0.5rem;
-      line-height: 1.5;
-    }
     .slider {
       overflow-y: hidden;
       overflow-x: auto;
