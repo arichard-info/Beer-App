@@ -4,35 +4,43 @@ import styled, { css } from "styled-components";
 
 import { resetPassword } from "@/utils/api/authentication";
 import { useUser } from "@/state/authentication";
+
 import Form from "@/components/Global/Form";
+import PasswordConfirm from "@/components/Global/Form/Fields/PasswordConfirm";
+import { useFields } from "@/components/Global/Form/utils";
 
 const Forgot = ({ className }) => {
   const [, dispatch] = useUser();
   const { token } = useParams();
+  const { fields, handleChange } = useFields({
+    password: {
+      password: "",
+      confirm: "",
+    },
+  });
 
-  const submitForm = async fields => {
-    const { password } = fields;
+  const submitForm = async (e, { valid }) => {
+    e.preventDefault();
+    if (!valid) return;
     const user = await resetPassword(token, {
-      password: password.value.password,
-      passwordConfirm: password.value.confirm
+      password: fields.password.password,
+      passwordConfirm: fields.password.confim,
     });
     if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
-  };
-
-  const fields = {
-    password: {
-      field: "passwordConfirm",
-      label: "Mot de passe",
-      confirmLabel: "Confirmation du mot de passe",
-      placeholder: "Mot de passe",
-      confirmPlaceholder: "Confirmation du mot de passe"
-    }
   };
 
   return (
     <div className={className}>
       <h1>Nouveau mot de passe</h1>
-      <Form fields={fields} onValidSubmit={submitForm} submitLabel="Envoyer" />
+      <Form onSubmit={submitForm}>
+        <PasswordConfirm
+          value={fields.password}
+          onChange={(v) => handleChange("password", v)}
+        />
+        <button type="submit" className="cta">
+          Confirmer
+        </button>
+      </Form>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import * as auth from "./authentication";
+import { login } from "./authentication";
 
 const searchStep = "add-drink-search";
 const popin = "add-drink-popin";
@@ -9,7 +9,7 @@ const month = "month-cases";
 
 context("Add Drink", () => {
   beforeEach(() => {
-    auth.login();
+    login();
   });
 
   it("Click on direct CTA", () => {

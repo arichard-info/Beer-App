@@ -53,4 +53,4 @@ app.use(require("./router"));
 const port = normalizePort("5000");
 app.set("port", port);
 server.listen(port);
-server.on("error", onError);
+server.on("error", onError(port));
