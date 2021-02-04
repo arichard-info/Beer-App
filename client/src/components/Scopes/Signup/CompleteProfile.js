@@ -4,10 +4,10 @@ import { useLocation, useHistory } from "react-router-dom";
 import { useUser } from "@/state/authentication";
 import { completeProfile } from "@/utils/api/authentication";
 
-import Form from "@/components/Global/NewForm";
-import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
-import TextInput from "@/components/Global/NewForm/Fields/TextInput";
-import { useFields } from "@/components/Global/NewForm/utils";
+import Form from "@/components/Global/Form";
+import FieldWrapper from "@/components/Global/Form/FieldWrapper";
+import TextInput from "@/components/Global/Form/Fields/TextInput";
+import { useFields } from "@/components/Global/Form/utils";
 
 const CompleteProfile = ({ className }) => {
   const [, authDispatch] = useUser();

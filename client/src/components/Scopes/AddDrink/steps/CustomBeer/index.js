@@ -2,10 +2,10 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 import BeerType from "./BeerType";
-import Form from "@/components/Global/NewForm";
-import TextInput from "@/components/Global/NewForm/Fields/TextInput";
-import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
-import { useFields } from "@/components/Global/NewForm/utils";
+import Form from "@/components/Global/Form";
+import TextInput from "@/components/Global/Form/Fields/TextInput";
+import FieldWrapper from "@/components/Global/Form/FieldWrapper";
+import { useFields } from "@/components/Global/Form/utils";
 
 import Header from "@/components/Scopes/AddDrink/steps/Header";
 

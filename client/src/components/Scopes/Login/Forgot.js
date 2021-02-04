@@ -2,10 +2,10 @@ import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import Form from "@/components/Global/NewForm";
-import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
-import TextInput from "@/components/Global/NewForm/Fields/TextInput";
-import { useFields } from "@/components/Global/NewForm/utils";
+import Form from "@/components/Global/Form";
+import FieldWrapper from "@/components/Global/Form/FieldWrapper";
+import TextInput from "@/components/Global/Form/Fields/TextInput";
+import { useFields } from "@/components/Global/Form/utils";
 
 import { forgot } from "@/utils/api/authentication";
 

@@ -1,100 +1,71 @@
-import React, { useReducer } from "react";
-import styled, { css } from "styled-components";
-import verifyField from "./utils";
-import TextField from "./TextField";
-import Textarea from "./Textarea";
-import PasswordConfirm from "./PasswordConfirm";
+import React, { useState, useEffect, useMemo } from "react";
+import { FormContext, validation } from "./utils";
 
-const switchFields = {
-  textField: el => <TextField {...el} />,
-  textArea: el => <Textarea {...el} />,
-  passwordConfirm: el => <PasswordConfirm {...el} />
-};
+const Form = ({ children, dataNrt = "", onSubmit = () => {} }) => {
+  const [fields, setFields] = useState({});
+  const [valid, setValid] = useState(null);
+  const [submitAttempts, setSubmitAttempts] = useState(0);
+  const showErrors = useMemo(() => !!submitAttempts, [submitAttempts]);
 
-const formReducer = (state, { type, value: actionValue = {} }) => {
-  const { name, value } = actionValue;
-  let fields = { ...state };
+  useEffect(() => {
+    setValid(!Object.values(fields).some((f) => f.error));
+  }, [fields]);
 
-  if (type === "VALIDATE_ALL") {
-    Object.keys(fields).forEach(el => {
-      fields[el].validation = true;
-    });
-    return fields;
-  }
-
-  let field = fields[name];
-  field.value = value;
-  field.errors = verifyField(field);
-  if (type === "FOCUS_OUT") field.validation = true;
-  fields[name] = field;
-  return fields;
-};
-
-const initFields = fields => {
-  Object.keys(fields).forEach(fieldName => {
-    fields[fieldName].errors = verifyField(fields[fieldName]);
-  });
-  return fields;
-};
-
-const Form = ({
-  className,
-  fields,
-  onValidSubmit,
-  onErrorSubmit,
-  submitLabel = "Continuer",
-  ...rest
-}) => {
-  const [formFields, formDispatch] = useReducer(
-    formReducer,
-    initFields(fields)
-  );
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const invalidFields = Object.keys(formFields).filter(
-      el => formFields[el].errors.length
-    );
-
-    if (invalidFields.length) {
-      formDispatch({ type: "VALIDATE_ALL" });
-      if (typeof onErrorSubmit === "function") onErrorSubmit(formFields);
-    } else if (typeof onValidSubmit === "function") onValidSubmit(formFields);
+  const validateField = (name, value, rules) => {
+    setFields((fields = {}) => ({
+      ...fields,
+      [name]: {
+        ...fields[name],
+        value,
+        rules,
+        error: validation({ value, rules }),
+      },
+    }));
   };
 
-  const onChange = ({ name, value }) =>
-    formDispatch({ type: "CHANGE", value: { name, value } });
-  const onFocusOut = ({ name, value }) =>
-    formDispatch({ type: "FOCUS_OUT", value: { name, value } });
+  const triggerValidation = (fieldName) => {
+    setFields((fields = {}) => {
+      const field = fields[fieldName];
+      if (!field) return fields;
+      return {
+        ...fields,
+        [fieldName]: {
+          ...field,
+          error: validation(field),
+        },
+      };
+    });
+  };
+
+  const removeField = (name) => {
+    setFields((fields) => {
+      delete fields[name];
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitAttempts((s) => s + 1);
+    onSubmit(e, { valid, fields });
+  };
 
   return (
-    <form noValidate onSubmit={handleSubmit} className={className} {...rest}>
-      {Object.keys(formFields).map((name, key) => {
-        const field = formFields[name];
-        return (
-          <div className="form-row" key={key}>
-            {field.field in switchFields &&
-              switchFields[field.field]({
-                ...field,
-                name,
-                onChange,
-                onFocusOut
-              })}
-          </div>
-        );
-      })}
-      <div className="form-row">
-        <input type="submit" value={submitLabel} />
-      </div>
-    </form>
+    <FormContext.Provider
+      value={{
+        fields,
+        valid,
+        validateField,
+        removeField,
+        triggerValidation,
+        showErrors,
+        submitAttempts,
+      }}
+    >
+      <form noValidate onSubmit={handleSubmit} data-nrt={dataNrt}>
+        {children}
+      </form>
+    </FormContext.Provider>
   );
 };
 
-export default styled(Form)(
-  () => css`
-    .form-row {
-      margin-bottom: 1.5rem;
-    }
-  `
-);
+export default Form;

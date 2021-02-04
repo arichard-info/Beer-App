@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import Form from "@/components/Global/NewForm";
-import TextInput from "@/components/Global/NewForm/Fields/TextInput";
+import Form from "@/components/Global/Form";
+import TextInput from "@/components/Global/Form/Fields/TextInput";
 
 const ProfilePage = ({ className }) => {
   return (

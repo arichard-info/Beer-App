@@ -1,64 +1,66 @@
-const verifyField = (fieldObject) => {
-  const { field } = fieldObject;
-  let errors = [];
-  switch (field) {
-    case "textField": {
-      errors = verifyTextField(fieldObject);
-      break;
-    }
-    case "passwordConfirm": {
-      errors = verifyPassword(fieldObject);
-      break;
-    }
-    case "textarea": {
-      errors = verifyTextarea(fieldObject);
-      break;
-    }
-    default:
-      errors = [];
+import { createContext, useContext, useState } from "react";
+
+export const FormContext = createContext({});
+
+export const useForm = () => useContext(FormContext);
+
+export const validation = ({ value, rules }) => {
+  if (!rules || typeof rules !== "object") return;
+
+  if (rules.required) {
+    const error = checkRequired(value);
+    if (error) return rules.required.message || "Ce champs est requis";
   }
 
-  return errors;
-};
-
-export default verifyField;
-
-const verifyTextarea = ({ value = "", required = false }) => {
-  if (required && (!value || value === "")) return "Ce champs est requis";
-  return true;
-};
-
-const verifyPassword = ({ value = {} }) => {
-  const { password = "", confirm = "" } = value;
-  let errors = [];
-  if (password.length < 6) errors.push("too_short");
-  if (confirm !== password || confirm === "") errors.push("not_confirmed");
-  if (!password.match(/[A-Z]/)) errors.push("not_uppercase");
-  if (!password.match(/[a-z]/)) errors.push("not_lowercase");
-  return errors;
-};
-
-const verifyTextField = ({ type = "text", value = "", required = false }) => {
-  if (required && (!value || value === "")) return ["Ce champs est requis"];
-  switch (type) {
-    case "email":
-      if (!validateEmail(value)) return ["Adresse email invalide"];
-      break;
-    case "tel":
-      if (!validateTel(value)) return ["Numéro de téléphone invalide"];
-      break;
-    default:
-      return [];
+  if (rules.pattern) {
+    const error = checkPattern(value, rules.pattern);
+    if (error) return rules.pattern.message || error;
   }
-  return [];
+
+  if (rules.custom) {
+    if (typeof rules.custom === "function") return rules.custom(value);
+  }
+
+  return false;
 };
 
-const validateEmail = (email) => {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+const checkRequired = (value) => {
+  if (!value || !value.trim().length) return true;
+  return false;
 };
 
-const validateTel = (tel) => {
-  var re = /^((\+)33|0|0033)[1-9](\d{2}){4}$/g;
-  return re.test(String(tel).toLowerCase());
+const checkPattern = (value, rule) => {
+  const switchPatterns = {
+    email: {
+      regex: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      message: "Format d'email invalide",
+    },
+    phone: {
+      regex: /^((\+)33|0|0033)[1-9](\d{2}){4}$/g,
+      message: "Numéro de téléphone invalide",
+    },
+  };
+
+  const conf = switchPatterns[rule.pattern || rule] || {
+    regex: rule.pattern || rule,
+    message: "Format invalide",
+  };
+
+  const str = String(value).toLowerCase();
+
+  if (!conf.regex.test(str)) return conf.message;
+};
+
+export const useFields = (initialFields) => {
+  const [fields, setFields] = useState(initialFields);
+
+  const handleEventChange = (field) => (e) => {
+    setFields((fields) => ({ ...fields, [field]: e.target.value }));
+  };
+
+  const handleChange = (field, value) => {
+    setFields((fields) => ({ ...fields, [field]: value }));
+  };
+
+  return { fields, handleEventChange, handleChange };
 };

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import BeerIcon from "@/components/Global/BeerIcon";
-import { useForm } from "@/components/Global/NewForm/utils";
+import { useForm } from "@/components/Global/Form/utils";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";

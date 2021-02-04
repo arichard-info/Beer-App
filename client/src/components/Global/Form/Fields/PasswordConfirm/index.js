@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import TextInput from "@/components/Global/NewForm/Fields/TextInput";
-import FieldWrapper from "@/components/Global/NewForm/FieldWrapper";
-import { useForm } from "@/components/Global/NewForm/utils";
+import TextInput from "@/components/Global/Form/Fields/TextInput";
+import FieldWrapper from "@/components/Global/Form/FieldWrapper";
+import { useForm } from "@/components/Global/Form/utils";
 
 import CheckTag from "./CheckTag";
 

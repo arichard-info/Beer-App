@@ -5,9 +5,9 @@ import styled, { css } from "styled-components";
 import { resetPassword } from "@/utils/api/authentication";
 import { useUser } from "@/state/authentication";
 
-import Form from "@/components/Global/NewForm";
-import PasswordConfirm from "@/components/Global/NewForm/Fields/PasswordConfirm";
-import { useFields } from "@/components/Global/NewForm/utils";
+import Form from "@/components/Global/Form";
+import PasswordConfirm from "@/components/Global/Form/Fields/PasswordConfirm";
+import { useFields } from "@/components/Global/Form/utils";
 
 const Forgot = ({ className }) => {
   const [, dispatch] = useUser();
