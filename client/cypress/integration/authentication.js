@@ -1,18 +1,30 @@
 /// <reference types="Cypress" />
 import { v4 } from "uuid";
 
-import {
-  loginForm,
-  loginFieldEmail,
-  loginFieldPassword,
-} from "./authentication.utils";
-
 export const signupCta = "signup-cta";
 export const signupForm = "signup-form";
 export const signupFieldName = "field-name";
 export const signupFieldEmail = "field-email";
 export const signupFieldPassword = "field-password";
 export const signupFieldPasswordConfirm = "field-confirm";
+
+export const loginForm = "login-form";
+export const loginFieldEmail = "field-email";
+export const loginFieldPassword = "field-password";
+
+export const login = () => {
+  cy.visit("/");
+  cy.fixture("authentication/user").then((user) => {
+    cy.intercept("POST", "/api/auth/login").as("loginRequest");
+    cy.getNrt(loginForm).within(() => {
+      cy.getNrt(loginFieldEmail).find("input").type(user.username);
+      cy.getNrt(loginFieldPassword)
+        .find("input")
+        .type(`${user.password}{enter}`);
+    });
+    cy.wait("@loginRequest");
+  });
+};
 
 context("Authentication", () => {
   beforeEach(function () {
