@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
+import BeerQuantity from "@/components/Scopes/AddDrink/steps/FillBeer/BeerQuantity";
 import Header from "@/components/Scopes/AddDrink/steps/Header";
 import Recap from "@/components/Scopes/AddDrink/steps/FillBeer/Recap";
 
@@ -16,6 +17,7 @@ const FillBeer = ({ className, form, setStep }) => {
     <div className={className}>
       <Header title="Remplis ta bière !" onBack={handleBack} />
       <div className="wrapper">
+        <BeerQuantity />
         <Recap form={form} />
       </div>
     </div>
