@@ -7,7 +7,7 @@ services:
       - ./data:/data/db
     ports:
       - "${DATABASE_PORT:-27017}:27017"
-  web:
+  node:
     container_name: prod_server
     environment:
       - NODE_ENV=production
@@ -21,9 +21,17 @@ services:
       - GOOGLE_CLIENT_SECRET
     build:
       context: .
-      dockerfile: ./docker/dockerfile/prod.node.dockerfile
+      dockerfile: ./docker/node/Dockerfile
     ports:
       - "5000:5000"
     restart: on-failure
     links:
       - database
+  nginx:
+    container_name: prod_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - "3000:80"
+    restart: on-failure

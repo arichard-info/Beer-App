@@ -2,30 +2,35 @@
   "apiVersion": "apps/v1",
   "kind": "Deployment",
   "metadata": {
-    "name": "beerapp",
+    "name": "dep-beerapp",
     "labels": {
-      "app": "node"
+      "app": "dep-beerapp"
     }
   },
   "spec": {
     "replicas": 1,
     "selector": {
       "matchLabels": {
-        "app": "node"
+        "app": "beerapp"
       }
     },
     "template": {
       "metadata": {
         "labels": {
-          "app": "node"
+          "app": "beerapp"
         }
       },
       "spec": {
         "containers": [
           {
             "name": "node",
-            "image": "kalagounet/beerapp:1.0.2",
+            "image": "kalagounet/beerapp-node:1.0.0",
             "ports": [{ "containerPort": 5000 }]
+          },
+          {
+            "name": "nginx",
+            "image": "kalagounet/beerapp-nginx:1.0.3",
+            "ports": [{ "containerPort": 80 }]
           }
         ],
         "imagePullSecrets": [{ "name": "regcred" }]
