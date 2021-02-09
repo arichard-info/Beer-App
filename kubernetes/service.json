@@ -6,12 +6,13 @@
   },
   "spec": {
     "selector": {
-      "app": "node"
+      "app": "beerapp"
     },
     "ports": [
       {
         "protocol": "TCP",
-        "port": 5000
+        "port": 3000,
+        "targetPort": 80
       }
     ]
   }
