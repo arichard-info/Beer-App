@@ -9,7 +9,7 @@ const ProfilePage = ({ className }) => {
     <div className={className}>
       <h1>Profile page</h1>
       <div style={{ height: "20rem" }}>
-        <RangeSlider min={0} max={100} value={value} onChange={setValue} />
+        <RangeSlider min={10} max={120} value={value} onChange={setValue} />
       </div>
     </div>
   );

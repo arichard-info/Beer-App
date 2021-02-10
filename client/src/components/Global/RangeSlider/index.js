@@ -10,13 +10,18 @@ const RangeSlider = ({
   className,
 }) => {
   const [dragging, setDragging] = useState(false);
+  const trackEl = useRef(null);
 
-  const handleChange = () => {
-    console.log("change");
+  const handleChange = (e) => {
+    const rect = trackEl.current.getBoundingClientRect();
+    const progress = rect.height - (e.clientY - rect.top); //y position within the element.
+    if (progress > rect.height) value = max;
+    else if (progress < 0) value = min;
+    else value = Math.round(min + (progress * (max - min)) / rect.height);
+    onChange(value);
   };
 
   const handleMouseUp = () => {
-    console.log("up");
     removeEventListeners();
     setDragging(false);
   };
@@ -27,8 +32,9 @@ const RangeSlider = ({
 
   const handleTouchMove = () => {};
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e) => {
     setDragging(true);
+    handleChange(e);
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("mousemove", handleChange);
   };
@@ -43,23 +49,25 @@ const RangeSlider = ({
 
   useEffect(() => {
     return removeEventListeners;
-  });
+  }, []);
+
   return (
     <div className={className}>
       <div
+        ref={trackEl}
         className={classNames("track", { dragging })}
-        // onTouchStart={handleTouchStart}
-        // onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onMouseDown={handleMouseDown}
-        // onMouseOver={handleMouseOver}
+        onMouseOver={handleMouseOver}
       >
         <div
           className="progress"
-          style={{ height: `${(100 * value) / (max - min)}%` }}
+          style={{ height: `${(100 * value) / (max - min) - min}%` }}
         />
         <div
           className="marker"
-          style={{ bottom: `${(100 * value) / (max - min)}%` }}
+          style={{ bottom: `${(100 * value) / (max - min) - min}%` }}
         />
       </div>
     </div>
@@ -75,9 +83,9 @@ export default styled(RangeSlider)(
       background-color: #e9e9e9;
       border-radius: 2rem;
       position: relative;
-      cursor: pointer;
+      cursor: grab;
       &.dragging {
-        cursor: move;
+        cursor: grabbing;
       }
     }
     .marker {
