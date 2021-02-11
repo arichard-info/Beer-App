@@ -11,10 +11,15 @@ const RangeSlider = ({
 }) => {
   const [dragging, setDragging] = useState(false);
   const trackEl = useRef(null);
+  const inputEl = useRef(null);
+
+  const handleInputChange = (e) => {
+    onChange(e.target.value);
+  };
 
   const handleChange = (e) => {
     const rect = trackEl.current.getBoundingClientRect();
-    const progress = rect.height - (e.clientY - rect.top); //y position within the element.
+    const progress = rect.height - (e.clientY - rect.top);
     if (progress > rect.height) value = max;
     else if (progress < 0) value = min;
     else value = Math.round(min + (progress * (max - min)) / rect.height);
@@ -26,20 +31,21 @@ const RangeSlider = ({
     setDragging(false);
   };
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (e) => {
+    inputEl.current.focus();
+    setDragging(true);
+    handleChange(e);
+    window.addEventListener("touchmove", handleChange);
     window.addEventListener("touchend", handleMouseUp);
   };
 
-  const handleTouchMove = () => {};
-
   const handleMouseDown = (e) => {
+    inputEl.current.focus();
     setDragging(true);
     handleChange(e);
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("mousemove", handleChange);
   };
-
-  const handleMouseOver = () => {};
 
   const removeEventListeners = () => {
     window.removeEventListener("mousemove", handleChange);
@@ -53,22 +59,31 @@ const RangeSlider = ({
 
   return (
     <div className={className}>
-      <div
-        ref={trackEl}
-        className={classNames("track", { dragging })}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onMouseDown={handleMouseDown}
-        onMouseOver={handleMouseOver}
-      >
+      <input
+        ref={inputEl}
+        className="vh"
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={handleInputChange}
+      />
+      <div className="track-wrapper">
         <div
-          className="progress"
-          style={{ height: `${(100 * value) / (max - min) - min}%` }}
-        />
-        <div
-          className="marker"
-          style={{ bottom: `${(100 * value) / (max - min) - min}%` }}
-        />
+          ref={trackEl}
+          className={classNames("track", { dragging })}
+          onTouchStart={handleTouchStart}
+          onMouseDown={handleMouseDown}
+        >
+          <div
+            className="progress"
+            style={{ height: `${(100 * value) / (max - min) - min}%` }}
+          />
+          <div
+            className="marker"
+            style={{ bottom: `${(100 * value) / (max - min) - min}%` }}
+          />
+        </div>
       </div>
     </div>
   );
@@ -77,9 +92,15 @@ const RangeSlider = ({
 export default styled(RangeSlider)(
   ({ theme: { colors } }) => css`
     height: 100%;
+    .track-wrapper {
+      width: auto;
+      display: inline-block;
+      height: 100%;
+      padding: 0.5rem;
+    }
     .track {
       height: 100%;
-      width: 1rem;
+      width: 1.2rem;
       background-color: #e9e9e9;
       border-radius: 2rem;
       position: relative;
@@ -92,11 +113,12 @@ export default styled(RangeSlider)(
       position: absolute;
       left: 50%;
       transform: translate(-50%, 50%);
-      height: 1.2rem;
-      width: 1.2rem;
+      height: 1.4rem;
+      width: 1.4rem;
       border-radius: 50%;
       background-color: #ffffff;
       border: 0.1rem solid #000000;
+      transition: height 0.2s ease, width 0.2s ease;
     }
     .progress {
       width: 100%;
@@ -105,6 +127,15 @@ export default styled(RangeSlider)(
       left: 0;
       background-color: ${colors.primary};
       border-radius: 2rem;
+    }
+
+    input:focus + .track-wrapper .marker {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    input:focus-visible + .track-wrapper {
+      border: 0.1rem solid #000000;
     }
   `
 );

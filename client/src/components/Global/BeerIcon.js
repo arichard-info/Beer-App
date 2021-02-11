@@ -45,9 +45,8 @@ const BeerIcon = ({
       <rect
         x="1"
         width="204"
-        height={`${(1 - fill) * 100}%`}
+        height={`${(1 - fill || 0) * 100}%`}
         fill={backgroundColor}
-        style={{ transition: "height .3s ease" }}
       />
     </g>
     <path
