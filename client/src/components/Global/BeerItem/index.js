@@ -25,7 +25,7 @@ const BeerItem = ({
         )}
       </div>
 
-      {quantity && (
+      {!!quantity && (
         <span className="quantity">
           {quantity}
           <small>ml</small>

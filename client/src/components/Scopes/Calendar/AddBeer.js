@@ -49,7 +49,7 @@ const AddBeer = ({ day }) => {
       )}
       <Link
         className="cta"
-        to={{ pathname: "/add-drink", state: { selectedDay: day } }}
+        to={{ pathname: "/add-drink", state: { date: day.date } }}
       >
         Ajouter une bière
       </Link>

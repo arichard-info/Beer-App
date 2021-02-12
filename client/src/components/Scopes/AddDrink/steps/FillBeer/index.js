@@ -7,7 +7,7 @@ import Recap from "@/components/Scopes/AddDrink/steps/FillBeer/Recap";
 import RangeSlider from "@/components/Global/RangeSlider";
 
 const FillBeer = ({ className, form, setForm, setStep, registerDrink }) => {
-  const [quantity, setQuantity] = useState(330);
+  const [loading, setLoading] = useState(false);
 
   const handleBack = () => {
     if (form.customBeer) {
@@ -17,9 +17,10 @@ const FillBeer = ({ className, form, setForm, setStep, registerDrink }) => {
     }
   };
 
-  const handleSubmit = () => {
-    setForm((form) => ({ ...form, quantity }));
-    registerDrink();
+  const handleSubmit = async () => {
+    setLoading(true);
+    await registerDrink();
+    setLoading(false);
   };
 
   return (
@@ -29,18 +30,20 @@ const FillBeer = ({ className, form, setForm, setStep, registerDrink }) => {
         <section className="glass-wrapper">
           <div className="glass">
             <span className="quantity">
-              {Math.round(quantity / 10)}
+              {Math.round(form.quantity / 10)}
               <small>cl</small>
             </span>
-            <BeerIcon fill={quantity / 1000} />
+            <BeerIcon fill={form.quantity / 1000} />
           </div>
           <div className="range">
             <RangeSlider
               vertical
-              value={quantity}
+              value={form.quantity}
               min={0}
               max={1000}
-              onChange={setQuantity}
+              onChange={(quantity) =>
+                setForm((form) => ({ ...form, quantity }))
+              }
               graduations={["1L", "75cl", "50cl", "25cl", "0cl"]}
             />
           </div>

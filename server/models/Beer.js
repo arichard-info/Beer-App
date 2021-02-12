@@ -6,24 +6,32 @@ const beerSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    required: "Please enter a beer name!"
+    required: "Please enter a beer name!",
+  },
+  type: {
+    type: String,
   },
   slug: String,
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
   abv: {
     type: Number,
     required: "Please enter the ABV",
     min: 0,
-    max: 100
+    max: 100,
   },
   tags: [String],
-  photo: String
+  photo: String,
+  provider: {
+    type: String,
+    default: "api",
+    enum: ["user", "api"],
+  },
 });
 
-beerSchema.pre("save", function(next) {
+beerSchema.pre("save", function (next) {
   if (!this.isModified("name")) {
     next();
     return;

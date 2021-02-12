@@ -86,13 +86,13 @@ const RangeSlider = ({
           <div
             className="progress"
             style={{
-              [vertical ? height : width]: `${progressPercent}%`,
+              [vertical ? "height" : "width"]: `${progressPercent}%`,
             }}
           />
           <div
             className="marker"
             style={{
-              [vertical ? bottom : left]: `${progressPercent}%`,
+              [vertical ? "bottom" : "left"]: `${progressPercent}%`,
             }}
           />
         </div>
@@ -165,7 +165,7 @@ export default styled(RangeSlider)(
       }
       .marker {
         left: 0;
-        transform: translate(-50%, 50%);
+        transform: translate(0, 50%);
         top: auto;
       }
       .progress {

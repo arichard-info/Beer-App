@@ -37,7 +37,7 @@ router.get(
 );
 
 router.post(
-  "/drinks/add-drink",
+  "/drinks/add",
   authController.authCookie,
   catchErrors(drinkController.add)
 );

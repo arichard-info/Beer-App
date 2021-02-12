@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Drink = mongoose.model("Drink");
+const Beer = mongoose.model("Beer");
 
 const all = async (req, res, next) => {
   const { user } = req;
@@ -57,7 +58,11 @@ const count = async (req, res, next) => {
     {
       $addFields: {
         stringDate: {
-          $dateToString: { format: "%Y-%m-%d", date: "$date" },
+          $dateToString: {
+            format: "%Y-%m-%d",
+            date: "$date",
+            timezone: "Europe/Paris",
+          },
         },
       },
     },
@@ -73,7 +78,22 @@ const count = async (req, res, next) => {
 };
 
 const add = async (req, res, next) => {
-  // Drink.insert(req.body);
+  const { beer, quantity, date } = req.body;
+
+  let userBeer = beer;
+  if (beer.provider === "user") {
+    userBeer = await Beer.create(beer);
+  }
+
+  const drink = await Drink.create({
+    beer: userBeer._id,
+    date,
+    quantity,
+    user: req.user._id,
+  });
+
+  res.json(drink);
+  next();
 };
 
 module.exports = {
