@@ -23,9 +23,11 @@ const AddDrink = ({ className }) => {
     quantity: 0,
   });
 
+  const registerDrink = () => {};
+
   return (
     <div className={className}>
-      {SwitchSteps[step.index]({ step, setStep, form, setForm })}
+      {SwitchSteps[step.index]({ step, setStep, form, setForm, registerDrink })}
     </div>
   );
 };

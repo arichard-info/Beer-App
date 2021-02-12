@@ -15,25 +15,31 @@ router.post(
 router.get(
   "/drinks",
   authController.authCookie,
-  catchErrors(drinkController.allDrinks)
+  catchErrors(drinkController.all)
 );
 
 router.get(
   "/drinks/day",
   authController.authCookie,
-  catchErrors(drinkController.dayDrinks)
+  catchErrors(drinkController.day)
 );
 
 router.get(
   "/drinks/fav",
   authController.authCookie,
-  catchErrors(drinkController.favDrinks)
+  catchErrors(drinkController.fav)
 );
 
 router.get(
   "/drinks/count",
   authController.authCookie,
-  catchErrors(drinkController.countDrinks)
+  catchErrors(drinkController.count)
+);
+
+router.post(
+  "/drinks/add-drink",
+  authController.authCookie,
+  catchErrors(drinkController.add)
 );
 
 module.exports = router;

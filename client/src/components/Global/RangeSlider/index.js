@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { classNames } from "@/utils";
+import Graduation from "./Graduation";
 
 const RangeSlider = ({
   onChange = () => {},
@@ -8,6 +9,8 @@ const RangeSlider = ({
   min = 0,
   max = 10,
   className,
+  vertical = false,
+  graduations = false,
 }) => {
   const [dragging, setDragging] = useState(false);
   const trackEl = useRef(null);
@@ -19,10 +22,13 @@ const RangeSlider = ({
 
   const handleChange = (e) => {
     const rect = trackEl.current.getBoundingClientRect();
-    const progress = rect.height - (e.clientY - rect.top);
-    if (progress > rect.height) value = max;
+    const sizeMax = vertical ? rect.height : rect.width;
+    const progress = vertical
+      ? sizeMax - (e.clientY - rect.top)
+      : sizeMax - (e.clientX - rect.left);
+    if (progress > sizeMax) value = max;
     else if (progress < 0) value = min;
-    else value = Math.round(min + (progress * (max - min)) / rect.height);
+    else value = Math.round(min + (progress * (max - min)) / sizeMax);
     onChange(value);
   };
 
@@ -57,8 +63,10 @@ const RangeSlider = ({
     return removeEventListeners;
   }, []);
 
+  const progressPercent = (100 * value) / (max - min) - min;
+
   return (
-    <div className={className}>
+    <div className={classNames(className, { vertical })}>
       <input
         ref={inputEl}
         className="vh"
@@ -77,30 +85,37 @@ const RangeSlider = ({
         >
           <div
             className="progress"
-            style={{ height: `${(100 * value) / (max - min) - min}%` }}
+            style={{
+              [vertical ? height : width]: `${progressPercent}%`,
+            }}
           />
           <div
             className="marker"
-            style={{ bottom: `${(100 * value) / (max - min) - min}%` }}
+            style={{
+              [vertical ? bottom : left]: `${progressPercent}%`,
+            }}
           />
         </div>
       </div>
+      {!!(graduations && graduations.length) && (
+        <Graduation graduations={graduations} vertical={vertical} />
+      )}
     </div>
   );
 };
 
 export default styled(RangeSlider)(
   ({ theme: { colors } }) => css`
-    height: 100%;
+    display: flex;
     .track-wrapper {
-      width: auto;
+      width: 100%;
+      height: auto;
       display: inline-block;
-      height: 100%;
       padding: 0.5rem;
     }
     .track {
-      height: 100%;
-      width: 1.2rem;
+      width: 100%;
+      height: 1.5rem;
       background-color: #e9e9e9;
       border-radius: 2rem;
       position: relative;
@@ -111,17 +126,17 @@ export default styled(RangeSlider)(
     }
     .marker {
       position: absolute;
-      left: 50%;
-      transform: translate(-50%, 50%);
-      height: 1.4rem;
-      width: 1.4rem;
+      top: 50%;
+      transform: translate(50%, -50%);
+      height: 1.6rem;
+      width: 1.6rem;
       border-radius: 50%;
       background-color: #ffffff;
       border: 0.1rem solid #000000;
       transition: height 0.2s ease, width 0.2s ease;
     }
     .progress {
-      width: 100%;
+      height: 100%;
       position: absolute;
       bottom: 0;
       left: 0;
@@ -136,6 +151,27 @@ export default styled(RangeSlider)(
 
     input:focus-visible + .track-wrapper {
       border: 0.1rem solid #000000;
+    }
+
+    &.vertical {
+      height: 100%;
+      .track-wrapper {
+        height: 100%;
+        width: auto;
+      }
+      .track {
+        height: 100%;
+        width: 1.5rem;
+      }
+      .marker {
+        left: 0;
+        transform: translate(-50%, 50%);
+        top: auto;
+      }
+      .progress {
+        width: 100%;
+        height: auto;
+      }
     }
   `
 );

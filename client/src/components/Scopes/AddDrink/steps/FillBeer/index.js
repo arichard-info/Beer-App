@@ -6,8 +6,8 @@ import Header from "@/components/Scopes/AddDrink/steps/Header";
 import Recap from "@/components/Scopes/AddDrink/steps/FillBeer/Recap";
 import RangeSlider from "@/components/Global/RangeSlider";
 
-const FillBeer = ({ className, form, setStep }) => {
-  const [quantity, setQuantity] = useState(250);
+const FillBeer = ({ className, form, setForm, setStep, registerDrink }) => {
+  const [quantity, setQuantity] = useState(330);
 
   const handleBack = () => {
     if (form.customBeer) {
@@ -16,25 +16,37 @@ const FillBeer = ({ className, form, setStep }) => {
       setStep((step) => ({ ...step, index: 0 }));
     }
   };
+
+  const handleSubmit = () => {
+    setForm((form) => ({ ...form, quantity }));
+    registerDrink();
+  };
+
   return (
     <div className={className}>
       <Header title="Remplis ta bière !" onBack={handleBack} />
       <div className="wrapper">
         <section className="glass-wrapper">
           <div className="glass">
+            <span className="quantity">
+              {Math.round(quantity / 10)}
+              <small>cl</small>
+            </span>
             <BeerIcon fill={quantity / 1000} />
           </div>
           <div className="range">
             <RangeSlider
+              vertical
               value={quantity}
               min={0}
               max={1000}
               onChange={setQuantity}
+              graduations={["1L", "75cl", "50cl", "25cl", "0cl"]}
             />
           </div>
         </section>
-        <section>
-          <Recap form={form} />
+        <section className="recap">
+          <Recap form={form} onClick={handleSubmit} />
         </section>
       </div>
     </div>
@@ -49,12 +61,13 @@ export default styled(FillBeer)(
       padding-left: 1.5rem;
       padding-right: 1.5rem;
       background-color: ${colors.white};
+      margin-top: 2rem;
     }
 
     .glass-wrapper {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 3rem;
+      margin-bottom: 5rem;
     }
 
     .glass {
@@ -77,9 +90,32 @@ export default styled(FillBeer)(
         z-index: -1;
       }
     }
+
+    .quantity {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: inline-block;
+      transform: translate(-50%, -50%);
+      font-size: 4rem;
+      font-weight: 700;
+      color: ${colors.grey7};
+      small {
+        font-size: 3.2rem;
+      }
+    }
+
+    .range {
+      display: flex;
+    }
+
     .beer-icon {
       width: 100%;
       height: auto;
+    }
+
+    .recap {
+      padding-bottom: 5rem;
     }
 
     @media ${device.gtMobileSm} {
@@ -96,13 +132,19 @@ export default styled(FillBeer)(
         padding-right: 0;
         padding-right: 1rem;
         margin-right: -1rem;
+        margin-top: 3rem;
       }
       .glass {
         order: 2;
         max-width: 30rem;
+        margin-right: 8rem;
       }
       .range {
         order: 1;
+      }
+
+      .glass-wrapper {
+        margin-bottom: 7rem;
       }
     }
   `
