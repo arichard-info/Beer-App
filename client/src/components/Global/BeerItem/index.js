@@ -1,17 +1,18 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import classNames from "@/utils";
 
 const BeerItem = ({
-  customClass,
+  customClass = "",
   className,
   beer = {},
   quantity = false,
-  onClick = () => {},
+  onClick = null,
 }) => {
   const clickable = typeof onClick === "function";
   return (
     <div
-      className={`${className}${clickable ? " clickable" : ""} ${customClass}`}
+      className={classNames(className, customClass, { clickable })}
       onClick={onClick}
     >
       <div
