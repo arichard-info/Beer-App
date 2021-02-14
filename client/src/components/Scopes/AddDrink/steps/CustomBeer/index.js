@@ -20,7 +20,7 @@ const CustomBeer = ({ className, setStep, setForm, form }) => {
   const handleSubmit = (e, { valid }) => {
     e.preventDefault();
     if (!valid) return;
-    setForm((form) => ({ ...form, beer: fields, provider: "user" }));
+    setForm((form) => ({ ...form, beer: { ...fields, provider: "user" } }));
     setStep((step) => ({ ...step, index: 3 }));
   };
 

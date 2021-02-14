@@ -42,11 +42,12 @@ const fav = async (req, res, next) => {
 
 const day = async (req, res, next) => {
   const user = req.user;
-  const day = req.query.date ? new Date(req.query.date) : new Date();
-  const start = new Date(day.setHours(00, 00, 00));
-  const end = new Date(day.setHours(23, 59, 59));
+  const start = req.query.date ? new Date(req.query.date) : new Date();
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(start.getTime());
+  end.setDate(end.getDate() + 1);
   const dayDrinks = await Drink.find({
-    $and: [{ user: user._id }, { date: { $gt: start, $lt: end } }],
+    $and: [{ user: user._id }, { date: { $gte: start, $lt: end } }],
   });
   return res.json(dayDrinks);
 };
@@ -84,6 +85,8 @@ const add = async (req, res, next) => {
   if (beer.provider === "user") {
     userBeer = await Beer.create(beer);
   }
+
+  console.log(userBeer);
 
   const drink = await Drink.create({
     beer: userBeer._id,
