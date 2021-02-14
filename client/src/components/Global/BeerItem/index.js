@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import classNames from "@/utils";
+import { classNames } from "@/utils";
 
 const BeerItem = ({
   customClass = "",

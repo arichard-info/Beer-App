@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Beer = mongoose.model("Beer");
 
-exports.getBeers = async (req, res, next) => {
+const find = async (req, res, next) => {
   let query = {};
 
   // Pagination options
@@ -19,7 +19,12 @@ exports.getBeers = async (req, res, next) => {
   res.json({ beers, totalCount });
 };
 
-exports.getBeerFromSlug = async (req, res, next) => {
+const findOne = async (req, res, next) => {
   const beer = await Beer.findOne({ slug: req.params.slug });
   res.json(beer);
+};
+
+module.exports = {
+  find,
+  findOne,
 };

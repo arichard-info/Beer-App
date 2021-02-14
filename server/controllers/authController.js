@@ -9,7 +9,7 @@ const User = mongoose.model("User");
  */
 
 // authentication
-exports.localAuth = (req, res, next) => {
+const localAuth = (req, res, next) => {
   passport.authenticate(
     "local",
     { session: false },
@@ -32,7 +32,7 @@ exports.localAuth = (req, res, next) => {
 };
 
 // forgot password
-exports.forgot = async (req, res) => {
+const forgot = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.json({
@@ -59,7 +59,7 @@ exports.forgot = async (req, res) => {
 };
 
 // check confirmed passwords
-exports.confirmedPasswords = (req, res, next) => {
+const confirmedPasswords = (req, res, next) => {
   if (req.body.password === req.body["password-confirm"]) {
     next();
     return;
@@ -68,7 +68,7 @@ exports.confirmedPasswords = (req, res, next) => {
 };
 
 // update password
-exports.updatePassword = async (req, res, next) => {
+const updatePassword = async (req, res, next) => {
   const user = await User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() },
@@ -92,7 +92,7 @@ exports.updatePassword = async (req, res, next) => {
  */
 
 // Google auth
-exports.googleAuth = (req, res, next) => {
+const googleAuth = (req, res, next) => {
   passport.authenticate(
     "google",
     {
@@ -116,13 +116,13 @@ exports.googleAuth = (req, res, next) => {
 };
 
 // socket init
-exports.addSocketIdtoSession = (req, res, next) => {
+const addSocketIdtoSession = (req, res, next) => {
   req.session.socketId = req.query.socketId;
   next();
 };
 
 // confirm provider auth
-exports.confirmProviderAuth = async (req, res, next) => {
+const confirmProviderAuth = async (req, res, next) => {
   if (!req.signedCookies || !req.signedCookies["usr_complete"]) {
     return res.status(401).end();
   }
@@ -144,7 +144,7 @@ exports.confirmProviderAuth = async (req, res, next) => {
  * Cookie authentication strategy
  */
 
-exports.authCookie = async (req, res, next) => {
+const authCookie = async (req, res, next) => {
   if (!req.signedCookies || !req.signedCookies.auth) {
     return res.status(401).end();
   }
@@ -160,7 +160,7 @@ exports.authCookie = async (req, res, next) => {
   });
 };
 
-exports.returnReqUser = (req, res, next) => {
+const returnReqUser = (req, res, next) => {
   if (!req.user) {
     res.status(401).end();
   }
@@ -171,6 +171,19 @@ exports.returnReqUser = (req, res, next) => {
   });
 };
 
-exports.logout = (req, res, next) => {
+const logout = (req, res, next) => {
   res.clearCookie("auth").end();
+};
+
+module.exports = {
+  localAuth,
+  forgot,
+  confirmedPasswords,
+  updatePassword,
+  googleAuth,
+  addSocketIdtoSession,
+  confirmProviderAuth,
+  authCookie,
+  returnReqUser,
+  logout,
 };

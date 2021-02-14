@@ -3,12 +3,10 @@ const User = mongoose.model("User");
 
 const { body, sanitizeBody, validationResult } = require("express-validator");
 
-exports.validateRegister = (req, res, next) => {
+const validate = (req, res, next) => {
   sanitizeBody("name");
   body("name", "You must supply a name !").notEmpty();
-  body("email", "That Email is not valid !")
-    .isEmail()
-    .normalizeEmail();
+  body("email", "That Email is not valid !").isEmail().normalizeEmail();
 
   if (!req.body.provider) {
     body("password", "Password Cannot be Blank !").notEmpty();
@@ -25,18 +23,18 @@ exports.validateRegister = (req, res, next) => {
   if (errors && errors.length) {
     return res.json({
       error: true,
-      messages: errors.map(err => err.msg)
+      messages: errors.map((err) => err.msg),
     });
   }
   next();
 };
 
-exports.localRegister = async (req, res, next) => {
+const register = async (req, res, next) => {
   const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
     return res.json({
       error: true,
-      messages: "Email already registered"
+      messages: "Email already registered",
     });
   }
   const user = new User({ email: req.body.email, name: req.body.name });
@@ -44,10 +42,10 @@ exports.localRegister = async (req, res, next) => {
   next();
 };
 
-exports.updateAccount = async (req, res, next) => {
+const update = async (req, res, next) => {
   const updates = {
     name: req.body.name,
-    email: req.body.email
+    email: req.body.email,
   };
 
   const user = await User.findOneAndUpdate(
@@ -59,13 +57,19 @@ exports.updateAccount = async (req, res, next) => {
   if (!user) {
     return res.json({
       error: true,
-      message: "Error when updating user"
+      message: "Error when updating user",
     });
   }
 
   return res.json({
     error: false,
     message: "Updated User!",
-    user
+    user,
   });
+};
+
+module.exports = {
+  register,
+  validate,
+  update,
 };

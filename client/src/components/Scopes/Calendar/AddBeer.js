@@ -18,9 +18,7 @@ const AddBeer = ({ day }) => {
     dispatch({ type: "UNSELECT_DAY" });
   };
 
-  const [drinks, loading] = useGetRequest(
-    `/api/user/drinks/day?date=${day.date}`
-  );
+  const [drinks, loading] = useGetRequest(`/api/user/drinks?date=${day.date}`);
 
   return (
     <>

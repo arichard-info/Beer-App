@@ -2,13 +2,24 @@ const mongoose = require("mongoose");
 const Drink = mongoose.model("Drink");
 const Beer = mongoose.model("Beer");
 
-const all = async (req, res, next) => {
+const find = async (req, res, next) => {
   const { user } = req;
-  const drinks = await Drink.find({ user: user._id });
+  let query = { user: user._id };
+
+  if (req.query.date) {
+    const start = new Date(req.query.date);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start.getTime());
+    end.setDate(end.getDate() + 1);
+
+    query = { $and: [query, { date: { $gte: start, $lt: end } }] };
+  }
+
+  const drinks = await Drink.find(query);
   return res.json(drinks);
 };
 
-const fav = async (req, res, next) => {
+const findFav = async (req, res, next) => {
   const user = req.user;
   const favDrinks = await Drink.aggregate([
     {
@@ -38,18 +49,6 @@ const fav = async (req, res, next) => {
     { $limit: 4 },
   ]);
   return res.json(favDrinks);
-};
-
-const day = async (req, res, next) => {
-  const user = req.user;
-  const start = req.query.date ? new Date(req.query.date) : new Date();
-  start.setHours(0, 0, 0, 0);
-  const end = new Date(start.getTime());
-  end.setDate(end.getDate() + 1);
-  const dayDrinks = await Drink.find({
-    $and: [{ user: user._id }, { date: { $gte: start, $lt: end } }],
-  });
-  return res.json(dayDrinks);
 };
 
 const count = async (req, res, next) => {
@@ -100,9 +99,8 @@ const add = async (req, res, next) => {
 };
 
 module.exports = {
-  all,
-  fav,
-  day,
+  find,
+  findFav,
   count,
   add,
 };
