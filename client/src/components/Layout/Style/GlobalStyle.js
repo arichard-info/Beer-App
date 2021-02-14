@@ -7,9 +7,9 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         margin: 0;
-        font-family: ${props => props.theme.fonts.sansSerif};
+        font-family: ${(props) => props.theme.fonts.sansSerif};
         font-size: 1.6rem;
-        color: ${props => props.theme.colors.text};
+        color: ${(props) => props.theme.colors.text};
         overscroll-behavior-y: none;
         overflow-y: scroll;
         height: 100%;
@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     h1{
         font-size: 2.6rem;
         font-weight: 700;
-        color: ${props => props.theme.colors.black};
+        color: ${(props) => props.theme.colors.black};
     }
 
     p{
@@ -46,10 +46,10 @@ const GlobalStyle = createGlobalStyle`
         width: 100%;
         border: none;
         border-radius: 50rem;
-        color: ${props => props.theme.colors.white};
-        font-weight: ${props => props.theme.fw.semibold};
-        background-color: ${props => props.theme.colors.primary};
-        font-family: ${props => props.theme.fonts.sansSerif};
+        color: ${(props) => props.theme.colors.white};
+        font-weight: ${(props) => props.theme.fw.semibold};
+        background-color: ${(props) => props.theme.colors.primary};
+        font-family: ${(props) => props.theme.fonts.sansSerif};
         transition: all .2s ease;
 
         &:hover{
@@ -64,7 +64,7 @@ const GlobalStyle = createGlobalStyle`
 
         &.bg-grey {
             background-color: #e8e8e8;
-            color: ${props => props.theme.colors.black};
+            color: ${(props) => props.theme.colors.black};
             border-color: #b5b5b5;
             &:hover{
                 background-color: #FFEBBC;
@@ -72,8 +72,8 @@ const GlobalStyle = createGlobalStyle`
         }
 
         &.bg-white{
-            border: .1rem solid ${props => props.theme.colors.black};
-            color: ${props => props.theme.colors.black};
+            border: .1rem solid ${(props) => props.theme.colors.black};
+            color: ${(props) => props.theme.colors.black};
             background-color: transparent;
 
             &:hover{
@@ -93,6 +93,16 @@ const GlobalStyle = createGlobalStyle`
             margin-left: 1rem;
             font-size: 1.8rem;
         }
+    }
+
+    .vh {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: .1rem;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: .1rem;
     }
   
 `;

@@ -12,9 +12,6 @@ const drinkSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "Beer",
     },
-    customBeer: {
-      type: Object,
-    },
     date: {
       type: Date,
       default: Date.now,

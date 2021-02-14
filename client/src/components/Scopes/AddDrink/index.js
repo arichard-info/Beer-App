@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
+import { postRequest } from "@/utils/api";
 
 import Search from "./steps/Search";
 import CustomBeer from "./steps/CustomBeer";
@@ -14,18 +15,23 @@ const SwitchSteps = {
 
 const AddDrink = ({ className }) => {
   const { state = {} } = useLocation();
-  const selectedDay = state.selectedDay || new Date();
+  const history = useHistory();
+  const date = state.date || new Date();
   const [step, setStep] = useState({ index: 0 });
   const [form, setForm] = useState({
-    selectedDay,
-    beer: false,
-    customBeer: false,
-    quantity: 0,
+    date,
+    beer: {},
+    quantity: 330,
   });
+
+  const registerDrink = async () => {
+    const response = await postRequest("/api/user/drinks/add", form);
+    history.push("/");
+  };
 
   return (
     <div className={className}>
-      {SwitchSteps[step.index]({ step, setStep, form, setForm })}
+      {SwitchSteps[step.index]({ step, setStep, form, setForm, registerDrink })}
     </div>
   );
 };

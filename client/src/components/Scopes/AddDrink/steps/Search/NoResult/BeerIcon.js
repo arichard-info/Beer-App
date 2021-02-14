@@ -23,6 +23,8 @@ export default styled(Icon)(
 
     svg {
       margin: auto;
+      width: 60%;
+      height: 60%;
     }
   `
 );

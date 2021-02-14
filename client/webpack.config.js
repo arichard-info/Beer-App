@@ -21,6 +21,7 @@ module.exports = {
     },
     port: 3000,
     host: process.env.REACT_APP_DOCKER ? "0.0.0.0" : "127.0.0.1",
+    hot: true,
   },
   module: {
     rules: [

@@ -5,18 +5,19 @@ import BeerItem from "@/components/Global/BeerItem";
 
 const Recap = ({
   className,
-  form: { selectedDay, beer = false, customBeer = false } = {},
+  form: { date, beer = false, customBeer = false } = {},
+  onClick = () => {},
 }) => {
   return (
     <div className={className}>
       <span className="date">
         <strong>
-          {selectedDay.date.getDate()} {getMonthName(selectedDay.date)}
+          {date.getDate()} {getMonthName(date)}
         </strong>
-        &nbsp;{selectedDay.date.getFullYear()}
+        &nbsp;{date.getFullYear()}
       </span>
       <BeerItem beer={beer || customBeer} />
-      <button type="submit" className="cta">
+      <button type="submit" className="cta" onClick={onClick}>
         Confirmer
       </button>
     </div>

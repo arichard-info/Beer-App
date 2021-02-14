@@ -10,17 +10,17 @@ import { useFields } from "@/components/Global/Form/utils";
 import Header from "@/components/Scopes/AddDrink/steps/Header";
 
 const CustomBeer = ({ className, setStep, setForm, form }) => {
-  const { customBeer: { type = "", name = "", alcohol = "" } = {} } = form;
+  const { customBeer: { type = "", name = "", abv = "" } = {} } = form;
   const { fields, handleEventChange, handleChange } = useFields({
     type,
     name,
-    alcohol,
+    abv,
   });
 
   const handleSubmit = (e, { valid }) => {
     e.preventDefault();
     if (!valid) return;
-    setForm((form) => ({ ...form, customBeer: fields, beer: null }));
+    setForm((form) => ({ ...form, beer: { ...fields, provider: "user" } }));
     setStep((step) => ({ ...step, index: 3 }));
   };
 
@@ -51,15 +51,15 @@ const CustomBeer = ({ className, setStep, setForm, form }) => {
           />
         </FieldWrapper>
 
-        <FieldWrapper label="Degré d'alcool" fieldName="name" inline>
+        <FieldWrapper label="Degré d'alcool" fieldName="abv" inline>
           <TextInput
-            name="alcohol"
+            name="abv"
             placeholder="5,0"
             suffix="% vol"
             type="number"
-            onChange={handleEventChange("alcohol")}
+            onChange={handleEventChange("abv")}
             rules={{ required: true }}
-            value={fields.alcohol}
+            value={fields.abv}
           />
         </FieldWrapper>
 

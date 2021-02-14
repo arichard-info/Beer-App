@@ -23,6 +23,7 @@ export default styled(Header)(
     background-color: ${colors.white};
     position: sticky;
     top: 0;
+    z-index: 1;
 
     @media ${device.gtMobile} {
       max-width: none;
