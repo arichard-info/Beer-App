@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const { catchErrors } = require("./../../utils/errorHandlers");
-const userController = require("./../../controllers/userController");
-const authController = require("./../../controllers/authController");
+const userController = require("../../controllers/user");
+const authController = require("./../../controllers/auth");
 
 // Local strategy
 router.post("/login", authController.localAuth);

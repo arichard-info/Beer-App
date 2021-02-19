@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { postRequest } from "@/utils/api";
@@ -24,8 +24,14 @@ const AddDrink = ({ className }) => {
     quantity: 330,
   });
 
+  console.log("FORM", form);
+
   const registerDrink = async () => {
-    const response = await postRequest("/api/user/drinks/add", form);
+    const beer = { ...form.beer, family: form?.beer?.family?._id };
+    const response = await postRequest("/api/user/drinks/add", {
+      ...form,
+      beer,
+    });
     history.push("/");
   };
 

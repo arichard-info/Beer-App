@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "12c03ac18060197ca0c45612",
+    "name": "Blanche",
+    "slug": "blanche",
+    "color": "#FFEBBC"
+  },
+  {
+    "_id": "12c03ac18060197ca0c45734",
+    "name": "Lager",
+    "slug": "lager",
+    "color": "#FFCF40"
+  },
+  {
+    "_id": "12c03ac18060197ca0c45856",
+    "name": "IPA",
+    "slug": "ipa",
+    "color": "#F2A954"
+  },
+  {
+    "_id": "12c03ac18060197ca0c45978",
+    "name": "Stout",
+    "slug": "stout",
+    "color": "#392813"
+  },
+  {
+    "_id": "12c03ac18060197ca0c46091",
+    "name": "Aromatisée",
+    "slug": "atomate",
+    "color": "#FFEBBC"
+  }
+]

@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const { catchErrors } = require("./../../utils/errorHandlers");
-const authController = require("./../../controllers/authController");
-const drinkController = require("./../../controllers/drinkController");
-const userController = require("./../../controllers/userController");
+const authController = require("./../../controllers/auth");
+const drinkController = require("../../controllers/drink");
+const userController = require("../../controllers/user");
 
 router.post("/", authController.authCookie, catchErrors(userController.update));
 

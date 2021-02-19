@@ -8,8 +8,9 @@ const beerSchema = new mongoose.Schema({
     trim: true,
     required: "Please enter a beer name!",
   },
-  type: {
-    type: String,
+  family: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Family",
   },
   slug: String,
   description: {
@@ -39,5 +40,13 @@ beerSchema.pre("save", function (next) {
   this.slug = slug(this.name);
   next();
 });
+
+function autopopulate(next) {
+  this.populate("family");
+  next();
+}
+
+beerSchema.pre("find", autopopulate);
+beerSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("Beer", beerSchema);
