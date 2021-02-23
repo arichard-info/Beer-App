@@ -24,8 +24,6 @@ const AddDrink = ({ className }) => {
     quantity: 330,
   });
 
-  console.log("FORM", form);
-
   const registerDrink = async () => {
     const beer = { ...form.beer, family: form?.beer?.family?._id };
     const response = await postRequest("/api/user/drinks/add", {

@@ -85,8 +85,6 @@ const add = async (req, res, next) => {
     userBeer = await Beer.create(beer);
   }
 
-  console.log(userBeer);
-
   const drink = await Drink.create({
     beer: userBeer._id,
     date,

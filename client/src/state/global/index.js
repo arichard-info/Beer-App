@@ -8,7 +8,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_BEER_TYPES": {
       const beerTypes = action.value;
-      console.log(action.value);
       return { ...state, beerTypes };
     }
     default:
