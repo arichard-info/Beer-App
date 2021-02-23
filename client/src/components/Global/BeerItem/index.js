@@ -1,17 +1,18 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { classNames } from "@/utils";
 
 const BeerItem = ({
-  customClass,
+  customClass = "",
   className,
   beer = {},
   quantity = false,
-  onClick = () => {},
+  onClick = null,
 }) => {
   const clickable = typeof onClick === "function";
   return (
     <div
-      className={`${className}${clickable ? " clickable" : ""} ${customClass}`}
+      className={classNames(className, customClass, { clickable })}
       onClick={onClick}
     >
       <div
@@ -20,8 +21,16 @@ const BeerItem = ({
       />
       <div className="beer-info">
         <span className="name">{beer.name}</span>
-        {!!(beer.tags && beer.tags.length) && (
-          <p className="tags">{beer.tags.join(" - ")}</p>
+        {(beer.family || beer.tags) && (
+          <span className="tags">
+            {beer.family && beer.family.name && (
+              <strong>
+                {beer.family.name}
+                {!!(beer.tags && beer.tags.length) && ` -`}
+              </strong>
+            )}
+            {!!(beer.tags && beer.tags.length) && beer.tags.join(" - ")}
+          </span>
         )}
       </div>
 
@@ -69,6 +78,9 @@ export default styled(BeerItem)(
     }
     .tags {
       margin: 0;
+      strong {
+        margin-right: 0.5rem;
+      }
     }
     .quantity {
       margin-left: auto;

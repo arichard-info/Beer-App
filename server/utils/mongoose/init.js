@@ -10,6 +10,7 @@ mongoose.connection.on("error", (err) => {
   process.exit();
 });
 
+require("./../../models/Family");
 require("./../../models/Beer");
 require("./../../models/User");
 require("./../../models/Drink");

@@ -10,21 +10,27 @@ mongoose.connect(process.env.DATABASE || "27107", {
 });
 mongoose.Promise = global.Promise;
 
+const Family = require("../../models/Family");
 const Beer = require("../../models/Beer");
 const Drink = require("../../models/Drink");
 const User = require("../../models/User");
 
+const families = JSON.parse(
+  fs.readFileSync(__dirname + "/family.json", "utf-8")
+);
 const beers = JSON.parse(fs.readFileSync(__dirname + "/beers.json", "utf-8"));
 const drinks = JSON.parse(fs.readFileSync(__dirname + "/drinks.json", "utf-8"));
 const users = JSON.parse(fs.readFileSync(__dirname + "/users.json", "utf-8"));
 
 async function deleteData() {
   try {
-    await Beer.collection.drop();
+    await Family.collection.drop().catch(console.error);
+    console.log("- Family collection");
+    await Beer.collection.drop().catch(console.error);
     console.log("- Beers collection");
-    await Drink.collection.drop();
+    await Drink.collection.drop().catch(console.error);
     console.log("- Drinks collection");
-    await User.collection.drop();
+    await User.collection.drop().catch(console.error);
     console.log("- Users collection\n");
     console.log("✅  Data removed !\n");
     if (!process.argv.includes("--replace")) {
@@ -43,6 +49,8 @@ async function deleteData() {
 
 async function loadData() {
   try {
+    await Family.insertMany(families);
+    console.log("- Family collection");
     await Beer.insertMany(beers);
     console.log("- Beers collection");
     await Drink.insertMany(drinks);

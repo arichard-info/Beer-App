@@ -15,9 +15,10 @@ const Search = ({ className, setStep, setForm }) => {
 
   const handleChoose = (beer) => {
     if (beer) {
-      setForm((form) => ({ ...form, beer, customBeer: false }));
+      setForm((form) => ({ ...form, beer }));
       setStep((step) => ({ ...step, index: 3 }));
     } else {
+      setForm((form) => ({ ...form, beer: {} }));
       setStep((step) => ({ ...step, index: 1 }));
     }
   };

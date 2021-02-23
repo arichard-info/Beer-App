@@ -1,28 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
+import { getRequest } from "@/utils/api";
 import BeerType from "./BeerType";
 import Form from "@/components/Global/Form";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import { useFields } from "@/components/Global/Form/utils";
+import { useGlobalContext } from "@/state/global";
 
 import Header from "@/components/Scopes/AddDrink/steps/Header";
 
 const CustomBeer = ({ className, setStep, setForm, form }) => {
-  const { customBeer: { type = "", name = "", abv = "" } = {} } = form;
+  const [loading, setLoading] = useState(true);
+  const [{ beerTypes }, dispatch] = useGlobalContext();
+
+  const { beer: { family = {}, name = "", abv = "" } = {} } = form;
   const { fields, handleEventChange, handleChange } = useFields({
-    type,
+    family,
     name,
     abv,
   });
 
   const handleSubmit = (e, { valid }) => {
     e.preventDefault();
-    if (!valid) return;
+    if (!valid || loading) return;
     setForm((form) => ({ ...form, beer: { ...fields, provider: "user" } }));
     setStep((step) => ({ ...step, index: 3 }));
   };
+
+  useEffect(() => {
+    setLoading(true);
+    if (beerTypes) return;
+    const getBeerTypes = async () => {
+      const res = await getRequest(`/api/families`);
+      dispatch({ type: "ADD_BEER_TYPES", value: res.data });
+      setLoading(false);
+    };
+    getBeerTypes();
+  }, []);
 
   return (
     <div className={className}>
@@ -33,10 +49,12 @@ const CustomBeer = ({ className, setStep, setForm, form }) => {
       <Form onSubmit={handleSubmit}>
         <FieldWrapper label="Type de bière" fieldName="type">
           <BeerType
-            name="type"
-            onChange={(v) => handleChange("type", v)}
+            name="family"
+            onChange={(v) => handleChange("family", v)}
             rules={{ required: true }}
-            value={fields.type}
+            value={(fields.family && fields.family.slug) || undefined}
+            types={beerTypes}
+            loading={loading}
           />
         </FieldWrapper>
 

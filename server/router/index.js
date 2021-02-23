@@ -5,6 +5,7 @@ const router = express.Router();
 router.use("/api/auth", require("./api/auth"));
 router.use("/api/user", require("./api/user"));
 router.use("/api/beers", require("./api/beer"));
+router.use("/api/families", require("./api/family"));
 
 if (process.env.NODE_ENV === "production") {
   router.use(require("./assets"));

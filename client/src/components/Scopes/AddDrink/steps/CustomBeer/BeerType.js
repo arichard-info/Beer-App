@@ -7,35 +7,7 @@ import { useForm } from "@/components/Global/Form/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-const types = [
-  {
-    label: "Blanche",
-    value: "blanche",
-    color: "#FFEBBC",
-  },
-  {
-    label: "Lager",
-    value: "lager",
-    color: "#FFCF40",
-  },
-  {
-    label: "IPA",
-    value: "ipa",
-    color: "#F2A954",
-  },
-  {
-    label: "Stout",
-    value: "stout",
-    color: "#392813",
-  },
-  {
-    label: "Aromatisée",
-    value: "atomate",
-    color: "#FFEBBC",
-  },
-];
-
-const Type = ({ className, value, onChange, rules, name }) => {
+const Type = ({ className, value, onChange, rules, name, types, loading }) => {
   const { validateField, removeField, showErrors, fields } = useForm();
 
   useEffect(() => {
@@ -46,30 +18,35 @@ const Type = ({ className, value, onChange, rules, name }) => {
   }, []);
 
   const handleChange = (e) => {
+    const type = types.find((el) => el.slug === e.target.value);
     if (name && rules) {
-      validateField(name, e.target.value, rules);
+      validateField(name, type.slug, rules);
     }
-    onChange(e.target.value);
+    onChange(type);
   };
+
+  if (loading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <div className={className}>
       <div className="slider">
         <div className="slides">
           {types.map((type) => {
-            const id = `beer-type-${type.value}`;
-            const isActive = value === type.value;
+            const id = `beer-type-${type.slug}`;
+            const isActive = value === type.slug;
             return (
               <div
                 className={`slide ${isActive ? "active" : ""}`}
-                key={type.value}
+                key={type.slug}
               >
                 <input
                   type="radio"
                   name="beer-type"
                   required
                   id={id}
-                  value={type.value}
+                  value={type.slug}
                   checked={isActive}
                   onChange={handleChange}
                 />
@@ -83,7 +60,7 @@ const Type = ({ className, value, onChange, rules, name }) => {
                 >
                   <FontAwesomeIcon className="check" icon={faCheckCircle} />
                   <BeerIcon color={type.color} />
-                  <span>{type.label}</span>
+                  <span>{type.name}</span>
                 </label>
               </div>
             );

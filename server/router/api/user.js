@@ -2,32 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 const { catchErrors } = require("./../../utils/errorHandlers");
-const authController = require("./../../controllers/authController");
-const drinkController = require("./../../controllers/drinkController");
-const userController = require("./../../controllers/userController");
+const authController = require("./../../controllers/auth");
+const drinkController = require("../../controllers/drink");
+const userController = require("../../controllers/user");
 
-router.post(
-  "/",
-  authController.authCookie,
-  catchErrors(userController.updateAccount)
-);
+router.post("/", authController.authCookie, catchErrors(userController.update));
 
 router.get(
   "/drinks",
   authController.authCookie,
-  catchErrors(drinkController.all)
-);
-
-router.get(
-  "/drinks/day",
-  authController.authCookie,
-  catchErrors(drinkController.day)
+  catchErrors(drinkController.find)
 );
 
 router.get(
   "/drinks/fav",
   authController.authCookie,
-  catchErrors(drinkController.fav)
+  catchErrors(drinkController.findFav)
 );
 
 router.get(

@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
 import { UserProvider, useUser } from "@/state/authentication";
+import { ContextProvider } from "@/state/global";
 import GlobalStyle from "@/components/Layout/Style/GlobalStyle";
 import ThemeProvider from "@/components/Layout/Style/ThemeProvider";
 
@@ -59,7 +60,9 @@ const App = () => {
 export default () => (
   <UserProvider>
     <ThemeProvider>
-      <App />
+      <ContextProvider>
+        <App />
+      </ContextProvider>
     </ThemeProvider>
   </UserProvider>
 );
