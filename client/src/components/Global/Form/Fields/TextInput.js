@@ -1,41 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
-import { useForm } from "../utils";
 
-const TextInput = ({
-  className,
-  onChange = () => {},
-  rules,
-  name,
-  suffix,
-  error,
-  ...rest
-}) => {
-  const { validateField, removeField, showErrors, fields } = useForm();
-
-  useEffect(() => {
-    if (rules && name) {
-      validateField(name, rest.value || "", rules);
-      return () => removeField(name);
-    }
-  }, []);
-
-  const handleChange = (e) => {
-    if (name && rules) {
-      validateField(name, e.target.value, rules);
-    }
-    onChange(e);
-  };
-
+const TextInput = ({ className, name, suffix, error, ...rest }) => {
   return (
     <div className={className}>
-      <Input
-        error={error || (fields[name] && fields[name].error && showErrors)}
-        name={name}
-        rules={rules}
-        onChange={handleChange}
-        {...rest}
-      />
+      <Input error={error} name={name} {...rest} />
       {suffix && <span className="suffix">{suffix}</span>}
     </div>
   );
