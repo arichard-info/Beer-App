@@ -17,7 +17,7 @@ context("Search", () => {
     }).as("pagination");
     cy.visit("/add-drink");
     cy.getNrt("beers-list").should("be.visible");
-    cy.getNrt("beers-count").contains("17");
+    cy.getNrt("beers-count").contains("14");
     cy.getNrt("beer-item").its("length").should("eql", 10);
     cy.getNrt("beers-more").click();
     cy.wait("@pagination");
@@ -31,7 +31,7 @@ context("Search", () => {
       query: { page: "0", search },
     }).as("search");
     cy.visit("/add-drink");
-    cy.getNrt("beers-count").contains("17");
+    cy.getNrt("beers-count").contains("14");
     cy.getNrt("beer-item").its("length").should("eql", 10);
     cy.getNrt("input-search").type(search);
     cy.wait("@search");
@@ -46,7 +46,7 @@ context("Search", () => {
       query: { page: "0", search },
     }).as("search");
     cy.visit("/add-drink");
-    cy.getNrt("beers-count").contains("17");
+    cy.getNrt("beers-count").contains("14");
     cy.getNrt("beer-item").its("length").should("eql", 10);
     cy.getNrt("input-search").type(search);
     cy.wait("@search");
