@@ -8,7 +8,7 @@ const NoResult = ({ className, onClick }) => {
       <div className="content">
         <h3>Bière inconnue ?</h3>
         <p>Appuie là dessus pour saisir ses caractéristiques</p>
-        <button onClick={onClick}>
+        <button onClick={onClick} data-nrt="button-custombeer">
           <BeerIcon />
         </button>
       </div>

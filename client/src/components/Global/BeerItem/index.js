@@ -8,12 +8,14 @@ const BeerItem = ({
   beer = {},
   quantity = false,
   onClick = null,
+  dataNrt = null,
 }) => {
   const clickable = typeof onClick === "function";
   return (
     <div
       className={classNames(className, customClass, { clickable })}
       onClick={onClick}
+      data-nrt={dataNrt || "beer-item"}
     >
       <div
         className="photo"
