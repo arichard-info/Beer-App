@@ -35,12 +35,17 @@ const Signup = ({ className }) => {
       <Link to="/">Retour</Link>
       <h1>Créer un compte</h1>
 
-      <form onSubmit={handleSubmit(submitForm)} noValidate>
+      <form
+        onSubmit={handleSubmit(submitForm)}
+        noValidate
+        data-nrt="signup-form"
+      >
         <FieldWrapper label="Nom / Prénom" error={errors.name}>
           <TextInput
             name="name"
             ref={register({ required: "Tu dois remplir ce champs" })}
             error={!!errors.name}
+            data-nrt="input-name"
           />
         </FieldWrapper>
         <FieldWrapper label="Adresse email" error={errors.email}>
@@ -55,6 +60,7 @@ const Signup = ({ className }) => {
               },
             })}
             error={!!errors.email}
+            data-nrt="input-email"
           />
         </FieldWrapper>
         <FieldWrapper label="Mot de passe" error={errors.password}>
@@ -65,6 +71,7 @@ const Signup = ({ className }) => {
               validate: (value) => !validatePassword(value).length,
             })}
             error={!!errors.password}
+            data-nrt="input-password"
           />
         </FieldWrapper>
         <FieldWrapper label="Confirmation" error={errors.passwordConfirm}>
@@ -75,6 +82,7 @@ const Signup = ({ className }) => {
               validate: (value) => value && value === passwordRef.current,
             })}
             error={!!errors.passwordConfirm}
+            data-nrt="input-passwordconfirm"
           />
         </FieldWrapper>
 

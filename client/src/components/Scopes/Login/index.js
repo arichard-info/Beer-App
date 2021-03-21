@@ -48,6 +48,7 @@ const LoginPage = ({ className }) => {
               },
             })}
             error={!!errors.email}
+            data-nrt="input-email"
           />
         </FieldWrapper>
         <FieldWrapper label="Mot de passe" error={errors.password}>
@@ -59,6 +60,7 @@ const LoginPage = ({ className }) => {
               required: "Ce champs est obligatoire",
             })}
             error={!!errors.password}
+            data-nrt="input-password"
           />
         </FieldWrapper>
 
