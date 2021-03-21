@@ -1,22 +1,22 @@
 import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useForm } from "react-hook-form";
 
-import Form from "@/components/Global/Form";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
-import { useFields } from "@/components/Global/Form/utils";
+import { pattern as emailPattern } from "@/config/email";
 
 import { forgot } from "@/utils/api/authentication";
 
 const Forgot = ({ className }) => {
   let history = useHistory();
-  const { fields, handleEventChange } = useFields({ email: "" });
 
-  const submitForm = async (e, { valid }) => {
+  const { register, handleSubmit, errors } = useForm();
+
+  const submitForm = async (data, e) => {
     e.preventDefault();
-    if (!valid) return;
-    const response = await forgot(fields.email);
+    const response = await forgot(data.email);
     if (response) {
       history.push("/");
       window.flash({
@@ -39,22 +39,26 @@ const Forgot = ({ className }) => {
         réinitialiser ton mot de passe à partir du liens qui se trouve dans le
         mail.
       </p>
-      <Form onSubmit={submitForm}>
-        <FieldWrapper fieldName="email" label="Adresse email">
+      <form onSubmit={handleSubmit(submitForm)} noValidate>
+        <FieldWrapper label="Email" error={errors.email}>
           <TextInput
             name="email"
-            type="email"
-            rules={{ required: true, pattern: "email" }}
-            placeholder="Adresse email"
-            value={fields.email}
-            onChange={handleEventChange("email")}
+            placeholder="Email"
+            ref={register({
+              required: "Ce champs est obligatoire",
+              pattern: {
+                value: emailPattern,
+                message: "Tu dois renseigner une adresse email valide",
+              },
+            })}
+            error={!!errors.email}
           />
         </FieldWrapper>
 
         <button type="submit" className="cta">
           Envoyer
         </button>
-      </Form>
+      </form>
     </div>
   );
 };

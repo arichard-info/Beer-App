@@ -1,13 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
 import { useUser } from "@/state/authentication";
 import { completeProfile } from "@/utils/api/authentication";
+import { pattern as emailPattern } from "@/config/email";
 
-import Form from "@/components/Global/Form";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
-import { useFields } from "@/components/Global/Form/utils";
 
 const CompleteProfile = ({ className }) => {
   const [, authDispatch] = useUser();
@@ -17,18 +18,12 @@ const CompleteProfile = ({ className }) => {
   const name = params.get("name") || "";
   const email = params.get("email") || "";
 
-  const { fields, handleEventChange } = useFields({
-    name,
-    email,
-  });
+  const { register, handleSubmit, errors } = useForm();
 
-  const submitForm = async (e, { valid }) => {
+  const submitForm = async (data, e) => {
     e.preventDefault();
     if (valid) {
-      const finalUser = await completeProfile({
-        email: fields.email,
-        name: fields.name,
-      });
+      const finalUser = await completeProfile(data);
 
       if (finalUser && !finalUser.error) {
         authDispatch({ type: "LOG_IN", value: finalUser });
@@ -43,31 +38,35 @@ const CompleteProfile = ({ className }) => {
   return (
     <div className={className}>
       <h1>Compléter le profil</h1>
-      <Form onSubmit={submitForm}>
-        <FieldWrapper fieldName="name" label="Nom / Prénom">
+      <form onSubmit={handleSubmit(submitForm)} noValidate>
+        <FieldWrapper label="Nom / Prénom" error={errors.name}>
           <TextInput
             name="name"
-            type="text"
-            rules={{ required: true }}
             placeholder="Nom / Prénom"
-            value={fields.name}
-            onChange={handleEventChange("name")}
+            defaultValue={name}
+            ref={register({ required: "Tu dois remplir ce champs" })}
+            error={!!errors.name}
           />
         </FieldWrapper>
-        <FieldWrapper fieldName="email" label="Adresse email">
+        <FieldWrapper label="Email" error={errors.email}>
           <TextInput
             name="email"
-            type="text"
-            rules={{ required: true, pattern: "email" }}
-            placeholder="Adresse email"
-            value={fields.email}
-            onChange={handleEventChange("email")}
+            placeholder="Email"
+            defaultValue={email}
+            ref={register({
+              required: "Tu dois saisir une adresse email valide",
+              pattern: {
+                value: emailPattern,
+                message: "Tu dois renseigner une adresse email valide",
+              },
+            })}
+            error={!!errors.email}
           />
         </FieldWrapper>
         <button type="submit" className="cta">
           Confirmer
         </button>
-      </Form>
+      </form>
     </div>
   );
 };

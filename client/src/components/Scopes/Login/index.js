@@ -2,25 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { useForm } from "react-hook-form";
 
+import OAuth from "./OAuth";
 import { useUser } from "@/state/authentication";
 import { login } from "@/utils/api/authentication";
-import OAuth from "./OAuth";
+import { pattern as emailPattern } from "@/config/email";
 
-import Form from "@/components/Global/Form";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
-import { useFields } from "@/components/Global/Form/utils";
 
 const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];
-  const { fields, handleEventChange } = useFields({ email: "", password: "" });
   const [, dispatch] = useUser();
 
-  const handleSubmit = async (e, { valid }) => {
+  const { register, handleSubmit, errors } = useForm();
+
+  const submitForm = async (data, e) => {
     e.preventDefault();
-    if (!valid) return;
-    const user = await login(fields.email, fields.password);
+    const user = await login(data.email, data.password);
     if (user && !user.error) {
       dispatch({ type: "LOG_IN", value: user });
       window.flash({ message: "Tu es maintenant connecté !", timeout: 3000 });
@@ -35,25 +35,32 @@ const LoginPage = ({ className }) => {
   return (
     <div className={className}>
       <h1>Connexion</h1>
-      <Form dataNrt="login-form" onSubmit={handleSubmit}>
-        <FieldWrapper fieldName="email" label="Adresse email">
+      <form data-nrt="login-form" onSubmit={handleSubmit(submitForm)}>
+        <FieldWrapper label="Email" error={errors.email}>
           <TextInput
             name="email"
-            type="email"
-            rules={{ required: true, pattern: "email" }}
-            placeholder="Adresse email"
-            value={fields.email}
-            onChange={handleEventChange("email")}
+            placeholder="Email"
+            ref={register({
+              required: "Ce champs est obligatoire",
+              pattern: {
+                value: emailPattern,
+                message: "Tu dois renseigner une adresse email valide",
+              },
+            })}
+            error={!!errors.email}
+            data-nrt="input-email"
           />
         </FieldWrapper>
-        <FieldWrapper fieldName="password" label="Mot de passe">
+        <FieldWrapper label="Mot de passe" error={errors.password}>
           <TextInput
-            name="password"
-            type="password"
-            rules={{ required: true }}
             placeholder="Mot de passe"
-            value={fields.password}
-            onChange={handleEventChange("password")}
+            type="password"
+            name="password"
+            ref={register({
+              required: "Ce champs est obligatoire",
+            })}
+            error={!!errors.password}
+            data-nrt="input-password"
           />
         </FieldWrapper>
 
@@ -64,7 +71,7 @@ const LoginPage = ({ className }) => {
         <button type="submit" className="cta">
           Connexion
         </button>
-      </Form>
+      </form>
 
       <div className="sep">
         <span>ou</span>

@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { useForm } from "./utils";
 
 export const Label = styled.label`
   color: ${(props) => props.theme.colors.formLabel};
@@ -64,14 +63,14 @@ const FieldWrapper = ({
   label = "",
   htmlFor = "",
   children,
+  error,
 }) => {
-  const { fields, showErrors } = useForm();
   return (
     <FormRow data-nrt={`field-${fieldName || htmlFor}`} inline={inline}>
       <Label htmlFor={htmlFor || fieldName}>{label}</Label>
       <div>{children}</div>
-      {showErrors && !!fields[fieldName] && fields[fieldName].error && (
-        <ValidationMessage error>{fields[fieldName].error}</ValidationMessage>
+      {error && error.message && (
+        <ValidationMessage error>{error.message}</ValidationMessage>
       )}
     </FormRow>
   );
