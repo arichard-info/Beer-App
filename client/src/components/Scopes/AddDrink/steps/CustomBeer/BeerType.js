@@ -8,7 +8,19 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Type = forwardRef(({ className, types, loading, error = false }, ref) => {
   if (loading) {
-    return <div>Loading</div>;
+    return (
+      <div className={className}>
+        <div className="slider">
+          <div className="slides">
+            {new Array(4).fill("").map((_, key) => (
+              <div key={key} className="slide">
+                <label />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
