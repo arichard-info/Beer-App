@@ -21,7 +21,7 @@ context("Search", () => {
     cy.getNrt("beer-item").its("length").should("eql", 10);
     cy.getNrt("beers-more").click();
     cy.wait("@pagination");
-    cy.getNrt("beer-item").its("length").should("eql", 17);
+    cy.getNrt("beer-item").its("length").should("eql", 14);
     cy.getNrt("beers-more").should("not.exist");
   });
   it("No result", () => {
