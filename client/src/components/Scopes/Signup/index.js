@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
+import PasswordMatch from "@/components/Global/Form/PasswordMatch";
+import { validate as validatePassword } from "@/config/password";
 
 import { useUser } from "@/state/authentication";
 import { signup } from "@/utils/api/authentication";
@@ -11,7 +13,12 @@ import { signup } from "@/utils/api/authentication";
 const Signup = ({ className }) => {
   const [, authDispatch] = useUser();
 
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, watch } = useForm();
+
+  const passwordRef = useRef({});
+  const passwordConfirmRef = useRef({});
+  passwordRef.current = watch("password", "");
+  passwordConfirmRef.current = watch("passwordConfirm", "");
 
   const submitForm = async (data) => {
     e.preventDefault();
@@ -45,27 +52,35 @@ const Signup = ({ className }) => {
         <FieldWrapper label="Adresse email" error={errors.email}>
           <TextInput
             name="email"
-            ref={register({ required: "Tu dois renseigner ton adresse email" })}
+            ref={register({
+              required: "Tu dois renseigner ton adresse email",
+            })}
             error={!!errors.email}
           />
         </FieldWrapper>
-        <Controller
-          as={PasswordConfirm}
-          name="password"
-          control={control}
-          rules={{
-            validate: ({ password, confirm }) => {
-              let errors = [];
-              if (password.length < 6) errors.push("too_short");
-              if (!password || !password.match(/[A-Z]/))
-                errors.push("not_uppercase");
-              if (!password || !password.match(/[a-z]/))
-                errors.push("not_lowercase");
-              if (confirm !== password || confirm === "")
-                errors.push("not_confirmed");
-              return errors.length ? errors : true;
-            },
-          }}
+        <FieldWrapper label="Mot de passe" error={errors.password}>
+          <TextInput
+            type="password"
+            name="password"
+            ref={register({
+              validate: (value) => !validatePassword(value).length,
+            })}
+            error={!!errors.password}
+          />
+        </FieldWrapper>
+        <FieldWrapper label="Confirmation" error={errors.passwordConfirm}>
+          <TextInput
+            type="password"
+            name="passwordConfirm"
+            ref={register({
+              validate: (value) => value && value === passwordRef.current,
+            })}
+            error={!!errors.passwordConfirm}
+          />
+        </FieldWrapper>
+        <PasswordMatch
+          password={passwordRef.current}
+          confirm={passwordConfirmRef.current}
         />
 
         <button type="submit" className="cta">

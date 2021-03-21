@@ -19,13 +19,6 @@ const Tag = styled.span`
   }
 
   ${(props) =>
-    props.error &&
-    css`
-      background-color: #f2dce0;
-      color: ${props.theme.colors.formError};
-    `}
-
-  ${(props) =>
     props.valid &&
     css`
       background-color: #cff7ec;
@@ -33,9 +26,9 @@ const Tag = styled.span`
     `}
 `;
 
-const CheckTag = ({ error = true, showError = false, label = "" }) => (
-  <Tag valid={!error} error={error && showError}>
-    {!error && <FontAwesomeIcon icon={faCheck} />}
+const CheckTag = ({ valid, label = "" }) => (
+  <Tag valid={valid}>
+    {valid && <FontAwesomeIcon icon={faCheck} />}
     {label}
   </Tag>
 );

@@ -1,14 +1,16 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled, { css } from "styled-components";
 
-const TextInput = ({ className, name, suffix, error, ...rest }) => {
-  return (
-    <div className={className}>
-      <Input error={error} name={name} {...rest} />
-      {suffix && <span className="suffix">{suffix}</span>}
-    </div>
-  );
-};
+const TextInput = forwardRef(
+  ({ className, name, suffix, error, ...rest }, ref) => {
+    return (
+      <div className={className}>
+        <Input error={error} name={name} ref={ref} {...rest} />
+        {suffix && <span className="suffix">{suffix}</span>}
+      </div>
+    );
+  }
+);
 
 const Input = styled.input`
   width: 100%;
