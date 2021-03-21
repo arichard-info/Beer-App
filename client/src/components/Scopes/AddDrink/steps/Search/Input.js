@@ -7,7 +7,7 @@ import { faSlidersH, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { debounce } from "@/utils";
 
 const Input = ({ className, onSearch }) => {
-  const handleType = debounce(value => onSearch(value), 750);
+  const handleType = debounce((value) => onSearch(value), 750);
   return (
     <div className={className}>
       <span className="search">
@@ -16,7 +16,8 @@ const Input = ({ className, onSearch }) => {
       <input
         type="text"
         placeholder="Brasserie, couleur ou type..."
-        onChange={e => handleType(e.target.value)}
+        onChange={(e) => handleType(e.target.value)}
+        data-nrt="input-search"
       />
 
       <button className="filters">

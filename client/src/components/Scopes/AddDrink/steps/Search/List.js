@@ -20,7 +20,7 @@ const List = ({
   if (!beers.length && !loading)
     return (
       <div className={className}>
-        <h2>Aucune bière trouvée</h2>
+        <h2 data-nrt="beers-count">Aucune bière trouvée</h2>
         <NoResult onClick={handleNoResultClick} />
       </div>
     );
@@ -39,8 +39,8 @@ const List = ({
   const showMoreCta = !loading && totalCount > beers.length;
   return (
     <>
-      <div className={className}>
-        <h2>{totalCount} bière(s) trouvée(s)</h2>
+      <div className={className} data-nrt="beers-list">
+        <h2 data-nrt="beers-count">{totalCount} bière(s) trouvée(s)</h2>
         {beers.map((beer, key) => (
           <BeerItem
             customClass="beer-item"
@@ -50,7 +50,7 @@ const List = ({
           />
         ))}
         {showMoreCta && (
-          <button className="cta" onClick={onViewMore}>
+          <button className="cta" onClick={onViewMore} data-nrt="beers-more">
             Plus de bières
           </button>
         )}
