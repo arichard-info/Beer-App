@@ -1,44 +1,48 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import { useForm } from "react-hook-form";
 
 import { getRequest } from "@/utils/api";
 import BeerType from "./BeerType";
-import Form from "@/components/Global/Form";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
-import { useFields } from "@/components/Global/Form/utils";
 import { useGlobalContext } from "@/state/global";
 
 import Header from "@/components/Scopes/AddDrink/steps/Header";
 
-const CustomBeer = ({ className, setStep, setForm, form }) => {
+const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
   const [loading, setLoading] = useState(true);
   const [{ beerTypes }, dispatch] = useGlobalContext();
 
-  const { beer: { family = {}, name = "", abv = "" } = {} } = form;
-  const { fields, handleEventChange, handleChange } = useFields({
-    family,
-    name,
-    abv,
-  });
+  const { register, handleSubmit, errors } = useForm();
 
-  const handleSubmit = (e, { valid }) => {
+  const submitForm = (data, e) => {
     e.preventDefault();
-    if (!valid || loading) return;
-    setForm((form) => ({ ...form, beer: { ...fields, provider: "user" } }));
+    if (loading) return;
+    setForm((form) => ({
+      ...form,
+      beer: {
+        ...data,
+        family: beerTypes.find((t) => t.slug === data.family),
+        provider: "user",
+      },
+    }));
     setStep((step) => ({ ...step, index: 3 }));
   };
 
   useEffect(() => {
-    setLoading(true);
-    if (beerTypes) return;
+    if (beerTypes) {
+      setLoading(false);
+      return;
+    }
     const getBeerTypes = async () => {
+      setLoading(true);
       const res = await getRequest(`/api/families`);
       dispatch({ type: "ADD_BEER_TYPES", value: res.data });
       setLoading(false);
     };
     getBeerTypes();
-  }, []);
+  }, [beerTypes]);
 
   return (
     <div className={className}>
@@ -46,45 +50,44 @@ const CustomBeer = ({ className, setStep, setForm, form }) => {
         title="Bière inconnue"
         onBack={() => setStep((step) => ({ ...step, index: 0 }))}
       />
-      <Form onSubmit={handleSubmit}>
-        <FieldWrapper label="Type de bière" fieldName="type">
+      <form onSubmit={handleSubmit(submitForm)} noValidate>
+        <FieldWrapper label="Type de bière" error={errors.family}>
           <BeerType
             name="family"
-            onChange={(v) => handleChange("family", v)}
-            rules={{ required: true }}
-            value={(fields.family && fields.family.slug) || undefined}
+            ref={register({ required: "Ce champs est obligatoire" })}
             types={beerTypes}
             loading={loading}
+            error={!!errors.family}
           />
         </FieldWrapper>
 
-        <FieldWrapper label="Nom de la bière" fieldName="name" inline>
+        <FieldWrapper label="Nom de la bière" error={errors.name} inline>
           <TextInput
             name="name"
             placeholder="Binouze"
             type="text"
-            onChange={handleEventChange("name")}
-            rules={{ required: true }}
-            value={fields.name}
+            ref={register({ required: "Ce champs est obligatoire" })}
+            defaultValue={beer.name}
+            error={!!errors.name}
           />
         </FieldWrapper>
 
-        <FieldWrapper label="Degré d'alcool" fieldName="abv" inline>
+        <FieldWrapper label="Degré d'alcool" error={errors.abv} inline>
           <TextInput
             name="abv"
             placeholder="5,0"
             suffix="% vol"
             type="number"
-            onChange={handleEventChange("abv")}
-            rules={{ required: true }}
-            value={fields.abv}
+            ref={register({ required: "Ce champs est obligatoire" })}
+            defaultValue={beer.abv}
+            error={!!errors.abv}
           />
         </FieldWrapper>
 
         <button type="submit" className="cta">
           Continuer
         </button>
-      </Form>
+      </form>
     </div>
   );
 };

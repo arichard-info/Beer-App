@@ -1,30 +1,12 @@
-import React, { useEffect } from "react";
+import React, { forwardRef } from "react";
 import styled, { css } from "styled-components";
 
 import BeerIcon from "@/components/Global/BeerIcon";
-import { useForm } from "@/components/Global/Form/utils";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-const Type = ({ className, value, onChange, rules, name, types, loading }) => {
-  const { validateField, removeField, showErrors, fields } = useForm();
-
-  useEffect(() => {
-    if (rules && name) {
-      validateField(name, value || "", rules);
-      return () => removeField(name);
-    }
-  }, []);
-
-  const handleChange = (e) => {
-    const type = types.find((el) => el.slug === e.target.value);
-    if (name && rules) {
-      validateField(name, type.slug, rules);
-    }
-    onChange(type);
-  };
-
+const Type = forwardRef(({ className, types, loading, error = false }, ref) => {
   if (loading) {
     return <div>Loading</div>;
   }
@@ -34,30 +16,18 @@ const Type = ({ className, value, onChange, rules, name, types, loading }) => {
       <div className="slider">
         <div className="slides">
           {types.map((type) => {
-            const id = `beer-type-${type.slug}`;
-            const isActive = value === type.slug;
+            const id = `family-${type.slug}`;
             return (
-              <div
-                className={`slide ${isActive ? "active" : ""}`}
-                key={type.slug}
-              >
+              <div className={`slide `} key={type.slug}>
                 <input
                   type="radio"
-                  name="beer-type"
+                  name="family"
                   required
                   id={id}
                   value={type.slug}
-                  checked={isActive}
-                  onChange={handleChange}
+                  ref={ref}
                 />
-                <label
-                  htmlFor={id}
-                  className={`${isActive ? "active" : ""} ${
-                    fields && fields[name] && fields[name].error && showErrors
-                      ? "error"
-                      : ""
-                  }`}
-                >
+                <label htmlFor={id} className={`${error ? "error" : ""}`}>
                   <FontAwesomeIcon className="check" icon={faCheckCircle} />
                   <BeerIcon color={type.color} />
                   <span>{type.name}</span>
@@ -69,7 +39,7 @@ const Type = ({ className, value, onChange, rules, name, types, loading }) => {
       </div>
     </div>
   );
-};
+});
 
 export default styled(Type)(
   ({ theme: { colors, device, fw } }) => css`
@@ -129,35 +99,12 @@ export default styled(Type)(
         font-weight: 700;
         transition: all 0.2 ease;
       }
-
-      &.active {
-        background-color: #ffcf40;
-        border-color: #ffcf40;
-        .check {
-          opacity: 1;
-        }
-        span {
-          color: white;
-        }
-      }
-
-      @media ${device.gtMobile} {
-        width: 10.5rem;
-        height: 10.5rem;
-        min-width: 10.5rem;
-        min-height: 10.5rem;
-      }
     }
 
     .beer-icon {
       margin-top: -0.5rem;
       height: 4.5rem;
       width: auto;
-      @media ${device.gtMobile} {
-        margin-top: -1rem;
-        height: 7rem;
-        width: auto;
-      }
     }
     input {
       opacity: 0;
@@ -165,6 +112,31 @@ export default styled(Type)(
       max-width: 0;
       height: 0;
       max-height: 0;
+    }
+
+    input:checked + label {
+      background-color: #ffcf40;
+      border-color: #ffcf40;
+      .check {
+        opacity: 1;
+      }
+      span {
+        color: white;
+      }
+    }
+
+    @media ${device.gtMobile} {
+      label {
+        width: 10.5rem;
+        height: 10.5rem;
+        min-width: 10.5rem;
+        min-height: 10.5rem;
+      }
+      .beer-icon {
+        margin-top: -1rem;
+        height: 7rem;
+        width: auto;
+      }
     }
   `
 );

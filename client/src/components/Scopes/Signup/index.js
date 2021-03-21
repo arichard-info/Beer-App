@@ -4,8 +4,9 @@ import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
-import PasswordMatch from "@/components/Global/Form/PasswordMatch";
+import CheckTags from "@/components/Global/Form/CheckTags";
 import { validate as validatePassword } from "@/config/password";
+import { pattern as emailPattern } from "@/config/email";
 
 import { useUser } from "@/state/authentication";
 import { signup } from "@/utils/api/authentication";
@@ -20,19 +21,12 @@ const Signup = ({ className }) => {
   passwordRef.current = watch("password", "");
   passwordConfirmRef.current = watch("passwordConfirm", "");
 
-  const submitForm = async (data) => {
+  const submitForm = async (data, e) => {
     e.preventDefault();
-    if (valid) {
-      const user = await signup({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        passwordConfirm: data.confirm,
-      });
-      if (user && !user.error) authDispatch({ type: "LOG_IN", value: user });
-      else {
-        console.error("Error when trying to signup", user.message || "");
-      }
+    const user = await signup(data);
+    if (user && !user.error) authDispatch({ type: "LOG_IN", value: user });
+    else {
+      console.error("Error when trying to signup", user.message || "");
     }
   };
 
@@ -52,8 +46,13 @@ const Signup = ({ className }) => {
         <FieldWrapper label="Adresse email" error={errors.email}>
           <TextInput
             name="email"
+            type="email"
             ref={register({
               required: "Tu dois renseigner ton adresse email",
+              pattern: {
+                value: emailPattern,
+                message: "Tu dois renseigner une adresse email valide",
+              },
             })}
             error={!!errors.email}
           />
@@ -78,7 +77,8 @@ const Signup = ({ className }) => {
             error={!!errors.passwordConfirm}
           />
         </FieldWrapper>
-        <PasswordMatch
+
+        <CheckTags
           password={passwordRef.current}
           confirm={passwordConfirmRef.current}
         />
