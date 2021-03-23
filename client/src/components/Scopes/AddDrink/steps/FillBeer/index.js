@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 import BeerIcon from "@/components/Global/BeerIcon";
-import Header from "@/components/Scopes/AddDrink/steps/Header";
+import Header from "@/components/Global/PageHeader";
 import Recap from "@/components/Scopes/AddDrink/steps/FillBeer/Recap";
 import RangeSlider from "@/components/Global/RangeSlider";
 
@@ -59,11 +59,6 @@ const FillBeer = ({ className, form, setForm, setStep, registerDrink }) => {
 export default styled(FillBeer)(
   ({ theme: { colors, device } }) => css`
     .wrapper {
-      max-width: 50rem;
-      margin: auto;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      background-color: ${colors.white};
       margin-top: 2rem;
     }
 
@@ -129,12 +124,6 @@ export default styled(FillBeer)(
 
     @media ${device.gtMobile} {
       .wrapper {
-        max-width: none;
-        margin: 0;
-        padding-left: 4rem;
-        padding-right: 0;
-        padding-right: 1rem;
-        margin-right: -1rem;
         margin-top: 3rem;
       }
       .glass {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { getRequest } from "@/utils/api";
-import Header from "@/components/Scopes/AddDrink/steps/Header";
+import Header from "@/components/Global/PageHeader";
 
 import Input from "./Input";
 import List from "./List";
