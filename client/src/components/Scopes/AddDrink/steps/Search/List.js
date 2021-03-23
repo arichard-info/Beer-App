@@ -62,13 +62,7 @@ const List = ({
 export default styled(List)(
   ({ theme: { device } }) =>
     css`
-      max-width: 50rem;
-      margin: auto;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
       margin-top: 2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
 
       h2 {
         font-size: 1.1rem;
@@ -85,10 +79,7 @@ export default styled(List)(
       }
 
       @media ${device.gtMobile} {
-        max-width: none;
         margin: 0;
-        padding-left: 4rem;
-        padding-right: 0;
         h2 {
           font-size: 1.4rem;
         }

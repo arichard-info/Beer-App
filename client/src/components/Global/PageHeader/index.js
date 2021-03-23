@@ -1,24 +1,31 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import BackButton from "@/components/Global/BackButton";
+import { classNames } from "@/utils";
 
-const Header = ({ className, title, children, onBack = undefined }) => {
+const Header = ({
+  className,
+  customClass,
+  title,
+  children,
+  onBack = undefined,
+  back = true,
+}) => {
   return (
-    <div className={className}>
-      <BackButton onClick={onBack} />
+    <header className={classNames(className, customClass)}>
+      {back && <BackButton onClick={onBack} />}
       <h1>{title}</h1>
       {children}
-    </div>
+    </header>
   );
 };
 
 export default styled(Header)(
   ({ theme: { colors, device } }) => css`
     max-width: 50rem;
+    width: 100%;
     margin: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 4rem;
+    padding-top: 2rem;
     padding-bottom: 2rem;
     background-color: ${colors.white};
     position: sticky;
@@ -26,15 +33,13 @@ export default styled(Header)(
     z-index: 1;
 
     @media ${device.gtMobile} {
+      width: auto;
       max-width: none;
-      margin: 0;
+      padding-top: 4rem;
       padding-left: 4rem;
-      padding-right: 0;
-      padding-right: 1rem;
-      margin-right: -1rem;
-      h2 {
-        font-size: 1.4rem;
-      }
+      margin-left: -4rem;
+      padding-right: 4rem;
+      margin-right: -4rem;
     }
   `
 );

@@ -37,6 +37,13 @@ export default styled(Layout)(
         z-index: 1;
         padding: 2rem 0;
       }
+      & > main {
+        max-width: 50rem;
+        margin: auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        background-color: ${colors.white};
+      }
       @media ${device.gtMobile} {
         max-width: 90rem;
         margin-left: auto;
@@ -50,7 +57,11 @@ export default styled(Layout)(
         }
         & > main {
           width: 66.66%;
+          margin: 0;
           margin-left: 33.33%;
+          padding-left: 4rem;
+          padding-right: 0;
+          padding-right: 1rem;
         }
       }
     `}

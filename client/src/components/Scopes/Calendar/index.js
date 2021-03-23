@@ -76,13 +76,10 @@ const StyledCalendar = styled(Calendar)(
 
     .scroll-wrapper {
       position: relative;
-      @media ${device.gtMobile} {
-        padding: 0 0 0 4rem;
-      }
     }
     .indicator {
       position: absolute;
-      left: 0.5rem;
+      left: -3.5rem;
       top: 0;
       width: 0.5rem;
       border-radius: 10px;

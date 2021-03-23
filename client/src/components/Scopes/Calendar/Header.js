@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import PageHeader from "@/components/Global/PageHeader";
 
 import { useCalendar } from "@/state/calendar";
 import { getMonthName } from "@/utils/date";
@@ -14,8 +15,7 @@ const Header = ({ className }) => {
     : { month: "", year: "" };
 
   return (
-    <header className={className}>
-      <h1>Mon calendrier</h1>
+    <PageHeader back={false} title="Mon calendrier" customClass={className}>
       <span className="month">
         {date.month} <small>{date.year}</small>
       </span>
@@ -28,21 +28,14 @@ const Header = ({ className }) => {
         <li>sam</li>
         <li>dim</li>
       </ul>
-    </header>
+    </PageHeader>
   );
 };
 
 export default styled(Header)(
   ({ theme: { fw, colors, device } }) => css`
-    position: sticky;
-    top: 0;
-    padding: 1.5rem;
-    z-index: 1;
-    background-color: ${colors.white};
-    h1 {
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-    }
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     .month {
       margin-bottom: 1.5rem;
       display: block;
@@ -67,20 +60,9 @@ export default styled(Header)(
         font-size: 1.4rem;
       }
     }
-
-    @media ${device.gtMobileSm} {
-      max-width: 50rem;
-      width: 50rem;
-      margin: auto;
-    }
-
     @media ${device.gtMobile} {
-      max-width: none;
-      width: 100%;
-      padding: 3rem 1.5rem 2rem 5.5rem;
-      h1 {
-        margin-bottom: 3rem;
-      }
+      padding-left: 5.5rem;
+      padding-right: 4rem;
     }
   `
 );

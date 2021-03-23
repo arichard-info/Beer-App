@@ -8,7 +8,7 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import { useGlobalContext } from "@/state/global";
 
-import Header from "@/components/Scopes/AddDrink/steps/Header";
+import Header from "@/components/Global/PageHeader";
 
 const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
   const [loading, setLoading] = useState(true);
@@ -92,23 +92,4 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
   );
 };
 
-export default styled(CustomBeer)(
-  ({ theme: { colors, device } }) => css`
-    form {
-      max-width: 50rem;
-      margin: auto;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      background-color: ${colors.white};
-    }
-
-    @media ${device.gtMobile} {
-      max-width: none;
-      margin: 0;
-      padding-left: 4rem;
-      padding-right: 0;
-      padding-right: 1rem;
-      margin-right: -1rem;
-    }
-  `
-);
+export default styled(CustomBeer)(({ theme: { colors, device } }) => css``);
