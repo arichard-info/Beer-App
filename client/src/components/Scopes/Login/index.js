@@ -39,6 +39,7 @@ const LoginPage = ({ className }) => {
         <FieldWrapper label="Email" error={errors.email}>
           <TextInput
             name="email"
+            type="email"
             placeholder="Email"
             ref={register({
               required: "Ce champs est obligatoire",

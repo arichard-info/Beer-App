@@ -3,6 +3,7 @@ import axios from "axios";
 import styled, { css } from "styled-components";
 import Header from "@/components/Global/PageHeader";
 import ProfileOverview from "@/components/Global/ProfileOverview";
+import UserSettings from "./UserSettings";
 
 import { useUser } from "@/state/authentication";
 
@@ -30,6 +31,10 @@ const SettingsPage = ({ className }) => {
             Inscrit le {user.creationDate || "??/??/????"}
           </span>
         </ProfileOverview>
+        <h2>Compte et connexion</h2>
+        <UserSettings user={user} />
+        <h2>Réseaux sociaux</h2>
+        <h2>Actions</h2>
         <button onClick={handleLogout}>Déconnexion</button>
       </div>
     </>
