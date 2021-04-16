@@ -12,7 +12,7 @@ context("Search", () => {
 
   it("Has default results", () => {
     cy.intercept({
-      url: "/api/beers",
+      url: "/api/beers?*",
       query: { page: "1" },
     }).as("pagination");
     cy.visit("/add-drink");
@@ -27,7 +27,7 @@ context("Search", () => {
   it("No result", () => {
     const search = "zzzzzzzzzzzzzzzzzzz";
     cy.intercept({
-      url: "/api/beers",
+      url: "/api/beers?*",
       query: { page: "0", search },
     }).as("search");
     cy.visit("/add-drink");
@@ -42,7 +42,7 @@ context("Search", () => {
   it("One result", () => {
     const search = "Bourbon Baby";
     cy.intercept({
-      url: "/api/beers",
+      url: "/api/beers?*",
       query: { page: "0", search },
     }).as("search");
     cy.visit("/add-drink");
