@@ -5,7 +5,7 @@ const TextInput = forwardRef(
   ({ className, name, suffix, error, ...rest }, ref) => {
     return (
       <div className={className}>
-        <Input error={error} name={name} ref={ref} {...rest} />
+        <Input error={error} name={name} {...rest} ref={ref} />
         {suffix && <span className="suffix">{suffix}</span>}
       </div>
     );
