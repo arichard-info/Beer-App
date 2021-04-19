@@ -16,7 +16,9 @@ const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];
   const [, dispatch] = useUser();
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
+
+  console.log(errors);
 
   const submitForm = async (data, e) => {
     e.preventDefault();
@@ -35,20 +37,25 @@ const LoginPage = ({ className }) => {
   return (
     <div className={className}>
       <h1>Connexion</h1>
-      <form data-nrt="login-form" onSubmit={handleSubmit(submitForm)}>
+      <form
+        data-nrt="login-form"
+        onSubmit={handleSubmit(submitForm)}
+        noValidate
+      >
         <FieldWrapper label="Email" error={errors.email}>
           <TextInput
             name="email"
+            type="email"
             placeholder="Email"
-            ref={register({
+            data-nrt="input-email"
+            error={!!errors.email}
+            {...register("email", {
               required: "Ce champs est obligatoire",
               pattern: {
                 value: emailPattern,
                 message: "Tu dois renseigner une adresse email valide",
               },
             })}
-            error={!!errors.email}
-            data-nrt="input-email"
           />
         </FieldWrapper>
         <FieldWrapper label="Mot de passe" error={errors.password}>
@@ -56,11 +63,11 @@ const LoginPage = ({ className }) => {
             placeholder="Mot de passe"
             type="password"
             name="password"
-            ref={register({
+            data-nrt="input-password"
+            error={!!errors.password}
+            {...register("password", {
               required: "Ce champs est obligatoire",
             })}
-            error={!!errors.password}
-            data-nrt="input-password"
           />
         </FieldWrapper>
 

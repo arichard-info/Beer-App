@@ -15,7 +15,12 @@ const Forgot = ({ className }) => {
   const [, dispatch] = useUser();
   const { token } = useParams();
 
-  const { register, handleSubmit, errors, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors = {} } = {},
+    watch,
+  } = useForm();
 
   const passwordRef = useRef({});
   const passwordConfirmRef = useRef({});
@@ -24,7 +29,6 @@ const Forgot = ({ className }) => {
 
   const submitForm = async (data, e) => {
     e.preventDefault();
-    if (!valid) return;
     const user = await resetPassword(token, {
       password: data.password,
       passwordConfirm: data.passwordConfim,
@@ -41,10 +45,10 @@ const Forgot = ({ className }) => {
             type="password"
             name="password"
             placeholder="Mot de passe"
-            ref={register({
+            error={!!errors.password}
+            {...register("password", {
               validate: (value) => !validatePassword(value).length,
             })}
-            error={!!errors.password}
           />
         </FieldWrapper>
         <FieldWrapper label="Confirmation" error={errors.passwordConfirm}>
@@ -52,10 +56,10 @@ const Forgot = ({ className }) => {
             type="password"
             name="passwordConfirm"
             placeholder="Confirmation"
-            ref={register({
+            error={!!errors.passwordConfirm}
+            {...register("passwordConfirm", {
               validate: (value) => value && value === passwordRef.current,
             })}
-            error={!!errors.passwordConfirm}
           />
         </FieldWrapper>
 

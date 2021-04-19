@@ -14,7 +14,7 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
   const [loading, setLoading] = useState(true);
   const [{ beerTypes }, dispatch] = useGlobalContext();
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
 
   const submitForm = (data, e) => {
     e.preventDefault();
@@ -51,13 +51,12 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
         onBack={() => setStep((step) => ({ ...step, index: 0 }))}
       />
       <form onSubmit={handleSubmit(submitForm)} noValidate>
-        <FieldWrapper label="Type de bière" error={errors.family}>
+        <FieldWrapper label="Type de bière" error={errors && errors.family}>
           <BeerType
-            name="family"
-            ref={register({ required: "Ce champs est obligatoire" })}
             types={beerTypes}
             loading={loading}
             error={!!errors.family}
+            {...register("family", { required: "Ce champs est obligatoire" })}
           />
         </FieldWrapper>
 
@@ -66,9 +65,9 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
             name="name"
             placeholder="Binouze"
             type="text"
-            ref={register({ required: "Ce champs est obligatoire" })}
             defaultValue={beer.name}
             error={!!errors.name}
+            {...register("name", { required: "Ce champs est obligatoire" })}
           />
         </FieldWrapper>
 
@@ -78,9 +77,9 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
             placeholder="5,0"
             suffix="% vol"
             type="number"
-            ref={register({ required: "Ce champs est obligatoire" })}
             defaultValue={beer.abv}
             error={!!errors.abv}
+            {...register("abv", { required: "Ce champs est obligatoire" })}
           />
         </FieldWrapper>
 
