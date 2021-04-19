@@ -12,7 +12,7 @@ import { forgot } from "@/utils/api/authentication";
 const Forgot = ({ className }) => {
   let history = useHistory();
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
 
   const submitForm = async (data, e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ const Forgot = ({ className }) => {
           <TextInput
             name="email"
             placeholder="Email"
-            ref={register({
+            {...register("email", {
               required: "Ce champs est obligatoire",
               pattern: {
                 value: emailPattern,
