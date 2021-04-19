@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 const searchStep = "add-drink-search";
 const popin = "add-drink-popin";
 const directCTA = "add-drink-direct";
