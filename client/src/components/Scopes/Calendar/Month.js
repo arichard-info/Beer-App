@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import classNames from "classnames";
+import { classNames } from "@/utils";
 
 import { useCalendar } from "@/state/calendar";
 import Case from "./Case";
