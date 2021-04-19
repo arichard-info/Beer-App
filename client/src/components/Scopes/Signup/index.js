@@ -14,7 +14,12 @@ import { signup } from "@/utils/api/authentication";
 const Signup = ({ className }) => {
   const [, authDispatch] = useUser();
 
-  const { register, handleSubmit, errors, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors = {} } = {},
+    watch,
+  } = useForm();
 
   const passwordRef = useRef({});
   const passwordConfirmRef = useRef({});
@@ -43,46 +48,50 @@ const Signup = ({ className }) => {
         <FieldWrapper label="Nom / Prénom" error={errors.name}>
           <TextInput
             name="name"
-            ref={register({ required: "Tu dois remplir ce champs" })}
+            placeholder="Nom / Prénom"
             error={!!errors.name}
             data-nrt="input-name"
+            {...register("name", { required: "Tu dois remplir ce champs" })}
           />
         </FieldWrapper>
         <FieldWrapper label="Adresse email" error={errors.email}>
           <TextInput
             name="email"
+            placeholder="Email"
             type="email"
-            ref={register({
+            error={!!errors.email}
+            data-nrt="input-email"
+            {...register("email", {
               required: "Tu dois renseigner ton adresse email",
               pattern: {
                 value: emailPattern,
                 message: "Tu dois renseigner une adresse email valide",
               },
             })}
-            error={!!errors.email}
-            data-nrt="input-email"
           />
         </FieldWrapper>
         <FieldWrapper label="Mot de passe" error={errors.password}>
           <TextInput
             type="password"
+            placeholder="Mot de passe"
             name="password"
-            ref={register({
-              validate: (value) => !validatePassword(value).length,
-            })}
             error={!!errors.password}
             data-nrt="input-password"
+            {...register("password", {
+              validate: (value) => !validatePassword(value).length,
+            })}
           />
         </FieldWrapper>
         <FieldWrapper label="Confirmation" error={errors.passwordConfirm}>
           <TextInput
             type="password"
+            placeholder="Confirmation"
             name="passwordConfirm"
-            ref={register({
+            data-nrt="input-passwordconfirm"
+            error={!!errors.passwordConfirm}
+            {...register("passwordConfirm", {
               validate: (value) => value && value === passwordRef.current,
             })}
-            error={!!errors.passwordConfirm}
-            data-nrt="input-passwordconfirm"
           />
         </FieldWrapper>
 
