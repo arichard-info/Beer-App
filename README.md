@@ -1,5 +1,7 @@
 # THIS IS A BEER APP 🍺
 
+[![Beer App](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/3do2g1&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/3do2g1/runs)
+
 This project is a beer consumption monitoring application. The user can enter the beers he drinks in a grid. The purpose of the application is to provide consumption statistics to the user.
 
 This project is not intended to push for alcohol consumption. The goal is simply to be able to track your consumption in a fun way, and to discover new beers.
