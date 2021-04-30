@@ -2,17 +2,18 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 import CheckTags from "@/components/Global/Form/CheckTags";
+
 import { validate as validatePassword } from "@/config/password";
 import { pattern as emailPattern } from "@/config/email";
-
-import { useUser } from "@/state/authentication";
 import { signup } from "@/utils/api/authentication";
 
 const Signup = ({ className }) => {
-  const [, authDispatch] = useUser();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -29,7 +30,7 @@ const Signup = ({ className }) => {
   const submitForm = async (data, e) => {
     e.preventDefault();
     const user = await signup(data);
-    if (user && !user.error) authDispatch({ type: "LOG_IN", value: user });
+    if (user && !user.error) dispatch({ type: " user/logIn", payload: user });
     else {
       console.error("Error when trying to signup", user.message || "");
     }

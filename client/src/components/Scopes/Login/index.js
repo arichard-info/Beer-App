@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import OAuth from "./OAuth";
-import { useUser } from "@/state/authentication";
 import { login } from "@/utils/api/authentication";
 import { pattern as emailPattern } from "@/config/email";
 
@@ -14,17 +14,15 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 
 const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];
-  const [, dispatch] = useUser();
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
-
-  console.log(errors);
 
   const submitForm = async (data, e) => {
     e.preventDefault();
     const user = await login(data.email, data.password);
     if (user && !user.error) {
-      dispatch({ type: "LOG_IN", value: user });
+      dispatch({ type: "user/logIn", payload: user });
       window.flash({ message: "Tu es maintenant connecté !", timeout: 3000 });
     } else
       window.flash({

@@ -1,10 +1,9 @@
 import React from "react";
 import { Switch, Redirect, Route } from "react-router-dom";
-
-import { useUser } from "@/state/authentication";
+import { useSelector } from "react-redux";
 
 const Router = ({ routes }) => {
-  const [user] = useUser();
+  const user = useSelector((state) => state.user);
   return (
     <Switch>
       {routes.map((route, key) => {

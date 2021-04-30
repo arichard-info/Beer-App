@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { debounce } from "@/utils";
 import { getUserDrinks } from "@/utils/api/drinks";
 import { useCalendar, CalendarProvider } from "@/state/calendar";
 
@@ -13,7 +12,7 @@ import Month from "./Month";
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
   const indicatorEl = useRef();
-  const [{ months, selected }, dispatch] = useCalendar();
+  const [{ months, selected, today }, dispatch] = useCalendar();
 
   useEffect(() => {
     const months = scrollContainer.current && scrollContainer.current.children;
@@ -45,9 +44,14 @@ const Calendar = ({ className }) => {
       const drinks = await getUserDrinks();
       dispatch({ type: "FILL_DRINKS", value: drinks });
     }
-    dispatch({ type: "INIT", value: scrollContainer.current });
+    if (months && today && scrollContainer && scrollContainer.current) {
+      const index = getMonthElIndex(months, today);
+      const currentEl = scrollContainer.current.childNodes[index];
+      const scrollPosition = currentEl.offsetTop;
+      window.scroll(0, scrollPosition);
+    }
     fillDrinks();
-  }, [dispatch]);
+  }, [dispatch, months, today, scrollContainer]);
 
   return (
     <div className={className}>
