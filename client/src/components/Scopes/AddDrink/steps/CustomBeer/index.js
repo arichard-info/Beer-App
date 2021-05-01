@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getRequest } from "@/utils/api";
 import BeerType from "./BeerType";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
-import { useGlobalContext } from "@/state/global";
 
 import Header from "@/components/Global/PageHeader";
 
 const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
+  const beerFamilies = useSelector(({ beers = {} } = {}) => beers.families);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [{ beerTypes }, dispatch] = useGlobalContext();
 
   const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
 
@@ -23,7 +24,7 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
       ...form,
       beer: {
         ...data,
-        family: beerTypes.find((t) => t.slug === data.family),
+        family: beerFamilies.find((t) => t.slug === data.family),
         provider: "user",
       },
     }));
@@ -31,18 +32,18 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
   };
 
   useEffect(() => {
-    if (beerTypes) {
+    if (beerFamilies) {
       setLoading(false);
       return;
     }
     const getBeerTypes = async () => {
       setLoading(true);
       const res = await getRequest(`/api/families`);
-      dispatch({ type: "ADD_BEER_TYPES", value: res.data });
+      dispatch({ type: "beers/setFamilies", payload: res.data });
       setLoading(false);
     };
     getBeerTypes();
-  }, [beerTypes]);
+  }, [beerFamilies]);
 
   return (
     <div className={className}>
@@ -53,7 +54,7 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
       <form onSubmit={handleSubmit(submitForm)} noValidate>
         <FieldWrapper label="Type de bière" error={errors && errors.family}>
           <BeerType
-            types={beerTypes}
+            types={beerFamilies}
             loading={loading}
             error={!!errors.family}
             {...register("family", { required: "Ce champs est obligatoire" })}

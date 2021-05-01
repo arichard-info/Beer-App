@@ -3,7 +3,6 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-import { ContextProvider } from "@/state/global";
 import GlobalStyle from "@/components/Layout/Style/GlobalStyle";
 import ThemeProvider from "@/components/Layout/Style/ThemeProvider";
 
@@ -63,9 +62,7 @@ export default () => {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <ContextProvider>
-          <App />
-        </ContextProvider>
+        <App />
       </ThemeProvider>
     </Provider>
   );
