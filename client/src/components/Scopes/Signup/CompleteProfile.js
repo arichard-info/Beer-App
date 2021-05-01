@@ -2,8 +2,8 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
-import { useUser } from "@/state/authentication";
 import { completeProfile } from "@/utils/api/authentication";
 import { pattern as emailPattern } from "@/config/email";
 
@@ -11,7 +11,7 @@ import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 
 const CompleteProfile = ({ className }) => {
-  const [, authDispatch] = useUser();
+  const dispatch = useDispatch();
   let location = useLocation();
   const history = useHistory();
   const params = new URLSearchParams(location.search);
@@ -26,9 +26,9 @@ const CompleteProfile = ({ className }) => {
       const finalUser = await completeProfile(data);
 
       if (finalUser && !finalUser.error) {
-        authDispatch({ type: "LOG_IN", value: finalUser });
+        authDispatch({ type: "user/logIn", payload: finalUser });
       } else {
-        authDispatch({ type: "REMOVE" });
+        authDispatch({ type: "user/logOut" });
         history.push("/");
         console.error("Invalid user");
       }

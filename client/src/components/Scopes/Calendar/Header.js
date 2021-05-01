@@ -1,18 +1,19 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import PageHeader from "@/components/Global/PageHeader";
+import { useSelector } from "react-redux";
 
-import { useCalendar } from "@/state/calendar";
 import { getMonthName } from "@/utils/date";
 
 const Header = ({ className }) => {
-  const [{ highlight }] = useCalendar();
-  const date = highlight
-    ? {
-        month: getMonthName(highlight.getMonth()),
-        year: highlight.getFullYear(),
-      }
-    : { month: "", year: "" };
+  const highlight = useSelector(({ calendar } = {}) => calendar.highlight);
+  const date =
+    highlight && highlight.date
+      ? {
+          month: getMonthName(highlight.date.getMonth()),
+          year: highlight.date.getFullYear(),
+        }
+      : { month: "", year: "" };
 
   return (
     <PageHeader back={false} title="Mon calendrier" customClass={className}>

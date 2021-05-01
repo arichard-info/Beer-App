@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import { resetPassword } from "@/utils/api/authentication";
-import { useUser } from "@/state/authentication";
 import { validate as validatePassword } from "@/config/password";
 
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
@@ -12,7 +12,7 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 import CheckTags from "@/components/Global/Form/CheckTags";
 
 const Forgot = ({ className }) => {
-  const [, dispatch] = useUser();
+  const dispatch = useDispatch();
   const { token } = useParams();
 
   const {
@@ -33,7 +33,7 @@ const Forgot = ({ className }) => {
       password: data.password,
       passwordConfirm: data.passwordConfim,
     });
-    if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
+    if (user && !user.error) dispatch({ type: "user/logIn", payload: user });
   };
 
   return (

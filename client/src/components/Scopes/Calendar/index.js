@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
-import { debounce } from "@/utils";
 import { getUserDrinks } from "@/utils/api/drinks";
-import { useCalendar, CalendarProvider } from "@/state/calendar";
 
 import Shortcut from "./Shortcut";
 import Header from "./Header";
@@ -13,7 +12,11 @@ import Month from "./Month";
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
   const indicatorEl = useRef();
-  const [{ months, selected }, dispatch] = useCalendar();
+
+  const dispatch = useDispatch();
+  const months = useSelector(({ calendar } = {}) => calendar.months);
+  const selected = useSelector(({ calendar } = {}) => calendar.selected);
+  const highlight = useSelector(({ calendar = {} }) => calendar.highlight);
 
   useEffect(() => {
     const months = scrollContainer.current && scrollContainer.current.children;
@@ -28,11 +31,7 @@ const Calendar = ({ className }) => {
       const entry = (entries && entries[0]) || {};
       if (entry.isIntersecting && entry.intersectionRatio === 1) {
         const index = months && [...months].indexOf(entry.target);
-        const height = entry.boundingClientRect.height;
-        const top = entry.target.offsetTop;
-        indicatorEl.current.style.top = `${top}px`;
-        indicatorEl.current.style.height = `${height}px`;
-        dispatch({ type: "UPDATE_HIGHLIGHT_MONTH", value: index });
+        dispatch({ type: "calendar/monthHighlight", payload: index });
       }
     };
 
@@ -41,11 +40,33 @@ const Calendar = ({ className }) => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (highlight && highlight.index !== undefined) {
+      const months =
+        scrollContainer.current && scrollContainer.current.children;
+      const el = months && months[highlight.index];
+      const boundings = el.getBoundingClientRect();
+      const height = boundings && boundings.height;
+      const top = el.offsetTop;
+      indicatorEl.current.style.top = `${top}px`;
+      indicatorEl.current.style.height = `${height}px`;
+    }
+  }, [highlight]);
+
+  useEffect(() => {
     async function fillDrinks() {
       const drinks = await getUserDrinks();
-      dispatch({ type: "FILL_DRINKS", value: drinks });
+      dispatch({ type: "calendar/fill", payload: drinks });
     }
-    dispatch({ type: "INIT", value: scrollContainer.current });
+    if (
+      highlight &&
+      highlight.index !== undefined &&
+      scrollContainer &&
+      scrollContainer.current
+    ) {
+      const currentEl = scrollContainer.current.childNodes[highlight.index];
+      const scrollPosition = currentEl.offsetTop;
+      window.scroll(0, scrollPosition);
+    }
     fillDrinks();
   }, [dispatch]);
 
@@ -66,7 +87,7 @@ const Calendar = ({ className }) => {
   );
 };
 
-const StyledCalendar = styled(Calendar)(
+export default styled(Calendar)(
   ({ theme: { device, colors } }) => css`
     width: 100%;
     display: flex;
@@ -92,11 +113,3 @@ const StyledCalendar = styled(Calendar)(
     }
   `
 );
-
-export default () => {
-  return (
-    <CalendarProvider>
-      <StyledCalendar />
-    </CalendarProvider>
-  );
-};
