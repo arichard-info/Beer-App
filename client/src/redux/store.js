@@ -4,14 +4,7 @@ import rootReducer from "./reducers";
 
 const initStore = () => {
   const composedEnhancer = composeWithDevTools(applyMiddleware());
-  const store = createStore(
-    rootReducer,
-    {
-      calendar: {},
-      user: null,
-    },
-    composedEnhancer
-  );
+  const store = createStore(rootReducer, {}, composedEnhancer);
   return store;
 };
 

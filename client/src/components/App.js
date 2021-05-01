@@ -22,9 +22,6 @@ const App = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const state = useSelector((state) => state);
-
-  console.log(user);
 
   useEffect(() => {
     async function checkAuth() {
