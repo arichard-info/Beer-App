@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import { getRequest } from "@/utils/api";
-import Header from "@/components/Global/PageHeader";
+import PageHeader from "@/components/Global/PageHeader";
 
 import Input from "./Input";
 import List from "./List";
@@ -45,13 +45,13 @@ const Search = ({ className, setStep, setForm }) => {
 
   return (
     <div className={className} data-nrt="add-drink-search">
-      <Header title="Ajoute ta bière">
+      <PageHeader title="Ajoute ta bière" sticky>
         <Input
           onSearch={(newSearch) => {
             setParams({ search: newSearch, page: 0 });
           }}
         />
-      </Header>
+      </PageHeader>
 
       <List
         beers={beers}

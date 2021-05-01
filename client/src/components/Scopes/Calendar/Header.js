@@ -16,7 +16,12 @@ const Header = ({ className }) => {
       : { month: "", year: "" };
 
   return (
-    <PageHeader back={false} title="Mon calendrier" customClass={className}>
+    <PageHeader
+      back={false}
+      title="Mon calendrier"
+      customClass={className}
+      sticky
+    >
       <span className="month">
         {date.month} <small>{date.year}</small>
       </span>

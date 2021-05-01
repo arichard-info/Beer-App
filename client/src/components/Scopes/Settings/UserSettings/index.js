@@ -1,22 +1,18 @@
 import React, { useState, lazy, Suspense } from "react";
 import styled, { css } from "styled-components";
 import Panel from "@/components/Global/Panel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-const EmailPanel = lazy(() =>
-  import("@/components/Scopes/Settings/UserSettings/EmailPanel")
+const EmailForm = lazy(() =>
+  import("@/components/Scopes/Settings/UserSettings/EmailForm")
 );
-const NamePanel = lazy(() =>
-  import("@/components/Scopes/Settings/UserSettings/NamePanel")
+const NameForm = lazy(() =>
+  import("@/components/Scopes/Settings/UserSettings/NameForm")
 );
-const PasswordPanel = lazy(() =>
-  import("@/components/Scopes/Settings/UserSettings/PasswordPanel")
+const PasswordForm = lazy(() =>
+  import("@/components/Scopes/Settings/UserSettings/PasswordForm")
 );
-
-const switchPanel = {
-  name: (user) => <NamePanel name={user.name} />,
-  email: (user) => <EmailPanel email={user.email} />,
-  password: (user) => <PasswordPanel password={user.password} />,
-};
 
 const UserSettings = ({ className, user }) => {
   const [selectedSetting, setSelectedSetting] = useState(null);
@@ -25,20 +21,35 @@ const UserSettings = ({ className, user }) => {
     setSelectedSetting(setting);
   };
 
+  const switchPanel = {
+    name: {
+      component: (user) => <NameForm name={user.name} />,
+    },
+    email: {
+      component: (user) => <EmailForm email={user.email} />,
+    },
+    password: {
+      component: (user) => <PasswordForm password={user.password} />,
+    },
+  };
+
   return (
     <>
       <div className={className}>
         <div className="row" role="button" onClick={handleClick("name")}>
           <span className="label">Nom</span>
-          <span>{user.name}</span>
+          <span className="value">{user.name}</span>
+          <FontAwesomeIcon icon={faChevronRight} />
         </div>
         <div className="row" role="button" onClick={handleClick("email")}>
           <span className="label">Email</span>
-          <span>{user.email}</span>
+          <span className="value">{user.email}</span>
+          <FontAwesomeIcon icon={faChevronRight} />
         </div>
         <div className="row" role="button" onClick={handleClick("password")}>
           <span className="label">Mot de passe</span>
-          <span>***</span>
+          <span className="value">***</span>
+          <FontAwesomeIcon icon={faChevronRight} />
         </div>
       </div>
       <Panel
@@ -49,7 +60,7 @@ const UserSettings = ({ className, user }) => {
         }}
       >
         {({ selectedSetting }) => (
-          <Suspense>{switchPanel[selectedSetting](user)}</Suspense>
+          <Suspense>{switchPanel[selectedSetting].component(user)}</Suspense>
         )}
       </Panel>
     </>
@@ -59,12 +70,27 @@ const UserSettings = ({ className, user }) => {
 export default styled(UserSettings)(
   () => css`
     .row {
-      padding: 1rem 0;
+      padding: 1.6rem 0;
       display: flex;
-      justify-content: space-between;
+      cursor: pointer;
+      align-items: center;
+      &:not(:last-child) {
+        border-bottom: 0.1rem solid #e6e6e6;
+      }
     }
     .label {
       font-weight: 700;
+    }
+    .value {
+      margin-left: auto;
+      margin-right: 3.2rem;
+      color: #808080;
+    }
+    svg {
+      color: #808080;
+    }
+    .panelWrapper {
+      padding: 1.6rem;
     }
   `
 );

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import styled, { css } from "styled-components";
-import { fixElement as fixBody, unfixElement as unfixBody } from "@/utils/dom";
+import BackButton from "@/components/Global/BackButton";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
-const Panel = ({ className, children, open, childProps, onClose }) => {
+const Panel = ({
+  className = "",
+  children,
+  open = false,
+  childProps = {},
+  onClose = () => {},
+}) => {
   const [shouldRender, setShouldRender] = useState(open);
   const [props, setProps] = useState(childProps);
 
@@ -38,13 +41,9 @@ const Panel = ({ className, children, open, childProps, onClose }) => {
         onAnimationEnd={onAnimationEnd}
         style={{ animation: `${open ? "slideFromRight" : "slideToRight"} .4s` }}
       >
-        <div className="overlay" />
+        <div className="overlay" onClick={handleClose} />
         <div className="panel">
-          <div className="header">
-            <button onClick={handleClose}>
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          </div>
+          <div className="header">{<BackButton onClick={handleClose} />}</div>
           <div className="body">
             {children && typeof children === "function" && children(props)}
           </div>
@@ -67,6 +66,14 @@ export default styled(Panel)(
       background-color: ${colors.white};
       height: 100%;
       width: 100%;
+      overflow: hidden;
+      padding: 1.6rem;
+    }
+
+    .body {
+      max-width: 50rem;
+      width: 100%;
+      margin: auto;
     }
 
     @keyframes slideFromRight {
@@ -100,6 +107,18 @@ export default styled(Panel)(
         height: auto;
         box-shadow: 0 0.5rem 0.4rem 0 rgba(0, 0, 0, 0.1);
         border-radius: 1.5rem;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .body {
+        max-width: none;
       }
 
       @keyframes slideFromRight {

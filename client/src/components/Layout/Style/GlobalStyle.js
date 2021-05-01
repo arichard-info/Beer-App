@@ -32,6 +32,12 @@ const GlobalStyle = createGlobalStyle`
         color: ${(props) => props.theme.colors.black};
     }
 
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: ${(props) => props.theme.colors.black};
+    }
+
     p{
         font-size: 1.4rem;
     }

@@ -8,7 +8,7 @@ import BeerType from "./BeerType";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 
-import Header from "@/components/Global/PageHeader";
+import PageHeader from "@/components/Global/PageHeader";
 
 const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
   const beerFamilies = useSelector(({ beers = {} } = {}) => beers.families);
@@ -47,9 +47,10 @@ const CustomBeer = ({ className, setStep, setForm, form: { beer = {} } }) => {
 
   return (
     <div className={className}>
-      <Header
+      <PageHeader
         title="Bière inconnue"
         onBack={() => setStep((step) => ({ ...step, index: 0 }))}
+        sticky
       />
       <form onSubmit={handleSubmit(submitForm)} noValidate>
         <FieldWrapper label="Type de bière" error={errors && errors.family}>

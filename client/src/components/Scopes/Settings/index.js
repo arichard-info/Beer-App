@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 
-import Header from "@/components/Global/PageHeader";
+import PageHeader from "@/components/Global/PageHeader";
 import ProfileOverview from "@/components/Global/ProfileOverview";
 import UserSettings from "./UserSettings";
 
@@ -20,7 +20,7 @@ const SettingsPage = ({ className }) => {
   };
   return (
     <>
-      <Header title="Paramètres" back={false} />
+      <PageHeader title="Paramètres" back={false} sticky />
       <div className={className}>
         <ProfileOverview
           name={user.name}
@@ -36,7 +36,9 @@ const SettingsPage = ({ className }) => {
         <UserSettings user={user} />
         <h2>Réseaux sociaux</h2>
         <h2>Actions</h2>
-        <button onClick={handleLogout}>Déconnexion</button>
+        <button className="cta" onClick={handleLogout}>
+          Déconnexion
+        </button>
       </div>
     </>
   );
@@ -44,6 +46,9 @@ const SettingsPage = ({ className }) => {
 
 export default styled(SettingsPage)(
   () => css`
+    h2 {
+      margin-top: 3.2rem;
+    }
     .profile {
       .date {
         color: #999999;
