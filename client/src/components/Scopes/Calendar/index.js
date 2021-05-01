@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
 import { getUserDrinks } from "@/utils/api/drinks";
@@ -8,6 +8,25 @@ import Shortcut from "./Shortcut";
 import Header from "./Header";
 import AddBeer from "./AddBeer";
 import Month from "./Month";
+
+function getMonthElIndex(months, day) {
+  let month = false;
+  let year = false;
+  if (typeof day.getMonth === "function") {
+    month = day.getMonth();
+    year = day.getFullYear();
+  } else return false;
+  const index = months.findIndex(
+    (days) =>
+      -1 !==
+      days.findIndex(
+        (day) =>
+          day.date.getMonth() === month && day.date.getFullYear() === year
+      )
+  );
+
+  return index;
+}
 
 const Calendar = ({ className }) => {
   const scrollContainer = useRef();
@@ -51,7 +70,7 @@ const Calendar = ({ className }) => {
       window.scroll(0, scrollPosition);
     }
     fillDrinks();
-  }, [dispatch, months, today, scrollContainer]);
+  }, [dispatch]);
 
   return (
     <div className={className}>

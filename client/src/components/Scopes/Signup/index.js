@@ -30,8 +30,9 @@ const Signup = ({ className }) => {
   const submitForm = async (data, e) => {
     e.preventDefault();
     const user = await signup(data);
-    if (user && !user.error) dispatch({ type: " user/logIn", payload: user });
-    else {
+    if (user && !user.error) {
+      dispatch({ type: "user/logIn", payload: user });
+    } else {
       console.error("Error when trying to signup", user.message || "");
     }
   };

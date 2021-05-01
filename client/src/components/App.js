@@ -13,7 +13,7 @@ import Emitter from "@/components/Layout/Flashes/Emitter";
 
 import SwitchRoutes from "@/components/Global/SwitchRoutes";
 import routes from "@/components/App.routes";
-import initStore from "@/redux";
+import initStore from "@/redux/store";
 
 window.flash = (flash) => Emitter.emit("flash", flash);
 
@@ -22,6 +22,9 @@ const App = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const state = useSelector((state) => state);
+
+  console.log(user);
 
   useEffect(() => {
     async function checkAuth() {
@@ -59,7 +62,7 @@ const App = () => {
 };
 
 export default () => {
-  const store = initStore(props);
+  const store = initStore();
   return (
     <Provider store={store}>
       <ThemeProvider>

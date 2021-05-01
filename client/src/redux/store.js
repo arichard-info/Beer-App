@@ -8,7 +8,7 @@ const initStore = () => {
     rootReducer,
     {
       calendar: {},
-      user: {},
+      user: null,
     },
     composedEnhancer
   );

@@ -1,7 +1,5 @@
 const initialState = {};
 
-const 
-
 export default function calendarReducer(state = initialState, action) {
   switch (action.type) {
     case "calendar/fill": {
