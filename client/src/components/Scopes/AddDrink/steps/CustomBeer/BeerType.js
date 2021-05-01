@@ -6,52 +6,55 @@ import BeerIcon from "@/components/Global/BeerIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
-const Type = forwardRef(({ className, types, loading, error = false }, ref) => {
-  if (loading) {
+const Type = forwardRef(
+  ({ className, types, loading, error = false, ...rest }, ref) => {
+    if (loading) {
+      return (
+        <div className={className}>
+          <div className="slider">
+            <div className="slides">
+              {new Array(4).fill("").map((_, key) => (
+                <div key={key} className="slide">
+                  <label />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className={className}>
         <div className="slider">
           <div className="slides">
-            {new Array(4).fill("").map((_, key) => (
-              <div key={key} className="slide">
-                <label />
-              </div>
-            ))}
+            {types.map((type) => {
+              const id = `family-${type.slug}`;
+              return (
+                <div className={`slide `} key={type.slug}>
+                  <input
+                    type="radio"
+                    name="family"
+                    required
+                    id={id}
+                    value={type.slug}
+                    ref={ref}
+                    {...rest}
+                  />
+                  <label htmlFor={id} className={`${error ? "error" : ""}`}>
+                    <FontAwesomeIcon className="check" icon={faCheckCircle} />
+                    <BeerIcon color={type.color} />
+                    <span>{type.name}</span>
+                  </label>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
     );
   }
-
-  return (
-    <div className={className}>
-      <div className="slider">
-        <div className="slides">
-          {types.map((type) => {
-            const id = `family-${type.slug}`;
-            return (
-              <div className={`slide `} key={type.slug}>
-                <input
-                  type="radio"
-                  name="family"
-                  required
-                  id={id}
-                  value={type.slug}
-                  ref={ref}
-                />
-                <label htmlFor={id} className={`${error ? "error" : ""}`}>
-                  <FontAwesomeIcon className="check" icon={faCheckCircle} />
-                  <BeerIcon color={type.color} />
-                  <span>{type.name}</span>
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-});
+);
 
 export default styled(Type)(
   ({ theme: { colors, device, fw } }) => css`

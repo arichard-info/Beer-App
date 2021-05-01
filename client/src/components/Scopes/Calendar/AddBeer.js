@@ -4,18 +4,18 @@ import { useTransition, animated } from "react-spring";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { getMonthName } from "@/utils/date";
-import { useCalendar } from "@/state/calendar";
 import { useGetRequest } from "@/utils/api/hooks";
 import BeerItem from "@/components/Global/BeerItem";
 import BeerItemPlaceholder from "@/components/Global/BeerItem/BeerItemPlaceholder";
 
 const AddBeer = ({ day }) => {
-  const [, dispatch] = useCalendar();
+  const dispatch = useDispatch();
 
   const handleClose = () => {
-    dispatch({ type: "UNSELECT_DAY" });
+    dispatch({ type: "calendar/unselectDay" });
   };
 
   const [drinks, loading] = useGetRequest(`/api/user/drinks?date=${day.date}`);

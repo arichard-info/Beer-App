@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import OAuth from "./OAuth";
-import { useUser } from "@/state/authentication";
 import { login } from "@/utils/api/authentication";
 import { pattern as emailPattern } from "@/config/email";
 
@@ -14,15 +14,15 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 
 const LoginPage = ({ className }) => {
   const providers = [{ id: "google", name: "Google", icon: faGoogle }];
-  const [, dispatch] = useUser();
+  const dispatch = useDispatch();
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
 
   const submitForm = async (data, e) => {
     e.preventDefault();
     const user = await login(data.email, data.password);
     if (user && !user.error) {
-      dispatch({ type: "LOG_IN", value: user });
+      dispatch({ type: "user/logIn", payload: user });
       window.flash({ message: "Tu es maintenant connecté !", timeout: 3000 });
     } else
       window.flash({
@@ -35,21 +35,25 @@ const LoginPage = ({ className }) => {
   return (
     <div className={className}>
       <h1>Connexion</h1>
-      <form data-nrt="login-form" onSubmit={handleSubmit(submitForm)}>
+      <form
+        data-nrt="login-form"
+        onSubmit={handleSubmit(submitForm)}
+        noValidate
+      >
         <FieldWrapper label="Email" error={errors.email}>
           <TextInput
             name="email"
             type="email"
             placeholder="Email"
-            ref={register({
+            data-nrt="input-email"
+            error={!!errors.email}
+            {...register("email", {
               required: "Ce champs est obligatoire",
               pattern: {
                 value: emailPattern,
                 message: "Tu dois renseigner une adresse email valide",
               },
             })}
-            error={!!errors.email}
-            data-nrt="input-email"
           />
         </FieldWrapper>
         <FieldWrapper label="Mot de passe" error={errors.password}>
@@ -57,11 +61,11 @@ const LoginPage = ({ className }) => {
             placeholder="Mot de passe"
             type="password"
             name="password"
-            ref={register({
+            data-nrt="input-password"
+            error={!!errors.password}
+            {...register("password", {
               required: "Ce champs est obligatoire",
             })}
-            error={!!errors.password}
-            data-nrt="input-password"
           />
         </FieldWrapper>
 

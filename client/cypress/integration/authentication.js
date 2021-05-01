@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 import { v4 } from "uuid";
 
 const signupCta = "signup-cta";

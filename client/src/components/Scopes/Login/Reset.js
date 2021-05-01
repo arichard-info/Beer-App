@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import { resetPassword } from "@/utils/api/authentication";
-import { useUser } from "@/state/authentication";
 import { validate as validatePassword } from "@/config/password";
 
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
@@ -12,10 +12,15 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 import CheckTags from "@/components/Global/Form/CheckTags";
 
 const Forgot = ({ className }) => {
-  const [, dispatch] = useUser();
+  const dispatch = useDispatch();
   const { token } = useParams();
 
-  const { register, handleSubmit, errors, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors = {} } = {},
+    watch,
+  } = useForm();
 
   const passwordRef = useRef({});
   const passwordConfirmRef = useRef({});
@@ -24,12 +29,11 @@ const Forgot = ({ className }) => {
 
   const submitForm = async (data, e) => {
     e.preventDefault();
-    if (!valid) return;
     const user = await resetPassword(token, {
       password: data.password,
       passwordConfirm: data.passwordConfim,
     });
-    if (user && !user.error) dispatch({ type: "LOG_IN", value: user });
+    if (user && !user.error) dispatch({ type: "user/logIn", payload: user });
   };
 
   return (
@@ -41,10 +45,10 @@ const Forgot = ({ className }) => {
             type="password"
             name="password"
             placeholder="Mot de passe"
-            ref={register({
+            error={!!errors.password}
+            {...register("password", {
               validate: (value) => !validatePassword(value).length,
             })}
-            error={!!errors.password}
           />
         </FieldWrapper>
         <FieldWrapper label="Confirmation" error={errors.passwordConfirm}>
@@ -52,10 +56,10 @@ const Forgot = ({ className }) => {
             type="password"
             name="passwordConfirm"
             placeholder="Confirmation"
-            ref={register({
+            error={!!errors.passwordConfirm}
+            {...register("passwordConfirm", {
               validate: (value) => value && value === passwordRef.current,
             })}
-            error={!!errors.passwordConfirm}
           />
         </FieldWrapper>
 

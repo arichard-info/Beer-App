@@ -1,21 +1,22 @@
 import React from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
+
 import Header from "@/components/Global/PageHeader";
 import ProfileOverview from "@/components/Global/ProfileOverview";
 import UserSettings from "./UserSettings";
 
-import { useUser } from "@/state/authentication";
-
 const SettingsPage = ({ className }) => {
-  const [user, dispatch] = useUser();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const handleLogout = async () => {
     try {
       await axios.get("/api/auth/logout");
     } catch (err) {
       console.log(err);
     }
-    dispatch({ type: "LOG_OUT" });
+    dispatch({ type: "user/logOut" });
   };
   return (
     <>

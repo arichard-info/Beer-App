@@ -1,12 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { classNames } from "@/utils";
 
-import { useCalendar } from "@/state/calendar";
 import Case from "./Case";
 
 const Month = ({ className, days }) => {
-  const [{ today, highlight }, dispatch] = useCalendar();
+  const dispatch = useDispatch();
+  const today = useSelector(({ calendar = {} } = {}) => calendar.today);
+  const highlight = useSelector(({ calendar = {} } = {}) => calendar.highlight);
   const offset =
     days && days[0] && days[0].date ? days[0].date.getDay() - 1 : 0;
   const offsetArray = Array(offset >= 0 ? offset : 6).fill(null);
@@ -14,8 +16,9 @@ const Month = ({ className, days }) => {
   const monthClassNames = classNames(className, "month-group", {
     current:
       highlight &&
-      days[0].date.getMonth() === highlight.getMonth() &&
-      days[0].date.getFullYear() === highlight.getFullYear(),
+      highlight.date &&
+      days[0].date.getMonth() === highlight.date.getMonth() &&
+      days[0].date.getFullYear() === highlight.date.getFullYear(),
   });
 
   return (
@@ -34,7 +37,9 @@ const Month = ({ className, days }) => {
             key={key}
             day={day}
             dayClassNames={dayClassNames}
-            handleClick={() => dispatch({ type: "SELECT_DAY", value: day })}
+            handleClick={() =>
+              dispatch({ type: "calendar/selectDay", payload: day })
+            }
           />
         );
       })}
