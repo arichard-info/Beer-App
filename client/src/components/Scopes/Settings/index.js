@@ -14,7 +14,7 @@ const SettingsPage = ({ className }) => {
     try {
       await axios.get("/api/auth/logout");
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     dispatch({ type: "user/logOut" });
   };

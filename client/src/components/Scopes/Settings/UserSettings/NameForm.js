@@ -5,10 +5,13 @@ import { useForm } from "react-hook-form";
 import FieldWrapper from "@/components/Global/Form/FieldWrapper";
 import TextInput from "@/components/Global/Form/Fields/TextInput";
 
-const NamePanel = ({ className, name }) => {
+const NamePanel = ({ className, name, onSubmit }) => {
   const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
 
-  const submitForm = async (data, e) => {};
+  const submitForm = async (data, e) => {
+    e.preventDefault();
+    onSubmit(data);
+  };
 
   return (
     <div className={className}>

@@ -3,6 +3,9 @@ import styled, { css } from "styled-components";
 import Panel from "@/components/Global/Panel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+
+import { updatePassword, update as updateUser } from "@/utils/api/user";
 
 const EmailForm = lazy(() =>
   import("@/components/Scopes/Settings/UserSettings/EmailForm")
@@ -15,21 +18,54 @@ const PasswordForm = lazy(() =>
 );
 
 const UserSettings = ({ className, user }) => {
+  const dispatch = useDispatch();
   const [selectedSetting, setSelectedSetting] = useState(null);
 
   const handleClick = (setting) => (e) => {
     setSelectedSetting(setting);
   };
 
+  const handleUserUpdate = (updates) => {
+    updateUser(updates)
+      .then((user) => {
+        dispatch({ type: "user/update", payload: user });
+        setSelectedSetting(null);
+        window.flash({ message: "Utilisateur mis à jour", timeout: 3000 });
+      })
+      .catch((err) => {
+        window.flash({ message: err.message, timeout: 15000, type: "danger" });
+      });
+  };
+
+  const handlePasswordUpdate = async (password, confirm) => {
+    updatePassword(password, confirm)
+      .then(() => {
+        setSelectedSetting(null);
+        window.flash({ message: "Mot de passe mis à jour", timeout: 3000 });
+      })
+      .catch((err) => {
+        window.flash({ message: err.message, timeout: 3000, type: "danger" });
+      });
+  };
+
   const switchPanel = {
     name: {
-      component: (user) => <NameForm name={user.name} />,
+      component: (user) => (
+        <NameForm name={user.name} onSubmit={handleUserUpdate} />
+      ),
     },
     email: {
-      component: (user) => <EmailForm email={user.email} />,
+      component: (user) => (
+        <EmailForm email={user.email} onSubmit={handleUserUpdate} />
+      ),
     },
     password: {
-      component: (user) => <PasswordForm password={user.password} />,
+      component: (user) => (
+        <PasswordForm
+          password={user.password}
+          onSubmit={handlePasswordUpdate}
+        />
+      ),
     },
   };
 

@@ -7,10 +7,13 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 
 import { pattern as emailPattern } from "@/config/email";
 
-const EmailForm = ({ className, email }) => {
+const EmailForm = ({ className, email, onSubmit }) => {
   const { register, handleSubmit, formState: { errors = {} } = {} } = useForm();
 
-  const submitForm = async (data, e) => {};
+  const submitForm = async (data, e) => {
+    e.preventDefault();
+    onSubmit(data);
+  };
 
   return (
     <div className={className}>
@@ -30,10 +33,10 @@ const EmailForm = ({ className, email }) => {
               pattern: {
                 value: emailPattern,
                 message: "Tu dois renseigner une adresse email valide",
-                validate: (value) =>
-                  value !== email ||
-                  "Tu dois renseigner une adresse différente de l'actuelle",
               },
+              validate: (value) =>
+                value !== email ||
+                "Tu dois renseigner une adresse différente de l'actuelle",
             })}
           />
         </FieldWrapper>

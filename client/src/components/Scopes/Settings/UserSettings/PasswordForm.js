@@ -8,7 +8,7 @@ import TextInput from "@/components/Global/Form/Fields/TextInput";
 import { validate as validatePassword } from "@/config/password";
 import CheckTags from "@/components/Global/Form/CheckTags";
 
-const PasswordPanel = ({ className }) => {
+const PasswordPanel = ({ className, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,11 @@ const PasswordPanel = ({ className }) => {
   passwordRef.current = watch("password", "");
   passwordConfirmRef.current = watch("passwordConfirm", "");
 
-  const submitForm = async (data, e) => {};
+  const submitForm = async (data, e) => {
+    e.preventDefault();
+    onSubmit(data.password, data.passwordConfirm);
+  };
+
   return (
     <div className={className}>
       <h2>Mot de passe</h2>
