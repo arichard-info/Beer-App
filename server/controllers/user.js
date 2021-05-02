@@ -42,29 +42,59 @@ const register = async (req, res, next) => {
   next();
 };
 
-const update = async (req, res, next) => {
-  const updates = {
-    name: req.body.name,
-    email: req.body.email,
-  };
+const updatePassword = async (req, res, next) => {
+  const { user } = req;
 
-  const user = await User.findOneAndUpdate(
-    { _id: req.body.user_id },
-    { $set: updates },
-    { new: true, runValidators: true, context: "query" }
+  body("password", "Password Cannot be Blank !").notEmpty();
+  body("password-confirm", "Confirmed Password cannot be blank!").notEmpty();
+  body("password-confirm", "Oops! Your passwords do not match").equals(
+    req.body.password
   );
 
-  if (!user) {
+  const errors = validationResult(req).array();
+  if (errors && errors.length) {
     return res.json({
       error: true,
-      message: "Error when updating user",
+      messages: errors.map((err) => err.msg),
     });
   }
 
+  await user.setPassword(req.body.password);
+  const updateUser = await user.save();
+  return res.json({
+    error: false,
+    message: "User logged in!",
+    user: updateUser.toObject(),
+  });
+};
+
+const update = async (req, res, next) => {
+  const { user } = req;
+
+  if (req.body.name) {
+    sanitizeBody("name");
+    body("name", "You must supply a name !").notEmpty();
+    user.name = req.body.name;
+  }
+
+  if (req.body.email) {
+    body("email", "That Email is not valid !").isEmail().normalizeEmail();
+    user.email = req.body.email;
+  }
+
+  const errors = validationResult(req).array();
+  if (errors && errors.length) {
+    return res.json({
+      error: true,
+      messages: errors.map((err) => err.msg),
+    });
+  }
+
+  const updateUser = await user.save();
   return res.json({
     error: false,
     message: "Updated User!",
-    user,
+    user: updateUser,
   });
 };
 

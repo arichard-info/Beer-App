@@ -32,4 +32,16 @@ router.post(
   catchErrors(drinkController.add)
 );
 
+router.post(
+  "/update",
+  authController.authCookie,
+  catchErrors(userController.update)
+);
+
+router.post(
+  "/update-password",
+  authController.authCookie,
+  catchErrors(userController.updatePassword)
+);
+
 module.exports = router;

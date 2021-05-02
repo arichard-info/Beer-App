@@ -23,7 +23,7 @@ export const FormRow = styled.div`
   grid-gap: 1rem;
   align-items: center;
   label {
-    grid-column: 1 / 2;
+    grid-column: 1 / 3;
     grid-row: 1;
   }
 
