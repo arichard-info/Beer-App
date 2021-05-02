@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { getMonthName } from "@/utils/date";
-import { useGetRequest } from "@/utils/api/hooks";
+import { useFetch } from "@/utils/api/hooks";
 import BeerItem from "@/components/Global/BeerItem";
 import BeerItemPlaceholder from "@/components/Global/BeerItem/BeerItemPlaceholder";
 
@@ -18,7 +18,7 @@ const AddBeer = ({ day }) => {
     dispatch({ type: "calendar/unselectDay" });
   };
 
-  const [drinks, loading] = useGetRequest(`/api/user/drinks?date=${day.date}`);
+  const [drinks, loading] = useFetch(`/api/user/drinks?date=${day.date}`);
 
   return (
     <>

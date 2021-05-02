@@ -68,7 +68,7 @@ const confirmedPasswords = (req, res, next) => {
 };
 
 // update password
-const updatePassword = async (req, res, next) => {
+const updateForgotPassword = async (req, res, next) => {
   const user = await User.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() },
@@ -179,7 +179,7 @@ module.exports = {
   localAuth,
   forgot,
   confirmedPasswords,
-  updatePassword,
+  updateForgotPassword,
   googleAuth,
   addSocketIdtoSession,
   confirmProviderAuth,

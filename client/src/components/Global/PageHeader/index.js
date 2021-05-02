@@ -10,9 +10,10 @@ const Header = ({
   children,
   onBack = undefined,
   back = true,
+  sticky = false,
 }) => {
   return (
-    <header className={classNames(className, customClass)}>
+    <header className={classNames(className, customClass, { sticky })}>
       {back && <BackButton onClick={onBack} />}
       <h1>{title}</h1>
       {children}
@@ -22,24 +23,26 @@ const Header = ({
 
 export default styled(Header)(
   ({ theme: { colors, device } }) => css`
-    max-width: 50rem;
     width: 100%;
-    margin: auto;
+    background-color: ${colors.white};
     padding-top: 2rem;
     padding-bottom: 2rem;
-    background-color: ${colors.white};
-    position: sticky;
-    top: 0;
-    z-index: 1;
+
+    &.sticky {
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
 
     @media ${device.gtMobile} {
       width: auto;
       max-width: none;
+      margin-left: -4rem;
+      margin-right: -4rem;
       padding-top: 4rem;
       padding-left: 4rem;
-      margin-left: -4rem;
       padding-right: 4rem;
-      margin-right: -4rem;
     }
   `
 );

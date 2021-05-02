@@ -17,7 +17,7 @@ router.post("/forgot", catchErrors(authController.forgot));
 router.post(
   "/reset/:token",
   authController.confirmedPasswords,
-  catchErrors(authController.updatePassword),
+  catchErrors(authController.updateForgotPassword),
   authController.localAuth
 );
 

@@ -26,6 +26,7 @@ const Forgot = ({ className }) => {
     } else
       window.flash({
         message: "Erreur lors de l'envoi du mail.",
+        type: "danger",
         timeout: 5000,
       });
   };

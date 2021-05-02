@@ -42,29 +42,74 @@ const register = async (req, res, next) => {
   next();
 };
 
-const update = async (req, res, next) => {
-  const updates = {
-    name: req.body.name,
-    email: req.body.email,
-  };
+const updatePassword = async (req, res, next) => {
+  const { user } = req;
 
-  const user = await User.findOneAndUpdate(
-    { _id: req.body.user_id },
-    { $set: updates },
-    { new: true, runValidators: true, context: "query" }
+  body("password", "Password Cannot be Blank !").notEmpty();
+  body("password-confirm", "Confirmed Password cannot be blank!").notEmpty();
+  body("password-confirm", "Oops! Your passwords do not match").equals(
+    req.body.password
   );
 
-  if (!user) {
+  const errors = validationResult(req).array();
+  if (errors && errors.length) {
     return res.json({
-      error: true,
-      message: "Error when updating user",
+      error: {
+        message:
+          (errors[0] && errors[0].msg) ||
+          "Erreur lors de la mise à jour de l'utilisateur",
+        detail: errors,
+      },
     });
   }
 
+  await user.setPassword(req.body.password);
+  const updateUser = await user.save();
   return res.json({
     error: false,
-    message: "Updated User!",
-    user,
+    user: updateUser.toObject(),
+  });
+};
+
+const update = async (req, res, next) => {
+  const { user } = req;
+
+  if (req.body.name) {
+    sanitizeBody("name");
+    body("name", "Tu dois fournir un nom !").notEmpty();
+    user.name = req.body.name;
+  }
+
+  if (req.body.email) {
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res.json({
+        error: {
+          message: "Cette adresse email est déjà utilisée",
+          detail: {},
+        },
+      });
+    }
+    body("email", "L'adresse email est invalide !").isEmail().normalizeEmail();
+    user.email = req.body.email;
+  }
+
+  const errors = validationResult(req).array();
+  if (errors && errors.length) {
+    return res.json({
+      error: {
+        message:
+          (errors[0] && errors[0].msg) ||
+          "Erreur lors de la mise à jour de l'utilisateur",
+        detail: errors,
+      },
+    });
+  }
+
+  const updateUser = await user.save();
+  return res.json({
+    error: false,
+    user: updateUser,
   });
 };
 
@@ -72,4 +117,5 @@ module.exports = {
   register,
   validate,
   update,
+  updatePassword,
 };

@@ -14,7 +14,7 @@ export const postRequest = async (route, body = {}, headers = {}) => {
   } catch (err) {
     return {
       error: true,
-      message: err
+      message: err,
     };
   }
 };
@@ -28,7 +28,7 @@ export const postRequest = async (route, body = {}, headers = {}) => {
 export const getRequest = async (route, params = {}, headers = {}) => {
   try {
     const paramsArray = Object.keys(params).map(
-      name => `${name}=${params[name]}`
+      (name) => `${name}=${params[name]}`
     );
     if (paramsArray && paramsArray.length) route += `?${paramsArray.join("&")}`;
     const response = await axios.get(route, { headers });
@@ -37,7 +37,36 @@ export const getRequest = async (route, params = {}, headers = {}) => {
   } catch (err) {
     return {
       error: true,
-      message: err
+      message: err,
     };
   }
+};
+
+export const fetchAjax = (ajaxPath, fetchOptions = {}, ajaxOption = {}) => {
+  if (typeof fetch === "function")
+    return fetch(ajaxPath, fetchOptions).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return ajaxOption.responseType && response[ajaxOption.responseType]
+        ? response[ajaxOption.responseType]()
+        : response.json();
+    });
+
+  console.warn(
+    `fetchAjax called with ${URL} : Wrong usage, this is not intended to be called on server-side.`
+  );
+  return Promise.reject(new Error());
+};
+
+export const jsonToQueryString = (json) => {
+  return Object.keys(json)
+    .map((key) => {
+      return (
+        typeof json[key] !== "undefined" &&
+        encodeURIComponent(key) + "=" + encodeURIComponent(json[key])
+      );
+    })
+    .filter(Boolean)
+    .join("&");
 };

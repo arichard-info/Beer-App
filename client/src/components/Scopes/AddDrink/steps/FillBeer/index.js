@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 import BeerIcon from "@/components/Global/BeerIcon";
-import Header from "@/components/Global/PageHeader";
+import PageHeader from "@/components/Global/PageHeader";
 import Recap from "@/components/Scopes/AddDrink/steps/FillBeer/Recap";
 import RangeSlider from "@/components/Global/RangeSlider";
 
@@ -25,7 +25,7 @@ const FillBeer = ({ className, form, setForm, setStep, registerDrink }) => {
 
   return (
     <div className={className}>
-      <Header title="Remplis ta bière !" onBack={handleBack} />
+      <PageHeader title="Remplis ta bière !" onBack={handleBack} sticky />
       <div className="wrapper">
         <section className="glass-wrapper">
           <div className="glass">

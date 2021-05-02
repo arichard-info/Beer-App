@@ -19,7 +19,7 @@ export const scrollTo = (
   const increment = 1000 / 60;
   const animationFrameReqFunc =
     window.requestAnimationFrame ||
-    function(callback) {
+    function (callback) {
       window.setTimeout(callback, increment);
     };
 
