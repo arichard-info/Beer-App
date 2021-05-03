@@ -13,7 +13,7 @@ const BackButton = ({ className, onClick }) => {
     };
   }
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} data-nrt="back-button">
       <FontAwesomeIcon icon={faArrowLeft} />
     </button>
   );

@@ -20,9 +20,9 @@ const EmailForm = ({ className, email, onSubmit }) => {
       <h2>Email</h2>
       <form onSubmit={handleSubmit(submitForm)} noValidate>
         <FieldWrapper label="Actuel">
-          <p>{email}</p>
+          <p data-nrt="user-email-current">{email}</p>
         </FieldWrapper>
-        <FieldWrapper label="Nouveau" error={errors.email}>
+        <FieldWrapper label="Nouveau" error={errors.email} fieldName="email">
           <TextInput
             name="email"
             placeholder="Email"
@@ -40,7 +40,7 @@ const EmailForm = ({ className, email, onSubmit }) => {
             })}
           />
         </FieldWrapper>
-        <button type="submit" className="cta">
+        <button type="submit" className="cta" data-nrt="user-form-submit">
           Confirmer
         </button>
       </form>
