@@ -70,7 +70,9 @@ const FieldWrapper = ({
       <Label htmlFor={htmlFor || fieldName}>{label}</Label>
       <div>{children}</div>
       {error && error.message && (
-        <ValidationMessage error>{error.message}</ValidationMessage>
+        <ValidationMessage error data-nrt="validation-message-error">
+          {error.message}
+        </ValidationMessage>
       )}
     </FormRow>
   );

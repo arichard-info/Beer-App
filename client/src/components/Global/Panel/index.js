@@ -9,6 +9,7 @@ const Panel = ({
   open = false,
   childProps = {},
   onClose = () => {},
+  ...rest
 }) => {
   const [shouldRender, setShouldRender] = useState(open);
   const [props, setProps] = useState(childProps);
@@ -37,6 +38,7 @@ const Panel = ({
   if (shouldRender) {
     return createPortal(
       <div
+        data-nrt={(rest && rest["data-nrt"]) || null}
         className={className}
         onAnimationEnd={onAnimationEnd}
         style={{ animation: `${open ? "slideFromRight" : "slideToRight"} .4s` }}

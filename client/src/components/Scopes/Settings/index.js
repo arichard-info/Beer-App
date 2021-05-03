@@ -28,7 +28,7 @@ const SettingsPage = ({ className }) => {
           date={user.creationDate}
           className="profile"
         >
-          <span className="date">
+          <span className="date" data-nrt="profile-overview-date">
             Inscrit le {user.creationDate || "??/??/????"}
           </span>
         </ProfileOverview>

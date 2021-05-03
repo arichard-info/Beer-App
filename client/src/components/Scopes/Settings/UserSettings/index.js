@@ -72,23 +72,45 @@ const UserSettings = ({ className, user }) => {
   return (
     <>
       <div className={className}>
-        <div className="row" role="button" onClick={handleClick("name")}>
+        <div
+          className="row"
+          role="button"
+          onClick={handleClick("name")}
+          data-nrt="user-setting-row"
+        >
           <span className="label">Nom</span>
-          <span className="value">{user.name}</span>
+          <span className="value" data-nrt="user-setting-name">
+            {user.name}
+          </span>
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
-        <div className="row" role="button" onClick={handleClick("email")}>
+        <div
+          className="row"
+          role="button"
+          onClick={handleClick("email")}
+          data-nrt="user-setting-row"
+        >
           <span className="label">Email</span>
-          <span className="value">{user.email}</span>
+          <span className="value" data-nrt="user-setting-email">
+            {user.email}
+          </span>
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
-        <div className="row" role="button" onClick={handleClick("password")}>
+        <div
+          className="row"
+          role="button"
+          onClick={handleClick("password")}
+          data-nrt="user-setting-row"
+        >
           <span className="label">Mot de passe</span>
-          <span className="value">***</span>
+          <span className="value" data-nrt="user-setting-password">
+            ***
+          </span>
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
       </div>
       <Panel
+        data-nrt="user-setting-panel"
         open={!!selectedSetting}
         childProps={{ selectedSetting }}
         onClose={() => {
