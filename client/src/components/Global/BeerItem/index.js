@@ -8,28 +8,32 @@ const BeerItem = ({
   beer = {},
   quantity = false,
   onClick = null,
-  dataNrt = null,
+  dataNrt = "beer-item",
 }) => {
   const clickable = typeof onClick === "function";
   return (
     <div
       className={classNames(className, customClass, { clickable })}
       onClick={onClick}
-      data-nrt={dataNrt || "beer-item"}
+      data-nrt={dataNrt}
     >
       <div
         className="photo"
         style={{ backgroundImage: `url(${beer.photo})` }}
       />
       <div className="beer-info">
-        <span className="name">{beer.name}</span>
+        <span className="name" data-nrt={`${dataNrt}-name`}>
+          {beer.name}
+        </span>
         {(beer.family || beer.tags) && (
           <span className="tags">
             {beer.family && beer.family.name && (
-              <strong>
-                {beer.family.name}
+              <>
+                <strong data-nrt={`${dataNrt}-family`}>
+                  {beer.family.name}
+                </strong>
                 {!!(beer.tags && beer.tags.length) && ` -`}
-              </strong>
+              </>
             )}
             {!!(beer.tags && beer.tags.length) && beer.tags.join(" - ")}
           </span>
@@ -37,7 +41,7 @@ const BeerItem = ({
       </div>
 
       {!!quantity && (
-        <span className="quantity">
+        <span className="quantity" data-nrt={`${dataNrt}-quantity`}>
           {quantity}
           <small>ml</small>
         </span>

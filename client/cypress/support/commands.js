@@ -1,4 +1,4 @@
-const getNrtSelector = (s) => `[data-nrt=${s}]`;
+const getNrtSelector = (s) => `[data-nrt="${s}"]`;
 
 Cypress.Commands.add("getNrt", (selector) => {
   return cy.get(getNrtSelector(selector));
