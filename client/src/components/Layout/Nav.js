@@ -12,19 +12,31 @@ const Nav = ({ className }) => {
       <nav>
         <ul>
           <li>
-            <NavLink activeClassName="active" to="/home">
+            <NavLink
+              activeClassName="active"
+              to="/home"
+              data-nrt="nav-main-grid"
+            >
               <FontAwesomeIcon icon={faCalendarAlt} />
               <span>Grille</span>
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/profile">
+            <NavLink
+              activeClassName="active"
+              to="/profile"
+              data-nrt="nav-main-stats"
+            >
               <FontAwesomeIcon icon={faChartArea} />
               <span>Stats</span>
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/settings">
+            <NavLink
+              activeClassName="active"
+              to="/settings"
+              data-nrt="nav-main-settings"
+            >
               <FontAwesomeIcon icon={faUser} />
               <span>Réglages</span>
             </NavLink>

@@ -4,10 +4,12 @@ import fallbackImage from "./profile-placeholder.png";
 
 const ProfileOverview = ({ className, image, name, children }) => {
   return (
-    <div className={className}>
+    <div className={className} data-nrt="profile-overview">
       <img src={image || fallbackImage} alt={name} />
       <div className="content">
-        <span className="name">{name}</span>
+        <span className="name" data-nrt="profile-overview-name">
+          {name}
+        </span>
         {children && <div>{children}</div>}
       </div>
     </div>

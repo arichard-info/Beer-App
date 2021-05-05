@@ -18,10 +18,11 @@ const NamePanel = ({ className, name, onSubmit }) => {
       <h2>Nom d'utilisateur</h2>
       <form onSubmit={handleSubmit(submitForm)} noValidate>
         <FieldWrapper label="Actuel">
-          <p>{name}</p>
+          <p data-nrt="user-name-current">{name}</p>
         </FieldWrapper>
-        <FieldWrapper label="Nouveau" error={errors.name}>
+        <FieldWrapper label="Nouveau" error={errors.name} fieldName="name">
           <TextInput
+            data-nrt="user-name-input"
             name="name"
             placeholder="Nom / Prénom"
             error={!!errors.name}
@@ -33,7 +34,7 @@ const NamePanel = ({ className, name, onSubmit }) => {
             })}
           />
         </FieldWrapper>
-        <button type="submit" className="cta">
+        <button type="submit" className="cta" data-nrt="user-form-submit">
           Confirmer
         </button>
       </form>

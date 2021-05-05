@@ -30,7 +30,11 @@ const PasswordPanel = ({ className, onSubmit }) => {
     <div className={className}>
       <h2>Mot de passe</h2>
       <form onSubmit={handleSubmit(submitForm)}>
-        <FieldWrapper label="Nouveau mot de passe" error={errors.password}>
+        <FieldWrapper
+          label="Nouveau mot de passe"
+          error={errors.password}
+          fieldName="password"
+        >
           <TextInput
             type="password"
             placeholder="Mot de passe"
@@ -42,7 +46,11 @@ const PasswordPanel = ({ className, onSubmit }) => {
             })}
           />
         </FieldWrapper>
-        <FieldWrapper label="Confirmation" error={errors.passwordConfirm}>
+        <FieldWrapper
+          label="Confirmation"
+          error={errors.passwordConfirm}
+          fieldName="passwordConfirm"
+        >
           <TextInput
             type="password"
             placeholder="Confirmation"
@@ -58,7 +66,7 @@ const PasswordPanel = ({ className, onSubmit }) => {
           password={passwordRef.current}
           confirm={passwordConfirmRef.current}
         />
-        <button type="submit" className="cta">
+        <button type="submit" className="cta" data-nrt="user-form-submit">
           Confirmer
         </button>
       </form>
