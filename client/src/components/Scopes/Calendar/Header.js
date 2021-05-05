@@ -3,15 +3,15 @@ import styled, { css } from "styled-components";
 import PageHeader from "@/components/Global/PageHeader";
 import { useSelector } from "react-redux";
 
-import { getMonthName } from "@/utils/date";
+import { renderDate } from "@/utils/date";
 
 const Header = ({ className }) => {
   const highlight = useSelector(({ calendar } = {}) => calendar.highlight);
   const date =
     highlight && highlight.date
       ? {
-          month: getMonthName(highlight.date.getMonth()),
-          year: highlight.date.getFullYear(),
+          month: renderDate(highlight.date, { month: "long" }),
+          year: renderDate(highlight.date, { year: "numeric" }),
         }
       : { month: "", year: "" };
 

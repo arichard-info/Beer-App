@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { getMonthName } from "@/utils/date";
+import { renderDate } from "@/utils/date";
 import BeerItem from "@/components/Global/BeerItem";
 
 const Recap = ({
@@ -12,9 +12,13 @@ const Recap = ({
     <div className={className}>
       <span className="date">
         <strong>
-          {date.getDate()} {getMonthName(date)}
+          {renderDate(date, {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+          })}
         </strong>
-        &nbsp;{date.getFullYear()}
+        &nbsp;{renderDate(date, { year: "numeric" })}
       </span>
       <BeerItem beer={beer || customBeer} />
       <button type="submit" className="cta" onClick={onClick}>

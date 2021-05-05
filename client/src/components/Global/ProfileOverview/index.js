@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import fallbackImage from "./profile-placeholder.png";
 
-const ProfileOverview = ({ className, image, name, date, children }) => {
+const ProfileOverview = ({ className, image, name, children }) => {
   return (
     <div className={className}>
       <img src={image || fallbackImage} alt={name} />

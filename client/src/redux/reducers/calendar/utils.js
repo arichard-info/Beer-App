@@ -1,4 +1,5 @@
-import { getDaysInMonth, getUniqueDayString } from "@/utils/date";
+import { getDaysInMonth, renderDate } from "@/utils/date";
+import { short as shortDate } from "@/utils/date.conf";
 
 export const getMonthsInInterval = (date, pastLength, futureLength) => {
   const month = date.getMonth();
@@ -9,7 +10,7 @@ export const getMonthsInInterval = (date, pastLength, futureLength) => {
     const date = new Date(Date.UTC(year, m, 1));
     const daysArray = getDaysInMonth(date);
     const days = daysArray.map((el) => ({
-      id: getUniqueDayString(el),
+      id: renderDate(el, shortDate),
       date: el,
       quantity: 0,
       count: 0,

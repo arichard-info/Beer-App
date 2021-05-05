@@ -6,7 +6,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { getMonthName } from "@/utils/date";
+import { renderDate } from "@/utils/date";
 import { useFetch } from "@/utils/api/hooks";
 import BeerItem from "@/components/Global/BeerItem";
 import BeerItemPlaceholder from "@/components/Global/BeerItem/BeerItemPlaceholder";
@@ -24,8 +24,12 @@ const AddBeer = ({ day }) => {
     <>
       <div className="header">
         <p>
-          {day.date.getDate()} {getMonthName(day.date)}
-          <small> {day.date.getFullYear()}</small>
+          {renderDate(date, {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+          })}
+          <small> {renderDate(date, { year: "numeric" })}</small>
         </p>
         <button className="close" onClick={handleClose}>
           <FontAwesomeIcon icon={faTimes} />

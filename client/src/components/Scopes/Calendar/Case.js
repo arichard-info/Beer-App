@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { getFullDate } from "@/utils/date";
+import { renderDate } from "@/utils/date";
+import { long as longDate } from "@/utils/date.conf";
 
 const Case = ({ className, day, dayClassNames, handleClick }) => {
   const levels = [0, 250, 500, 750, 1000, 1250, 1500, 2000, 1000000000];
@@ -14,7 +15,7 @@ const Case = ({ className, day, dayClassNames, handleClick }) => {
       <div className="daybox__wrapper">
         <button
           className={`daybox__inner level-${dayLevel}`}
-          title={getFullDate(day.date)}
+          title={renderDate(day.date, longDate)}
           onClick={handleClick}
         >
           {day.date.getDate()}
