@@ -7,6 +7,9 @@ import PageHeader from "@/components/Global/PageHeader";
 import ProfileOverview from "@/components/Global/ProfileOverview";
 import UserSettings from "./UserSettings";
 
+import { renderDate } from "@/utils/date";
+import { short as shortDate } from "@/utils/date.conf";
+
 const SettingsPage = ({ className }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -25,11 +28,12 @@ const SettingsPage = ({ className }) => {
         <ProfileOverview
           name={user.name}
           image={user.image}
-          date={user.creationDate}
           className="profile"
         >
           <span className="date" data-nrt="profile-overview-date">
-            Inscrit le {user.creationDate || "??/??/????"}
+            Inscrit le{" "}
+            {(user.registerDate && renderDate(user.registerDate, shortDate)) ||
+              "--/--/----"}
           </span>
         </ProfileOverview>
         <h2>Compte et connexion</h2>

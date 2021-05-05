@@ -1,3 +1,5 @@
+import defaultFormat from "./date.conf";
+
 export function getDaysInMonth(m, y) {
   let date = null;
   let month = false;
@@ -17,31 +19,16 @@ export function getDaysInMonth(m, y) {
   return days;
 }
 
-export function getMonthName(date) {
-  const monthNames = [
-    "Janvier",
-    "Février",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Août",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-    "Décembre"
-  ];
+export const renderDate = (date, DATE_FORMAT_OPTION = defaultFormat) => {
+  let dateObj = null;
 
-  if (typeof date.getMonth === "function") return monthNames[date.getMonth()];
-  if (Number.isInteger(date)) return monthNames[date];
-  return "";
-}
+  if (date instanceof Date && !isNaN(dateObj)) {
+    dateObj = date;
+  } else if (typeof date === "String") {
+    dateObj = new Date(date.split("+")[0]);
+  } else {
+    return "";
+  }
 
-export function getFullDate(date) {
-  return `${date.getDate()} ${getMonthName(date)} ${date.getFullYear()}`;
-}
-
-export function getUniqueDayString(date) {
-  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-}
+  return new Intl.DateTimeFormat("fr-FR", DATE_FORMAT_OPTION).format(dateObj);
+};

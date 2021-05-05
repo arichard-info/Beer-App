@@ -12,31 +12,32 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
     validate: [validator.isEmail, "Invalid Email Address"],
-    required: "Please Supply an email address"
+    required: "Please Supply an email address",
   },
   name: {
     type: String,
     required: "Please supply a name",
-    trim: true
+    trim: true,
   },
   picture: {
     type: String,
-    trim: true
+    trim: true,
   },
   authProviderId: {
-    type: String
+    type: String,
   },
   authProvider: {
-    type: String
+    type: String,
   },
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+  registerDate: Date,
 });
 
 userSchema.virtual("drinks", {
   ref: "Drink",
   localField: "_id",
-  foreignField: "user"
+  foreignField: "user",
 });
 
 function autopopulate(next) {
