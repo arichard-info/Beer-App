@@ -16,16 +16,16 @@ const Drink = require("../models/Drink");
 const User = require("../models/User");
 
 const families = JSON.parse(
-  fs.readFileSync(__dirname + "/../../data/family.json", "utf-8")
+  fs.readFileSync(__dirname + "/../data/family.json", "utf-8")
 );
 const beers = JSON.parse(
-  fs.readFileSync(__dirname + "/../../data/beers.json", "utf-8")
+  fs.readFileSync(__dirname + "/../data/beers.json", "utf-8")
 );
 const drinks = JSON.parse(
-  fs.readFileSync(__dirname + "/../../data/drinks.json", "utf-8")
+  fs.readFileSync(__dirname + "/../data/drinks.json", "utf-8")
 );
 const users = JSON.parse(
-  fs.readFileSync(__dirname + "/../../data/users.json", "utf-8")
+  fs.readFileSync(__dirname + "/../data/users.json", "utf-8")
 );
 
 async function deleteData() {
