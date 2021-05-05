@@ -1,3 +1,8 @@
 {
-    "presets": ["react-app"]
+  "presets": ["react-app"],
+  "env": {
+    "production": {
+      "plugins": [["react-remove-properties", { "properties": ["data-nrt"] }]]
+    }
+  }
 }
