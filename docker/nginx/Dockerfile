@@ -1,12 +1,10 @@
 FROM node:alpine as builder
 
-ENV CONTEXT=test
-
 WORKDIR /usr/src/app
 COPY ./client/package*.json ./
 RUN npm ci
 COPY ./client/ .
-RUN CONTEXT=${CONTEXT} npm run build
+RUN npm run build
 
 # ------------------------------------------------------
 # Production Build
