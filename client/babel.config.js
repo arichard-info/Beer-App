@@ -6,4 +6,5 @@ module.exports = {
   plugins: [
     !showDataNrt && ["react-remove-properties", { properties: ["data-nrt"] }],
   ].filter(Boolean),
+  ignore: ["cypress"],
 };
