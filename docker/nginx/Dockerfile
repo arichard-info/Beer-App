@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY ./client/package*.json ./
 RUN npm ci
 COPY ./client/ .
-RUN npm run build
+RUN CONTEXT=${CONTEXT} npm run build
 
 # ------------------------------------------------------
 # Production Build
