@@ -29,6 +29,8 @@ services:
       - database
   nginx:
     container_name: prod_nginx
+    environment:
+      - CONTEXT
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
