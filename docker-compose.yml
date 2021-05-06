@@ -30,7 +30,7 @@ services:
   nginx:
     container_name: prod_nginx
     environment:
-      - CONTEXT
+      - CONTEXT=test
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
