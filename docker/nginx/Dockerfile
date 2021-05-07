@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY ./client/package*.json ./
 RUN npm ci
 COPY ./client/ .
-RUN /bin/bash -c 'npm run build'
+RUN /bin/sh -c 'npm run build'
 
 # ------------------------------------------------------
 # Production Build
