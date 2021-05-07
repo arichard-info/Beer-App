@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build and start docker containers
         run: docker-compose -f docker-compose.yml up -d
+        env:
+          CONTEXT: test
       - name: Docker ps
         run: docker ps
       - name: Inject sample data

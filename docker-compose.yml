@@ -32,6 +32,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
+      args:
+        - CONTEXT=${CONTEXT}
     ports:
       - "3000:80"
     restart: on-failure
