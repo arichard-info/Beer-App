@@ -1,7 +1,5 @@
 FROM node:alpine as builder
 
-ARG CONTEXT=run
-
 WORKDIR /usr/src/app
 COPY ./client/package*.json ./
 RUN npm ci
