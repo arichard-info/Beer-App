@@ -26,17 +26,14 @@ const Month = ({ className, days }) => {
       {[...offsetArray, ...days].map((day, key) => {
         if (day === null || !day.date)
           return <div key={key} className="offset" />;
-
-        const dayClassNames = classNames("daybox", {
-          disabled: day.date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0),
-          today: day.date.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0),
-        });
-
         return (
           <Case
             key={key}
             day={day}
-            dayClassNames={dayClassNames}
+            today={day.date.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)}
+            disabled={
+              day.date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0)
+            }
             handleClick={() =>
               dispatch({ type: "calendar/selectDay", payload: day })
             }

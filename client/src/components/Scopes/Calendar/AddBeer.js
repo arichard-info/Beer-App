@@ -24,12 +24,12 @@ const AddBeer = ({ day }) => {
     <>
       <div className="header">
         <p>
-          {renderDate(date, {
+          {renderDate(day.date, {
             weekday: "long",
             month: "long",
             day: "numeric",
           })}
-          <small> {renderDate(date, { year: "numeric" })}</small>
+          <small> {renderDate(day.date, { year: "numeric" })}</small>
         </p>
         <button className="close" onClick={handleClose}>
           <FontAwesomeIcon icon={faTimes} />

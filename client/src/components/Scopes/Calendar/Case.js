@@ -1,17 +1,24 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { classNames } from "@/utils";
 import { renderDate } from "@/utils/date";
-import { long as longDate } from "@/utils/date.conf";
+import { long as longDate, short as shortDate } from "@/utils/date.conf";
 
-const Case = ({ className, day, dayClassNames, handleClick }) => {
+const Case = ({ className, day, handleClick, today, disabled }) => {
   const levels = [0, 250, 500, 750, 1000, 1250, 1500, 2000, 1000000000];
   const dayLevel = day.quantity
     ? levels.findIndex(
         (lvl, key) => day.quantity > lvl && day.quantity <= levels[key + 1]
       ) + 1
     : 0;
+
+  const dayClassNames = classNames("daybox", { disabled, today });
+
   return (
-    <div className={`${className} ${dayClassNames} `}>
+    <div
+      className={`${className} ${dayClassNames} `}
+      data-nrt={`case-${renderDate(day.date, shortDate)}`}
+    >
       <div className="daybox__wrapper">
         <button
           className={`daybox__inner level-${dayLevel}`}

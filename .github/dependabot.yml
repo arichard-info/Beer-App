@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/client"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    reviewers:
+      - arichard-info
+    assignees:
+      - arichard-info
+    commit-message:
+      prefix: chore
+      include: scope
+  - package-ecosystem: npm
+    directory: "/server"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    reviewers:
+      - arichard-info
+    assignees:
+      - arichard-info
+    commit-message:
+      prefix: chore
+      include: scope

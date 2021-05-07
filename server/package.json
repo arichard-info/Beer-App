@@ -5,9 +5,9 @@
   "scripts": {
     "start": "node app.js",
     "dev": "supervisor -w router, models, controllers -e ejs,js,json, app.js",
-    "mongo:sample": "node --no-deprecation ./scripts/data/sampleData.js",
-    "mongo:remove": "node --no-deprecation ./scripts/data/sampleData.js --delete",
-    "mongo:replace": "node --no-deprecation ./scripts/data/sampleData.js --replace"
+    "mongo:sample": "node --no-deprecation ./scripts/sampleData.js",
+    "mongo:remove": "node --no-deprecation ./scripts/sampleData.js --delete",
+    "mongo:replace": "node --no-deprecation ./scripts/sampleData.js --replace"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -33,7 +33,7 @@
     "passport-local-mongoose": "^6.1.0",
     "passport-twitter": "^1.0.4",
     "slugs": "^0.1.3",
-    "socket.io": "^4.0.1",
+    "socket.io": "^4.0.2",
     "supervisor": "^0.12.0",
     "validator": "^13.6.0"
   }

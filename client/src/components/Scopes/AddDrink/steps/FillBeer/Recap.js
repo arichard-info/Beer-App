@@ -21,7 +21,12 @@ const Recap = ({
         &nbsp;{renderDate(date, { year: "numeric" })}
       </span>
       <BeerItem beer={beer || customBeer} />
-      <button type="submit" className="cta" onClick={onClick}>
+      <button
+        type="submit"
+        className="cta"
+        onClick={onClick}
+        data-nrt="submit-button"
+      >
         Confirmer
       </button>
     </div>
