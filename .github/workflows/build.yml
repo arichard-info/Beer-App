@@ -19,12 +19,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: NPM install - client
         working-directory: client
-        run: npm ci
-      - name: NPM build - client
-        working-directory: client
-        run: npm run build
         env:
           CONTEXT: test
+        run: |
+          npm ci
+          npm run build
       - name: Build and start docker containers
         run: docker-compose -f docker-compose.yml up -d
       - name: Docker ps
