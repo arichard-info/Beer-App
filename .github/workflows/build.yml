@@ -18,10 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: NPM install - client
-        working-directory: client
         env:
           CONTEXT: test
         run: |
+          cd client
           npm ci
           npm run build
       - name: Build and start docker containers
