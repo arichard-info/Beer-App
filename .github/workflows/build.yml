@@ -17,10 +17,15 @@ jobs:
       NODE_ENV: production
     steps:
       - uses: actions/checkout@v1
-      - name: Build and start docker containers
-        run: docker-compose -f docker-compose.yml up -d
+      - name: NPM install - client
         env:
           CONTEXT: test
+        run: |
+          cd client
+          npm ci
+          npm run build
+      - name: Build and start docker containers
+        run: docker-compose -f docker-compose.yml up -d
       - name: Docker ps
         run: docker ps
       - name: Inject sample data
