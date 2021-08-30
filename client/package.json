@@ -8,7 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "axios": "^0.21.1",
-    "cypress": "^7.4.0",
+    "cypress": "^8.3.1",
     "events": "^3.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -40,7 +40,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "optionalDependencies": {
-    "cypress": "^7.4.0"
+    "cypress": "^8.3.1"
   },
   "scripts": {
     "start": "env NODE_ENV=development webpack serve --host localhost --open 'Google Chrome'",
