@@ -17,7 +17,7 @@
     "debug": "~4.3.1",
     "dotenv": "^9.0.2",
     "es6-promisify": "^7.0.0",
-    "express": "~4.17.1",
+    "express": "~4.17.3",
     "express-session": "^1.17.1",
     "express-validator": "^6.11.1",
     "jsonwebtoken": "^8.5.1",
